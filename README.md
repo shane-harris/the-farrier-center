@@ -50,8 +50,6 @@ Make your commits on that branch. When you're ready to share your changes:
 git push -u origin feature-name
 ```
 
-_Note: The remote branch can have a different name than your local one if you want it to._
-
 When you're ready to merge your changes into `master`, make a "merge request" on GitLab.
 
 ## Pulling
