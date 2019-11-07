@@ -1,0 +1,21 @@
+{
+  "name": "farrier_center_app",
+  "version": "1.0.0",
+  "description": "Move to the directory where you want the project to be stored.\r If you want the projects in `Documents/Project-Bojack`, you would move into `Documents` using `cd`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"echo \\ \"Error: no test specified\\\" && exit 1\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.ecs.csus.edu/horsin-around/project-bojack.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  }
+}
