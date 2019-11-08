@@ -1,7 +1,7 @@
 {
   "name": "farrier_center_app",
   "version": "1.0.0",
-  "description": "Move to the directory where you want the project to be stored.\r If you want the projects in `Documents/Project-Bojack`, you would move into `Documents` using `cd`.",
+  "description": "An app for Farriers to manage their clients and build medical reports",
   "main": "index.js",
   "scripts": {
     "test": "\"echo \\ \"Error: no test specified\\\" && exit 1\""
