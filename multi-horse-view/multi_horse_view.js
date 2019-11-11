@@ -1,1 +1,3 @@
-$('.col-md-3').tooltip();
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
