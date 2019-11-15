@@ -11,6 +11,10 @@ app.get('/horses', (req, res) => {
   res.render('horses.ejs')
 })
 
+app.get('/password', (req, res) => {
+  res.render('password.ejs')
+})
+
 app.listen(8000, () => {
   console.log('Example app listening on port 8000!')
 })
