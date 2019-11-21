@@ -1,3 +1,8 @@
+html,
+body {
+  height: 100%;
+  padding-bottom: 100px;
+}
 #popup {
   display: none;
 }
@@ -32,4 +37,9 @@
 .password-form {
   width: 50%;
   margin: auto;
+}
+
+#site-footer {
+  position: page;
+  bottom: 0;
 }
