@@ -4,7 +4,8 @@
   "description": "An app for Farriers to manage their clients and build medical reports",
   "main": "index.js",
   "scripts": {
-    "test": "\"echo \\ \"Error: no test specified\\\" && exit 1\""
+    "pretest": "eslint --fix \"./**/*.js\"",
+    "pretty": "prettier --write \"./**/*.{js,json}\""
   },
   "repository": {
     "type": "git",
