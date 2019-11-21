@@ -4,7 +4,7 @@
   "description": "An app for Farriers to manage their clients and build medical reports",
   "main": "index.js",
   "scripts": {
-    "test": "\"echo \\ \"Error: no test specified\\\" && exit 1\""
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -17,11 +17,14 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.6.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
+    "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
-    "prettier": "1.18.2"
+    "prettier": "1.18.2",
+    "sinon": "^7.5.0"
   },
   "husky": {
     "hooks": {
