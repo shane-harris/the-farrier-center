@@ -4,8 +4,9 @@
   "description": "An app for Farriers to manage their clients and build medical reports",
   "main": "index.js",
   "scripts": {
-    "pretest": "eslint --fix \"./**/*.js\"",
-    "pretty": "prettier --write \"./**/*.{js,css,json,md}\""
+    "pretest": "eslint --fix './**/*.js'",
+    "pretty": "prettier --write './**/*.{js,css,json,md}'",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
