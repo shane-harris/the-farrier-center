@@ -1,6 +1,8 @@
 #page-container {
   position: relative;
-  min-height: 100vh;
+  /*sets footer to bottom even if the page isn't full
+    the 92 is 100 minus the height of the footer*/
+  min-height: 92vh;
 }
 #popup {
   display: none;
