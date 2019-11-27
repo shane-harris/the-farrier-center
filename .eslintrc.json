@@ -4,7 +4,8 @@
     "commonjs": true,
     "es6": true,
     "node": true,
-    "jquery": true
+    "jquery": true,
+    "mocha": true
   },
   "extends": "eslint:recommended",
   "globals": {
@@ -14,5 +15,10 @@
   "parserOptions": {
     "ecmaVersion": 2018
   },
-  "rules": {}
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-constant-condition": ["error", { "checkLoops": false }],
+    "strict": ["warn", "safe"],
+    "no-empty": ["error", { "allowEmptyCatch": true }]
+  }
 }

@@ -7,7 +7,7 @@
     "pretest": "eslint --fix './**/*.js'",
     "pretty": "prettier --write './**/*.{js,css,json,md}'",
     "start": "node index.js",
-    "test": "mocha"
+    "test": "mocha --exit"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.6.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
