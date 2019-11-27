@@ -1,63 +1,34 @@
 # Project Bojack
 
-## Getting started
+## Installin Dependencies
 
-### Clone the repository
+Our project depends on several node packages, which are specified in `package.json`. To install all
+dependencies, run `npm install` (or `npm i` for short).
 
-Move to the directory where you want the project to be stored.
-If you want the projects in `Documents/Project-Bojack`, you would move into `Documents` using `cd`.
+Any time you pull code from GitLab, you should run `npm install` again if any new packages have been
+added to `package.json`. All packages will be "installed" in `node_modules`, so if you think there's
+something wrong with an installed package, you can simply delete that folder and run `npm install`
+again. (Some versions of `npm` support the `npm clean-install` command, which will do this for you).
 
-Then run:
+## MongoDB Setup
 
-```
-git clone https://gitlab.ecs.csus.edu/horsin-around/project-bojack.git Project-Bojack
-```
+To configure your username and password for MongoDB, create a file called `.env` in the root
+directory of the project.
 
-_Note: The final argument will be the name of the directory you clone into. Feel free to change it._
-
-## Setting up your identity
-
-You will need to make your commits using your ECS email:
+In that file, specify the following two _environment variables_:
 
 ```
-git config --global user.name "First Last"
-git config user.email ecs_username@ecs.csus.edu
-```
-
-_Note: The `--global` flag changes your global configuration - presumably you will use the same name
-for all projects.
-You may want to use different emails for your other projects though. You can set a global default as
-well as different local settings for individual repos._
-
-_If you want to view or edit your configuration file by hand, your local configuration is stored in
-`.git/config`. Your global configuration is stored in `~/.gitconfig` (`~` is your home directory)._
-
-## Merging
-
-**Please do not commit directly to `master`.**
-
-Create a new branch and switch to it:
+MONGO_USER='username'
+MONGO_PASS='password'
 
 ```
-git checkout -b feature-name
-```
 
-`feature-name` should be something like `fix-typo`, `update-readme` or `edit-css`.
+Change `'username'` and `'password'` to your actual MongoDB username and password.
 
-Make your commits on that branch. When you're ready to share your changes:
+## Configure Port
 
-```
-git push -u origin feature-name
-```
-
-When you're ready to merge your changes into `master`, make a "merge request" on GitLab.
-
-## Pulling
-
-If you just want to get the latest changes to `master`, all you need is:
+In `.env`, specify the desired port number, e.g.:
 
 ```
-git pull
+PORT=80
 ```
-
-_Note: This assumes you are on the `master` branch. Use `git checkout master` to switch to it._

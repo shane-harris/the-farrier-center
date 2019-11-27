@@ -1,5 +1,6 @@
 'use strict'
 
+require('dotenv').config()
 const express = require('express')
 const app = express()
 
@@ -20,8 +21,10 @@ app.get('/horse', (req, res) => {
   res.render('horse.ejs')
 })
 
-app.listen(8000, () => {
-  console.log('Example app listening on port 8000!')
+const port = process.env.PORT || 8000
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!`)
 })
 
 module.exports = app
