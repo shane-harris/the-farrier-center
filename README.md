@@ -24,3 +24,11 @@ MONGO_PASS='password'
 ```
 
 Change `'username'` and `'password'` to your actual MongoDB username and password.
+
+## Configure Port
+
+In `.env`, specify the desired port number, e.g.:
+
+```
+PORT=80
+```
