@@ -6,9 +6,8 @@
   "scripts": {
     "format": "prettier --write './**/*.{js,css,json,md}'",
     "pretest": "eslint --fix './**/*.js'",
-    "pretty": "prettier --write './**/*.{js,css,json,md}'",
-    "start": "node index.js",
-    "test": "mocha --exit"
+    "test": "mocha --exit",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
