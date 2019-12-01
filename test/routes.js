@@ -54,4 +54,21 @@ describe('Routes', () => {
       })
     })
   })
+
+  describe('GET /user', () => {
+    let req
+    before(() => {
+      return (req = chai.request(app).get('/user'))
+    })
+
+    it('should get the user page', () => {
+      return req.then(res => res.should.have.status(200))
+    })
+
+    describe('The user page', () => {
+      it('should render HTML', () => {
+        return req.then(res => res.should.be.html)
+      })
+    })
+  })
 })
