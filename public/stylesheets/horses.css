@@ -35,6 +35,11 @@
 .navbar.bg-alt {
 }
 
+#site-footer {
+  position: page;
+  bottom: 0;
+}
+
 .password-form {
   width: 50%;
   margin: auto;
