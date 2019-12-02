@@ -21,6 +21,10 @@ app.get('/horse', (req, res) => {
   res.render('horse.ejs')
 })
 
+app.get('/user', (req, res) => {
+  res.render('user.ejs')
+})
+
 const port = process.env.PORT || 8000
 
 app.listen(port, () => {
