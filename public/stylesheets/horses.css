@@ -49,18 +49,3 @@
   position: page;
   bottom: 0;
 }
-
-.profile {
-  margin: 20px 0;
-}
-
-.profile-sidebar {
-  padding: 20px 0 10px 0;
-  background: #fff;
-}
-
-.profile-content {
-  padding: 20px;
-  background: #fff;
-  min-height: 460px;
-}

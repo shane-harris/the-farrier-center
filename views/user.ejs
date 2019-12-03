@@ -1,49 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>User Profile</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        type="text/css">
     <link rel="stylesheet" type="text/css" href="/public/stylesheets/horses.css">
+
 </head>
 
-<body>
+
+<body class="">
     <%- include('partials/header-nav') %>
-    <div class="container">
-        <div class="row profile">
+    <div class="container py-5">
+        <div class="row">
             <div class="col-md-3">
-                <div class="profile-sidebar">
-                    <div class="profile-usermenu">
-                        <ul class="nav">
-                            <li class="active">
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-user"></i>
-                                    Profile </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-cog"></i>
-                                    Account Settings </a>
-                            </li>
-                        </ul>
+                <div class="row">
+                    <div class="col-md-12"><a class="btn w-100 text-body btn-link text-left" href="#"><i
+                                class="fa fa-user fa-fw pull-left"></i>Profile</a></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12"><a class="btn w-100 btn-link text-body text-left" href="#"><i
+                                class="fa fa-cog fa-fw pull-left"></i>&nbsp;Account Settings<br></a></div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="inputmailinline" placeholder="First Name"
+                                    readonly="readonly"> </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mx-2" id="inputpasswordinline"
+                                    placeholder="Last Name" readonly="readonly"> </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input type="email" class="form-control" placeholder="e-mail" readonly="readonly">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="form-inline">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Phone #" readonly="readonly">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
-                <div class="profile-content">
-                    profile info
-                </div>
-            </div>
         </div>
-        <br>
-        <br>
-        <%- include('partials/footer') %>
+    </div>
+    </div>
+    <%- include('partials/footer') %>
 </body>
 
 </html>
