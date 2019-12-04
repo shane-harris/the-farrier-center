@@ -17,8 +17,13 @@ app.get('/horses', (req, res) => {
 app.get('/password', (req, res) => {
   res.render('password.ejs')
 })
+
 app.get('/horse', (req, res) => {
   res.render('horse.ejs')
+})
+
+app.get('/queue', (req, res) => {
+  res.render('queue.ejs')
 })
 
 const port = process.env.PORT || 8000
