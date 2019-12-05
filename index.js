@@ -4,11 +4,13 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
+const config = require('./config/config.js')
+
 let encoded_connection_url =
   'mongodb+srv://' +
-  process.env.MONGO_USER +
+  config.username +
   ':' +
-  process.env.MONGO_PASS +
+  config.password +
   '@farrier-dev-test-2pgqu.mongodb.net/test?retryWrites=true&w=majority'
 
 mongoose
@@ -37,14 +39,13 @@ app.get('/horses', (req, res) => {
 app.get('/password', (req, res) => {
   res.render('password.ejs')
 })
+
 app.get('/horse', (req, res) => {
   res.render('horse.ejs')
 })
 
-const port = process.env.PORT || 8000
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`)
+app.listen(config.port, () => {
+  console.log(`Example app listening on port ${config.port}!`)
 })
 
 module.exports = app
