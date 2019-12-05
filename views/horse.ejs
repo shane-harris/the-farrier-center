@@ -22,7 +22,7 @@
   <%- include('partials/header-nav') %>
     <!-- Horse Summary
      Style color needs to swapped for a css version -->
-    <div class="container" style="background-color:powderblue;">
+    <div class="container profile">
       <div class="row">
         <div class="col-sm-4">
           <img alt="Horse" class="img-fluid float-left" src="../public/images/horse_profile.png" />
@@ -74,10 +74,17 @@
       </div>
     </div>
 
-    <p></p>
 
     <!–– Horse Medical Analysis ––>
-    <div class="container" style="background-color:powderblue;">
+
+    <div class="container profile">
+      <div class="row justify-content-center">
+        <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button" aria-expanded="false" aria-controls="medical">
+          Show Horse Medical Analysis
+        </a>
+      </div>
+
+      <div class="collapse" id="medical">
       <div class="row">
         <div class="col-sm-4">
           <h1>Medical Analysis</h1>
@@ -134,12 +141,11 @@
           </p>
         </div>
       </div>
+      </div>
     </div>
 
-    <p></p>
-
     <!–– Horse Most Recent Shoeing ––>
-    <div class="container" style="background-color:powderblue;">
+    <div class="container profile" >
       <div class="row">
         <div class="col-sm-4">
           <h1>Recent Shoeing</h1>
@@ -153,7 +159,7 @@
       </div>
       <!-- Shoeing Data -->
       <div class="row">
-        <div class="col-sm-6" style="background-color:navajowhite;">
+        <div class="col-sm-6 shoeing">
           <h1>Front Left</h1>
           <h2>A/P</h2>
           <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
@@ -178,7 +184,7 @@
             printer took a galley of type and scrambled it to make a type specimen book.
           </p>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 shoeing">
           <h1>Front Right</h1>
           <h2>A/P</h2>
           <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
@@ -206,7 +212,7 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-6 shoeing">
           <h1>Back Left</h1>
           <h2>A/P</h2>
           <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
@@ -231,7 +237,7 @@
             printer took a galley of type and scrambled it to make a type specimen book.
           </p>
         </div>
-        <div class="col-sm-6" style="background-color:navajowhite;">
+        <div class="col-sm-6 shoeing">
           <h1>Back Right</h1>
           <h2>A/P</h2>
           <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
