@@ -69,6 +69,8 @@
 
     <!–– Horse Medical Analysis ––>
 
+    <% var medicalAnalysis = {date: "11/13/19", farrier: "Steve", gait: "Lorem Ipsum", lameness: "Lorem Ipsum", blemishes: "Lorem Ipsum", laminitus: "Lorem Ipsum"} %>
+
     <div class="container profile">
       <div class="row justify-content-center">
         <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button" aria-expanded="false" aria-controls="medical">
@@ -82,55 +84,26 @@
           <h1>Medical Analysis</h1>
         </div>
         <div class="col-sm-4">
-          <h1>Date: 11/13/19</h1>
+          <h1>Date: <%= medicalAnalysis.date%></h1>
         </div>
         <div class="col-sm-4">
-          <h1>Farrier: Steve</h1>
+          <h1>Farrier: <%= medicalAnalysis.farrier %></h1>
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-12">
           <h4>Gait Analysis</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.gait%></p>
+
           <h4>Lameness</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.lameness %></p>
+
           <h4>Blemishes</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.blemishes %></p>
+
           <h4>Laminitus</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.laminitus%></p>
         </div>
       </div>
       </div>
