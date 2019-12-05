@@ -16,6 +16,9 @@
         <div class="col-sm-4">
           <img alt="Horse" class="img-fluid float-left" src="../public/images/horse_profile.png" />
         </div>
+
+        <% var horse = {name:"Secretariat", gender:"Male", temperament:"Docile", discipline:"Hunt Seat", location:"9876 Countysun Road, Creek Town, CA", owner:"Meadow Stables", vet:"John Buck"}%>
+
         <div class="col-sm-4">
           <table class="table table-borderless">
             <thead>
@@ -24,31 +27,31 @@
             <tbody>
               <tr>
                 <th scope="row">Name:</th>
-                <td>Secretariat</td>
+                <td><%= horse.name %></td>
               </tr>
               <tr>
                 <th scope="row">Gender</th>
-                <td>Stallion</td>
+                <td><%= horse.gender %></td>
               </tr>
               <tr>
                 <th scope="row">Temperament</th>
-                <td>Docile</td>
+                <td><%= horse.temperament %></td>
               </tr>
               <tr>
                 <th scope="row">Discipline</th>
-                <td>Hunt Seat</td>
+                <td><%= horse.discipline%></td>
               </tr>
               <tr>
                 <th scope="row">Location</th>
-                <td>9876 Countysun Road, Creek Town, CA</td>
+                <td><%= horse.location %></td>
               </tr>
               <tr>
                 <th scope="row">Owner</th>
-                <td>Meadow Stables</td>
+                <td><%= horse.owner %></td>
               </tr>
               <tr>
                 <th scope="row">Vet</th>
-                <td>John Buck</td>
+                <td><%= horse.vet %></td>
               </tr>
             </tbody>
           </table>
