@@ -1,3 +1,5 @@
+'use strict'
+
 require('dotenv').config()
 const config = {
   username: process.env.MONGO_USER,
