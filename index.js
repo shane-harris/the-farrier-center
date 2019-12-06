@@ -49,7 +49,7 @@ app.get('/horse', (req, res) => {
   res.render('horse.ejs')
 })
 
-app.get('/', (req, res) => {
+app.get('/queue', (req, res) => {
   res.render('queue.ejs')
 })
 
