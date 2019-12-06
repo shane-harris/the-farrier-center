@@ -32,9 +32,6 @@
   background: #abb1b8;
 }
 
-.navbar.bg-alt {
-}
-
 #site-footer {
   position: page;
   bottom: 0;
@@ -48,4 +45,19 @@
 #site-footer {
   position: page;
   bottom: 0;
+}
+
+.hprofile {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.shoeing {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 2px;
 }
