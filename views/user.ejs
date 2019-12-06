@@ -1,62 +1,98 @@
+<!doctype html>
+<html lang="en">
+
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/public/stylesheets/horses.css">
-
 </head>
-
 
 <body class="">
     <%- include('partials/header-nav') %>
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-12"><a class="btn w-100 text-body btn-link text-left" href="#"><i
-                                class="fa fa-user fa-fw pull-left"></i>Profile</a></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12"><a class="btn w-100 btn-link text-body text-left" href="#"><i
-                                class="fa fa-cog fa-fw pull-left"></i>&nbsp;Account Settings<br></a></div>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-12">
-                        <form class="form-inline">
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="inputmailinline" placeholder="First Name"
-                                    readonly="readonly"> </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control mx-2" id="inputpasswordinline"
-                                    placeholder="Last Name" readonly="readonly"> </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <form class="form-inline">
-                            <div class="input-group">
-                                <input type="email" class="form-control" placeholder="e-mail" readonly="readonly">
+    <div class="py-5">
+        <div class="container" id="page-container">
+            <div class="row w-75">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item"> <a href="" class="active nav-link" data-toggle="pill"
+                                data-target="#tabone"><i class="fa fa-user">User</i></a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill" data-target="#tabtwo"><i
+                                    class="fa fa-cog">Account Settings</i></a> </li>
+                    </ul>
+                    <div class="tab-content mt-2">
+                        <div class="tab-pane fade show active" id="tabone" role="tabpanel">
+                            <div class="col-md-12">
+                                <div class="row my-2 mt-4">
+                                    <div class="">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="inputmailinline"
+                                                    placeholder="First Name" readonly="readonly"> </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control mx-2" id="inputpasswordinline"
+                                                    placeholder="Last Name" readonly="readonly"> </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row my-2 mt-4">
+                                    <div class="">
+                                        <form class="form-inline">
+                                            <div class="input-group">
+                                                <input type="email" class="form-control" placeholder="e-mail">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6"><a class="btn btn-primary" href="#">Submit</a></div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="">
+                                        <form class="form-inline">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="Phone #">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6"><a class="btn btn-primary" href="#"
+                                            contenteditable="true">Submit</a></div>
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <form class="form-inline">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Phone #" readonly="readonly">
+                        </div>
+                        <div class="tab-pane fade" id="tabtwo" role="tabpanel">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5 class="">Change Password</h5>
+                                    </div>
+                                </div>
+                                <form id="c_form-h" class="mt-1">
+                                    <div class="form-group row"> <label for="inputmailh"
+                                            class="col-2 col-form-label">Current Password</label>
+                                        <div class="col-10">
+                                            <input type="password" class="form-control" id="inputmailh"> </div>
+                                    </div>
+                                    <div class="form-group row"> <label for="inputpasswordh"
+                                            class="col-2 col-form-label">New Password</label>
+                                        <div class="col-10">
+                                            <input type="password" class="form-control" id="inputpasswordh"> </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-2">Confirm
+                                            Password</label>
+                                        <div class="col-10"><input type="password" class="form-control"
+                                                id="inlineFormInput"></div>
+                                    </div><button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <%- include('partials/footer') %>
 </body>
