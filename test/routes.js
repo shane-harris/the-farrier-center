@@ -55,10 +55,10 @@ describe('Routes', () => {
     })
   })
 
-  describe('GET /queue', () => {
+  describe('GET /', () => {
     let req
     before(() => {
-      return (req = chai.request(app).get('/queue'))
+      return (req = chai.request(app).get('/'))
     })
 
     it('should get the queue page', () => {
