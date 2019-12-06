@@ -27,7 +27,6 @@ mongoose.connection.on('error', err => {
 })
 
 app.use('/public', express.static('public'))
-
 /*
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -50,7 +49,7 @@ app.get('/horse', (req, res) => {
   res.render('horse.ejs')
 })
 
-app.get('/queue', (req, res) => {
+app.get('/', (req, res) => {
   res.render('queue.ejs')
 })
 
