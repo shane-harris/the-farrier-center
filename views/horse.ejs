@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Horse Profile View</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/public/stylesheets/horses.css" />
+
+    <%- include('partials/head') %>
   </head>
 
   <body>
   <%- include('partials/header-nav') %>
-    <!-- Horse Summary
-     Style color needs to swapped for a css version -->
-    <div class="container" style="background-color:powderblue;">
+
+  <div id="page-container" class="container-fluid">
+    <!-- Horse Summary-->
+    <div class="container hprofile">
       <div class="row">
         <div class="col-sm-4">
           <img alt="Horse" class="img-fluid float-left" src="../public/images/horse_profile.png" />
         </div>
+
+        <% var horse = {name:"Secretariat", gender:"Male", temperament:"Docile", discipline:"Hunt Seat", location:"9876 Countysun Road, Creek Town, CA", owner:"Meadow Stables", vet:"John Buck"}%>
+
         <div class="col-sm-4">
           <table class="table table-borderless">
             <thead>
@@ -35,31 +27,31 @@
             <tbody>
               <tr>
                 <th scope="row">Name:</th>
-                <td>Secretariat</td>
+                <td><%= horse.name %></td>
               </tr>
               <tr>
                 <th scope="row">Gender</th>
-                <td>Stallion</td>
+                <td><%= horse.gender %></td>
               </tr>
               <tr>
                 <th scope="row">Temperament</th>
-                <td>Docile</td>
+                <td><%= horse.temperament %></td>
               </tr>
               <tr>
                 <th scope="row">Discipline</th>
-                <td>Hunt Seat</td>
+                <td><%= horse.discipline%></td>
               </tr>
               <tr>
                 <th scope="row">Location</th>
-                <td>9876 Countysun Road, Creek Town, CA</td>
+                <td><%= horse.location %></td>
               </tr>
               <tr>
                 <th scope="row">Owner</th>
-                <td>Meadow Stables</td>
+                <td><%= horse.owner %></td>
               </tr>
               <tr>
                 <th scope="row">Vet</th>
-                <td>John Buck</td>
+                <td><%= horse.vet %></td>
               </tr>
             </tbody>
           </table>
@@ -74,190 +66,96 @@
       </div>
     </div>
 
-    <p></p>
 
     <!–– Horse Medical Analysis ––>
-    <div class="container" style="background-color:powderblue;">
+
+    <% var medicalAnalysis = {date: "11/13/19", farrier: "Steve", gait: "Lorem Ipsum", lameness: "Lorem Ipsum", blemishes: "Lorem Ipsum", laminitus: "Lorem Ipsum"} %>
+
+    <div class="container hprofile">
+      <div class="row justify-content-center">
+        <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button" aria-expanded="false" aria-controls="medical">
+          Show Medical Analysis
+        </a>
+      </div>
+
+      <div class="collapse" id="medical">
       <div class="row">
         <div class="col-sm-4">
           <h1>Medical Analysis</h1>
         </div>
         <div class="col-sm-4">
-          <h1>Date: 11/13/19</h1>
+          <h1>Date: <%= medicalAnalysis.date%></h1>
         </div>
         <div class="col-sm-4">
-          <h1>Farrier: Steve</h1>
+          <h1>Farrier: <%= medicalAnalysis.farrier %></h1>
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm-12">
           <h4>Gait Analysis</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.gait%></p>
+
           <h4>Lameness</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.lameness %></p>
+
           <h4>Blemishes</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.blemishes %></p>
+
           <h4>Laminitus</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book. It has
-            survived not only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-          </p>
+          <p><%= medicalAnalysis.laminitus%></p>
         </div>
       </div>
+      </div>
     </div>
-
-    <p></p>
 
     <!–– Horse Most Recent Shoeing ––>
-    <div class="container" style="background-color:powderblue;">
-      <div class="row">
-        <div class="col-sm-4">
-          <h1>Recent Shoeing</h1>
-        </div>
-        <div class="col-sm-4">
-          <h1>Date: 11/13/19</h1>
-        </div>
-        <div class="col-sm-4">
-          <h1>Farrier: Steve</h1>
-        </div>
+    <div class="container hprofile" >
+      <div class="row justify-content-center">
+        <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button" aria-expanded="false" aria-controls="medical">
+          Show Medical Analysis
+        </a>
       </div>
-      <!-- Shoeing Data -->
-      <div class="row">
-        <div class="col-sm-6" style="background-color:navajowhite;">
-          <h1>Front Left</h1>
-          <h2>A/P</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.7</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-          <h2>M/L</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.2</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
+      <div id="shoeing" class="collapse">
+        <div class="row">
+          <div class="col-sm-4">
+            <h1>Recent Shoeing</h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Date: 11/13/19</h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Farrier: Steve</h1>
+          </div>
         </div>
-        <div class="col-sm-6">
-          <h1>Front Right</h1>
-          <h2>A/P</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.7</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-          <h2>M/L</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.2</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-        </div>
-      </div>
 
-      <div class="row">
-        <div class="col-sm-6">
-          <h1>Back Left</h1>
-          <h2>A/P</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.7</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-          <h2>M/L</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.2</h3>
-          <p>Type: Fuller</p>
-          <p>Size:7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-        </div>
-        <div class="col-sm-6" style="background-color:navajowhite;">
-          <h1>Back Right</h1>
-          <h2>A/P</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.7</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
-          <h2>M/L</h2>
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/hoof.jpg" />
-          <h3>Measurements: 6.2</h3>
-          <p>Type: Fuller</p>
-          <p>Size: 7</p>
-          <h3>Notes:</h3>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type specimen book.
-          </p>
+        <!-- Shoeing Data -->
+        <div class="row">
+          <div class="col-sm-6 shoeing">
+              <% var data = {hoof: "Front Left", hoofImage1: "../public/images/hoof.jpg", hoofImage2: "../public/images/hoof.jpg", shoeType: "Fuller", shoeSize: 7, notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."} %>
+              <%- include('partials/shoeing', data ) %>
+          </div>
+
+            <div class="col-sm-6 shoeing">
+              <% data.hoof = "Front Right"%>
+              <%- include('partials/shoeing', data ) %>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col-sm-6 shoeing">
+            <% data.hoof = "Back Left"%>
+            <%- include('partials/shoeing', data ) %>
+          </div>
+
+          <div class="col-sm-6 shoeing">
+            <% data.hoof = "Back Right"%>
+            <%- include('partials/shoeing', data ) %>
+          </div>
         </div>
       </div>
     </div>
+  </div>
   <%- include('partials/footer') %>
   </body>
 </html>
