@@ -55,6 +55,23 @@ describe('Routes', () => {
     })
   })
 
+  describe('GET /', () => {
+    let req
+    before(() => {
+      return (req = chai.request(app).get('/'))
+    })
+
+    it('should get the queue page', () => {
+      return req.then(res => res.should.have.status(200))
+    })
+
+    describe('The queue page', () => {
+      it('should render HTML', () => {
+        return req.then(res => res.should.be.html)
+      })
+    })
+  })
+
   describe('GET /user', () => {
     let req
     before(() => {
@@ -66,6 +83,23 @@ describe('Routes', () => {
     })
 
     describe('The user page', () => {
+      it('should render HTML', () => {
+        return req.then(res => res.should.be.html)
+      })
+    })
+  })
+
+  describe('GET /queue', () => {
+    let req
+    before(() => {
+      return (req = chai.request(app).get('/queue'))
+    })
+
+    it('should get the queue page', () => {
+      return req.then(res => res.should.have.status(200))
+    })
+
+    describe('The queue page', () => {
       it('should render HTML', () => {
         return req.then(res => res.should.be.html)
       })
