@@ -9,7 +9,7 @@
   <body>
   <%- include('partials/header-nav') %>
 
-  <div class="container-fluid">
+  <div id="page-container" class="container-fluid">
     <!-- Horse Summary-->
     <div class="container hprofile">
       <div class="row">
@@ -111,40 +111,47 @@
 
     <!–– Horse Most Recent Shoeing ––>
     <div class="container hprofile" >
-      <div class="row">
-        <div class="col-sm-4">
-          <h1>Recent Shoeing</h1>
-        </div>
-        <div class="col-sm-4">
-          <h1>Date: 11/13/19</h1>
-        </div>
-        <div class="col-sm-4">
-          <h1>Farrier: Steve</h1>
-        </div>
+      <div class="row justify-content-center">
+        <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button" aria-expanded="false" aria-controls="medical">
+          Show Medical Analysis
+        </a>
       </div>
-
-      <!-- Shoeing Data -->
-      <div class="row">
-        <div class="col-sm-6 shoeing">
-            <% var data = {hoof: "Front Left", hoofImage1: "../public/images/hoof.jpg", hoofImage2: "../public/images/hoof.jpg", shoeType: "Fuller", shoeSize: 7, notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."} %>
-            <%- include('partials/shoeing', data ) %>
-        </div>
-
-          <div class="col-sm-6 shoeing">
-            <% data.hoof = "Front Right"%>
-            <%- include('partials/shoeing', data ) %>
+      <div id="shoeing" class="collapse">
+        <div class="row">
+          <div class="col-sm-4">
+            <h1>Recent Shoeing</h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Date: 11/13/19</h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Farrier: Steve</h1>
           </div>
         </div>
 
-      <div class="row">
-        <div class="col-sm-6 shoeing">
-          <% data.hoof = "Back Left"%>
-          <%- include('partials/shoeing', data ) %>
-        </div>
+        <!-- Shoeing Data -->
+        <div class="row">
+          <div class="col-sm-6 shoeing">
+              <% var data = {hoof: "Front Left", hoofImage1: "../public/images/hoof.jpg", hoofImage2: "../public/images/hoof.jpg", shoeType: "Fuller", shoeSize: 7, notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."} %>
+              <%- include('partials/shoeing', data ) %>
+          </div>
 
-        <div class="col-sm-6 shoeing">
-          <% data.hoof = "Back Right"%>
-          <%- include('partials/shoeing', data ) %>
+            <div class="col-sm-6 shoeing">
+              <% data.hoof = "Front Right"%>
+              <%- include('partials/shoeing', data ) %>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col-sm-6 shoeing">
+            <% data.hoof = "Back Left"%>
+            <%- include('partials/shoeing', data ) %>
+          </div>
+
+          <div class="col-sm-6 shoeing">
+            <% data.hoof = "Back Right"%>
+            <%- include('partials/shoeing', data ) %>
+          </div>
         </div>
       </div>
     </div>
