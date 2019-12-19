@@ -22,16 +22,16 @@ describe('Routes', () => {
     })
   })
 
-  describe('GET /horse', () => {
+  describe('GET /horse/1', () => {
     let req
     before(() => {
-      return (req = chai.request(app).get('/horse'))
+      return (req = chai.request(app).get('/horse/1'))
     })
 
     it('should get the horse page', () => {
       return req.then(res => res.should.have.status(200))
     })
-    describe('The horses page', () => {
+    describe('The horse page', () => {
       it('should render HTML', () => {
         return req.then(res => res.should.be.html)
       })

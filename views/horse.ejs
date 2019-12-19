@@ -10,19 +10,6 @@
         <div class="col-sm-4">
           <img alt="Horse" class="img-fluid float-left" src="../public/images/horse_profile.png" />
         </div>
-
-        <%
-          const horse = {
-            name:"Secretariat",
-            gender:"Male",
-            temperament:"Docile",
-            discipline:"Hunt Seat",
-            location:"9876 Countysun Road, Creek Town, CA",
-            owner:"Meadow Stables",
-            vet:"John Buck"
-          }
-        %>
-
         <div class="col-sm-4">
           <table class="table table-borderless">
             <thead>
@@ -71,17 +58,6 @@
     </div>
     <%# Horse Medical Analysis %>
 
-    <%
-      const medicalAnalysis = {
-        date: "11/13/19",
-        farrier: "Steve",
-        gait: "Lorem Ipsum",
-        lameness: "Lorem Ipsum",
-        blemishes: "Lorem Ipsum",
-        laminitus: "Lorem Ipsum"
-      }
-    %>
-
     <div class="container hprofile">
       <div class="row justify-content-center">
         <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button"
@@ -96,26 +72,27 @@
             <h1>Medical Analysis</h1>
           </div>
           <div class="col-sm-4">
-            <h1>Date: <%= medicalAnalysis.date%></h1>
+            <% date = horse.medicalAnalysis.date %>
+            <h1>Date: <%= `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` %></h1>
           </div>
           <div class="col-sm-4">
-            <h1>Farrier: <%= medicalAnalysis.farrier %></h1>
+            <h1>Farrier: <%= horse.medicalAnalysis.farrier %></h1>
           </div>
         </div>
 
         <div class="row">
           <div class="col-sm-12">
             <h4>Gait Analysis</h4>
-            <p><%= medicalAnalysis.gait %></p>
+            <p><%= horse.medicalAnalysis.gait %></p>
 
             <h4>Lameness</h4>
-            <p><%= medicalAnalysis.lameness %></p>
+            <p><%= horse.medicalAnalysis.lameness %></p>
 
             <h4>Blemishes</h4>
-            <p><%= medicalAnalysis.blemishes %></p>
+            <p><%= horse.medicalAnalysis.blemishes %></p>
 
             <h4>Laminitus</h4>
-            <p><%= medicalAnalysis.laminitus %></p>
+            <p><%= horse.medicalAnalysis.laminitus %></p>
           </div>
         </div>
       </div>
@@ -145,34 +122,25 @@
         <%# Shoeing Data %>
         <div class="row">
           <div class="col-sm-6 shoeing">
-            <%
-              const data = {
-                hoof: "Front Left",
-                hoofImage1: "../public/images/hoof.jpg",
-                hoofImage2: "../public/images/hoof.jpg",
-                shoeType: "Fuller",
-                shoeSize: 7,
-                notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-              }
-            %>
-            <%- include('partials/shoeing', data) %>
+            <% horse.data.hoof = "Front Left" %>
+            <%- include('partials/shoeing', horse.data) %>
           </div>
 
           <div class="col-sm-6 shoeing">
-            <% data.hoof = "Front Right"%>
-            <%- include('partials/shoeing', data) %>
+            <% horse.data.hoof = "Front Right" %>
+            <%- include('partials/shoeing', horse.data) %>
           </div>
         </div>
 
         <div class="row">
           <div class="col-sm-6 shoeing">
-            <% data.hoof = "Back Left" %>
-            <%- include('partials/shoeing', data) %>
+            <% horse.data.hoof = "Back Left" %>
+            <%- include('partials/shoeing', horse.data) %>
           </div>
 
           <div class="col-sm-6 shoeing">
-            <% data.hoof = "Back Right"%>
-            <%- include('partials/shoeing', data) %>
+            <% horse.data.hoof = "Back Right" %>
+            <%- include('partials/shoeing', horse.data) %>
           </div>
         </div>
       </div>

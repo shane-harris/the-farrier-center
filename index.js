@@ -15,12 +15,8 @@ let encoded_connection_url =
 
 mongoose
   .connect(encoded_connection_url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to Database!')
-  })
-  .catch(err => {
-    console.log(err)
-  })
+  .then(() => console.log('Connected to Database!'))
+  .catch(console.error)
 
 mongoose.connection.on('error', err => {
   console.log(err)
@@ -36,8 +32,14 @@ app.get('/horses', (req, res) => {
   res.render('horses.ejs')
 })
 
-app.get('/horse', (req, res) => {
-  res.render('horse.ejs')
+app.get('/horse/:id', (req, res) => {
+  const Horse = require('./models/horse')
+
+  Horse.findOne({ id: req.params.id })
+    .then(horse => {
+      res.render('horse.ejs', { horse })
+    })
+    .catch(console.error)
 })
 
 app.get('/user', (req, res) => {
