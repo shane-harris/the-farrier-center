@@ -11,60 +11,9 @@
 
     <div class="container mt-3">
       <div class="row">
-        <%# Each col-md-3 will take up 1/4 of a row, adding more here will result in new tiles
-          being created, filling rows to 4 before starting a new row. This is where we will
-          dynamically insert things when the time comes. -Dimitrios P %>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
-        <div class="col-md-3">
-          <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-            <div class="demo-content" data-toggle="tooltip">Demo - Horse</div>
-          </span>
-        </div>
+        <% for (horse of horses) { %>
+        <%-  include('partials/horse-profile', horse) %>
+        <% } %>
       </div>
     </div>
   </div>

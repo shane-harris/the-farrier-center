@@ -29,16 +29,20 @@ app.get('/', (req, res) => {
 })
 
 app.get('/horses', (req, res) => {
-  res.render('horses.ejs')
+  const Horse = require('./models/horse')
+
+  Horse.find()
+    // sort by id (ascending)
+    .sort({ id: 1 })
+    .then(horses => res.render('horses.ejs', { horses }))
+    .catch(console.error)
 })
 
 app.get('/horse/:id', (req, res) => {
   const Horse = require('./models/horse')
 
   Horse.findOne({ id: req.params.id })
-    .then(horse => {
-      res.render('horse.ejs', { horse })
-    })
+    .then(horse => res.render('horse.ejs', { horse }))
     .catch(console.error)
 })
 
