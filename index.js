@@ -27,11 +27,6 @@ mongoose.connection.on('error', err => {
 })
 
 app.use('/public', express.static('public'))
-/*
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-*/
 
 app.get('/', (req, res) => {
   res.render('queue.ejs')
@@ -39,10 +34,6 @@ app.get('/', (req, res) => {
 
 app.get('/horses', (req, res) => {
   res.render('horses.ejs')
-})
-
-app.get('/password', (req, res) => {
-  res.render('password.ejs')
 })
 
 app.get('/horse', (req, res) => {
