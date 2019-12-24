@@ -38,23 +38,6 @@ describe('Routes', () => {
     })
   })
 
-  describe('GET /password', () => {
-    let req
-    before(() => {
-      return (req = chai.request(app).get('/password'))
-    })
-
-    it('should get the password page', () => {
-      return req.then(res => res.should.have.status(200))
-    })
-
-    describe('The password page', () => {
-      it('should render HTML', () => {
-        return req.then(res => res.should.be.html)
-      })
-    })
-  })
-
   describe('GET /', () => {
     let req
     before(() => {
