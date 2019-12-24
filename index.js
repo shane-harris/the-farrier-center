@@ -49,7 +49,7 @@ app.get('/user', (req, res) => {
 
 app.get('/queue', (req, res) => {
   Horse.find()
-    // sort by lastVisit (descending)
+    // sort by lastVisit (ascending)
     .sort({ lastVisit: 1 })
     .then(horses => res.render('queue.ejs', { horses }))
     .catch(console.error)
