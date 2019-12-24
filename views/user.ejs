@@ -1,94 +1,83 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-
-    <title>User Profile</title>
-
-    <%- include('partials/head') %>
-
-</head>
+<%- include('partials/head', { title: 'User Profile' }) %>
 
 <body class="">
-    <%- include('partials/header-nav') %>
-    <div class="container" id="page-container">
-        <div class="row w-75">
+  <%- include('partials/header-nav') %>
+  <div class="container" id="page-container">
+    <div class="row w-75">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs">
+          <li class="nav-item"> <a href="" class="active nav-link" data-toggle="pill"
+              data-target="#tabone"><i class="fa fa-user">User</i></a> </li>
+          <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill"
+              data-target="#tabtwo"><i class="fa fa-cog">Account Settings</i></a> </li>
+        </ul>
+        <div class="tab-content mt-2">
+          <div class="tab-pane fade show active" id="tabone" role="tabpanel">
             <div class="col-md-12">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item"> <a href="" class="active nav-link" data-toggle="pill" data-target="#tabone"><i
-                                class="fa fa-user">User</i></a> </li>
-                    <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill" data-target="#tabtwo"><i
-                                class="fa fa-cog">Account Settings</i></a> </li>
-                </ul>
-                <div class="tab-content mt-2">
-                    <div class="tab-pane fade show active" id="tabone" role="tabpanel">
-                        <div class="col-md-12">
-                            <div class="row my-2 mt-4">
-                                <div class="">
-                                    <form class="form-inline">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="inputmailinline"
-                                                placeholder='first name' readonly="readonly"> </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control mx-2" id="inputpasswordinline"
-                                                placeholder='last name' readonly="readonly"> </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="row my-2 mt-4">
-                                <div class="">
-                                    <form class="form-inline">
-                                        <div class="input-group">
-                                            <input type="email" class="form-control" placeholder="e-mail">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-6"><a class="btn btn-primary" href="#">Update</a></div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="">
-                                    <form class="form-inline">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Phone #">
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-6"><a class="btn btn-primary" href="#"
-                                        contenteditable="true">Update</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="tabtwo" role="tabpanel">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h5 class="">Change Password</h5>
-                                </div>
-                            </div>
-                            <form id="c_form-h" class="mt-1">
-                                <div class="form-group row"> <label for="inputmailh"
-                                        class="col-2 col-form-label">Current Password</label>
-                                    <div class="col-10">
-                                        <input type="password" class="form-control" id="inputmailh"> </div>
-                                </div>
-                                <div class="form-group row"> <label for="inputpasswordh"
-                                        class="col-2 col-form-label">New Password</label>
-                                    <div class="col-10">
-                                        <input type="password" class="form-control" id="inputpasswordh"> </div>
-                                </div>
-                                <div class="form-group row"><label class="col-2">Confirm
-                                        Password</label>
-                                    <div class="col-10"><input type="password" class="form-control"
-                                            id="inlineFormInput"></div>
-                                </div><button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </div>
+              <div class="row my-2 mt-4">
+                <div class="">
+                  <form class="form-inline">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="inputmailinline"
+                        placeholder='first name' readonly="readonly"> </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control mx-2" id="inputpasswordinline"
+                        placeholder='last name' readonly="readonly"> </div>
+                  </form>
                 </div>
+              </div>
+              <div class="row my-2 mt-4">
+                <div class="">
+                  <form class="form-inline">
+                    <div class="input-group">
+                      <input type="email" class="form-control" placeholder="e-mail">
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-6"><a class="btn btn-primary" href="#">Update</a></div>
+              </div>
+              <div class="row mt-4">
+                <div class="">
+                  <form class="form-inline">
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Phone #">
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-6"><a class="btn btn-primary" href="#"
+                    contenteditable="true">Update</a></div>
+              </div>
             </div>
+          </div>
+          <div class="tab-pane fade" id="tabtwo" role="tabpanel">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <h5 class="">Change Password</h5>
+                </div>
+              </div>
+              <form id="c_form-h" class="mt-1">
+                <div class="form-group row"> <label for="inputmailh"
+                    class="col-2 col-form-label">Current Password</label>
+                  <div class="col-10">
+                    <input type="password" class="form-control" id="inputmailh"> </div>
+                </div>
+                <div class="form-group row"> <label for="inputpasswordh"
+                    class="col-2 col-form-label">New Password</label>
+                  <div class="col-10">
+                    <input type="password" class="form-control" id="inputpasswordh"> </div>
+                </div>
+                <div class="form-group row"><label class="col-2">Confirm
+                    Password</label>
+                  <div class="col-10"><input type="password" class="form-control"
+                      id="inlineFormInput"></div>
+                </div><button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <%- include('partials/footer') %>
+  </div>
+  <%- include('partials/footer') %>
 </body>
-
-</html>

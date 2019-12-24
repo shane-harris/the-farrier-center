@@ -1,23 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Horse Profile View</title>
+<%- include('partials/head', { title: 'Horse Profile' }) %>
 
-    <%- include('partials/head') %>
-  </head>
-
-  <body>
+<body>
   <%- include('partials/header-nav') %>
 
   <div id="page-container" class="container-fluid">
-    <!-- Horse Summary-->
+    <%# Horse Summary %>
     <div class="container hprofile">
       <div class="row">
         <div class="col-sm-4">
           <img alt="Horse" class="img-fluid float-left" src="../public/images/horse_profile.png" />
         </div>
 
-        <% var horse = {name:"Secretariat", gender:"Male", temperament:"Docile", discipline:"Hunt Seat", location:"9876 Countysun Road, Creek Town, CA", owner:"Meadow Stables", vet:"John Buck"}%>
+        <%
+          const horse = {
+            name:"Secretariat",
+            gender:"Male",
+            temperament:"Docile",
+            discipline:"Hunt Seat",
+            location:"9876 Countysun Road, Creek Town, CA",
+            owner:"Meadow Stables",
+            vet:"John Buck"
+          }
+        %>
 
         <div class="col-sm-4">
           <table class="table table-borderless">
@@ -65,54 +69,63 @@
         </div>
       </div>
     </div>
+    <%# Horse Medical Analysis %>
 
-
-    <!–– Horse Medical Analysis ––>
-
-    <% var medicalAnalysis = {date: "11/13/19", farrier: "Steve", gait: "Lorem Ipsum", lameness: "Lorem Ipsum", blemishes: "Lorem Ipsum", laminitus: "Lorem Ipsum"} %>
+    <%
+      const medicalAnalysis = {
+        date: "11/13/19",
+        farrier: "Steve",
+        gait: "Lorem Ipsum",
+        lameness: "Lorem Ipsum",
+        blemishes: "Lorem Ipsum",
+        laminitus: "Lorem Ipsum"
+      }
+    %>
 
     <div class="container hprofile">
       <div class="row justify-content-center">
-        <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button" aria-expanded="false" aria-controls="medical">
+        <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button"
+          aria-expanded="false" aria-controls="medical">
           Show Medical Analysis
         </a>
       </div>
 
       <div class="collapse" id="medical">
-      <div class="row">
-        <div class="col-sm-4">
-          <h1>Medical Analysis</h1>
+        <div class="row">
+          <div class="col-sm-4">
+            <h1>Medical Analysis</h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Date: <%= medicalAnalysis.date%></h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Farrier: <%= medicalAnalysis.farrier %></h1>
+          </div>
         </div>
-        <div class="col-sm-4">
-          <h1>Date: <%= medicalAnalysis.date%></h1>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h4>Gait Analysis</h4>
+            <p><%= medicalAnalysis.gait %></p>
+
+            <h4>Lameness</h4>
+            <p><%= medicalAnalysis.lameness %></p>
+
+            <h4>Blemishes</h4>
+            <p><%= medicalAnalysis.blemishes %></p>
+
+            <h4>Laminitus</h4>
+            <p><%= medicalAnalysis.laminitus %></p>
+          </div>
         </div>
-        <div class="col-sm-4">
-          <h1>Farrier: <%= medicalAnalysis.farrier %></h1>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-12">
-          <h4>Gait Analysis</h4>
-          <p><%= medicalAnalysis.gait%></p>
-
-          <h4>Lameness</h4>
-          <p><%= medicalAnalysis.lameness %></p>
-
-          <h4>Blemishes</h4>
-          <p><%= medicalAnalysis.blemishes %></p>
-
-          <h4>Laminitus</h4>
-          <p><%= medicalAnalysis.laminitus%></p>
-        </div>
-      </div>
       </div>
     </div>
 
-    <!–– Horse Most Recent Shoeing ––>
-    <div class="container hprofile" >
+    <%# Horse Most Recent Shoeing %>
+    <div class="container hprofile">
       <div class="row justify-content-center">
-        <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button" aria-expanded="false" aria-controls="medical">
+        <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
+          aria-expanded="false" aria-controls="medical">
           Show Medical Analysis
         </a>
       </div>
@@ -129,33 +142,41 @@
           </div>
         </div>
 
-        <!-- Shoeing Data -->
+        <%# Shoeing Data %>
         <div class="row">
           <div class="col-sm-6 shoeing">
-              <% var data = {hoof: "Front Left", hoofImage1: "../public/images/hoof.jpg", hoofImage2: "../public/images/hoof.jpg", shoeType: "Fuller", shoeSize: 7, notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."} %>
-              <%- include('partials/shoeing', data ) %>
+            <%
+              const data = {
+                hoof: "Front Left",
+                hoofImage1: "../public/images/hoof.jpg",
+                hoofImage2: "../public/images/hoof.jpg",
+                shoeType: "Fuller",
+                shoeSize: 7,
+                notes: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+              }
+            %>
+            <%- include('partials/shoeing', data) %>
           </div>
 
-            <div class="col-sm-6 shoeing">
-              <% data.hoof = "Front Right"%>
-              <%- include('partials/shoeing', data ) %>
-            </div>
+          <div class="col-sm-6 shoeing">
+            <% data.hoof = "Front Right"%>
+            <%- include('partials/shoeing', data) %>
           </div>
+        </div>
 
         <div class="row">
           <div class="col-sm-6 shoeing">
-            <% data.hoof = "Back Left"%>
-            <%- include('partials/shoeing', data ) %>
+            <% data.hoof = "Back Left" %>
+            <%- include('partials/shoeing', data) %>
           </div>
 
           <div class="col-sm-6 shoeing">
             <% data.hoof = "Back Right"%>
-            <%- include('partials/shoeing', data ) %>
+            <%- include('partials/shoeing', data) %>
           </div>
         </div>
       </div>
     </div>
   </div>
   <%- include('partials/footer') %>
-  </body>
-</html>
+</body>
