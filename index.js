@@ -15,29 +15,32 @@ let encoded_connection_url =
 
 mongoose
   .connect(encoded_connection_url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('Connected to Database!')
-  })
+  .then(() => console.log('Connected to Database!'))
   .catch(err => {
-    console.log(err)
+    console.error(err)
+    process.exit(1)
   })
 
-mongoose.connection.on('error', err => {
-  console.log(err)
-})
+const Horse = require('./models/horse')
 
 app.use('/public', express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('queue.ejs')
+  res.redirect('/queue')
 })
 
 app.get('/horses', (req, res) => {
-  res.render('horses.ejs')
+  Horse.find()
+    // sort by id (ascending)
+    .sort({ id: 1 })
+    .then(horses => res.render('horses.ejs', { horses }))
+    .catch(console.error)
 })
 
-app.get('/horse', (req, res) => {
-  res.render('horse.ejs')
+app.get('/horse/:id', (req, res) => {
+  Horse.findOne({ id: req.params.id })
+    .then(horse => res.render('horse.ejs', { horse }))
+    .catch(console.error)
 })
 
 app.get('/user', (req, res) => {
@@ -45,7 +48,11 @@ app.get('/user', (req, res) => {
 })
 
 app.get('/queue', (req, res) => {
-  res.render('queue.ejs')
+  Horse.find()
+    // sort by lastVisit (ascending)
+    .sort({ lastVisit: 1 })
+    .then(horses => res.render('queue.ejs', { horses }))
+    .catch(console.error)
 })
 
 app.listen(config.port, () => {

@@ -16,29 +16,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Buttercup</td>
-            <td>
-              <address>123 Main St,<br>Farmingtown, CA 99877</address>
-            </td>
-            <td>9/10/2019</td>
-            <td class="bg-danger"></td>
-          </tr>
-          <tr>
-            <td>Tequila Sunrise</td>
-            <td>
-              <address>1100 Sunset Ave,<br>Fair Oaks, CA 95728</address>
-            </td>
-            <td>10/10/2019</td>
-            <td class="bg-warning"></td>
-          </tr>
-          <tr>
-            <td>Juniper</td>
-            <td>
-              <address>915 Hubbard St,<br>Elk Grove, CA 97587</address>
-            </td>
-            <td>10/30/2019</td>
-          </tr>
+          <% for (horse of horses) { %>
+          <%-  include('partials/queue-item', { horse }) %>
+          <% } %>
         </tbody>
       </table>
     </div>

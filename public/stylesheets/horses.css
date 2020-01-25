@@ -8,11 +8,11 @@
   display: none;
 }
 
-.demo-content:hover {
+.horse-profile:hover {
   border: solid lightblue;
 }
 
-.demo-content {
+.horse-profile {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-top: 200px;
@@ -28,7 +28,7 @@
   background-repeat: no-repeat;
 }
 
-.demo-content.bg-alt {
+.horse-profile.bg-alt {
   background: #abb1b8;
 }
 
@@ -60,4 +60,11 @@
   border-radius: 10px;
   padding: 20px;
   margin-top: 2px;
+}
+
+.link-unstyled,
+.link-unstyled:link,
+.link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
 }
