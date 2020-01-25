@@ -20,9 +20,7 @@ To Interface with the database first you must create an account on the cluster, 
 4. Click on `ADD NEW USER`. 
 5. Create your account for the database, You should only need the read and write permissions. 
 
-```
-it is recommended not to use special characters.
-```
+**It is recommended not to use special characters.**
 
 ![Important Locations for cluster access](public/images/ClusterAccess.png)
 
@@ -38,7 +36,7 @@ Change `'username'` and `'password'` to your actual MongoDB username and passwor
 
 ## Configure Port
 
-In `.env`, You can specify the desired port number, e.g.:
+In `.env`, you can specify the desired port number, e.g.:
 
 ```
 PORT=80
