@@ -1,4 +1,6 @@
 # Project Bojack
+Project Bojack is an online application with intention of being used to track the condition of and 
+work done on horses by employees of `The Ferrier Center`.
 
 ## Installing Dependencies
 
@@ -12,13 +14,15 @@ again. (Some versions of `npm` support the `npm clean-install` command, which wi
 
 ## MongoDB Setup
 To Interface with the database first you must create an account on the cluster, to do this 
-1. Go to https://cloud.mongodb.com 
-2. Click on the cluster
-3. Under the Security header click on `Database Access`, 
+1. Go to https://cloud.mongodb.com and login.
+2. Click on the cluster.
+3. Under the Security header click on `Database Access`.
 4. Click on `ADD NEW USER`. 
 5. Create your account for the database, You should only need the read and write permissions. 
 
-`it is recommended not to use special characters.`
+```
+it is recommended not to use special characters.
+```
 
 ![Important Locations for cluster access](public/images/ClusterAccess.png)
 
