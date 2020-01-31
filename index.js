@@ -43,6 +43,10 @@ app.get('/horse/:id', (req, res) => {
     .catch(console.error)
 })
 
+app.get('/create_horse', (req, res) => {
+  res.render('new-horse.ejs')
+})
+
 app.get('/user', (req, res) => {
   res.render('user.ejs')
 })
