@@ -30,11 +30,11 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
-const Account = require('./models/account')
-passport.use(new LocalStrategy(Account.authenticate()))
+const User = require('./models/user')
+passport.use(new LocalStrategy(User.authenticate()))
 
-passport.serializeUser(Account.serializeUser())
-passport.deserializeUser(Account.deserializeUser())
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 let encoded_connection_url =
   'mongodb+srv://' +
@@ -91,7 +91,7 @@ app.get('/register', function(req, res) {
 
 app.post('/register', function(req, res, next) {
   console.log('registering user')
-  Account.register(new Account({ username: req.body.username }), req.body.password, function(err) {
+  User.register(new User({ username: req.body.username }), req.body.password, function(err) {
     if (err) {
       console.log('error while user register!', err)
       return next(err)
