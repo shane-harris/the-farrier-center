@@ -55,11 +55,13 @@ mongoose.set('useCreateIndex', true)
 
 const Horse = require('./models/horse')
 
-app.get('/', (req, res) => {
+const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
+
+app.get('/', loggedIn, (req, res) => {
   res.redirect('/queue')
 })
 
-app.get('/horses', (req, res) => {
+app.get('/horses', loggedIn, (req, res) => {
   Horse.find()
     // sort by id (ascending)
     .sort({ id: 1 })
@@ -67,17 +69,17 @@ app.get('/horses', (req, res) => {
     .catch(console.error)
 })
 
-app.get('/horse/:id', (req, res) => {
+app.get('/horse/:id', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .then(horse => res.render('horse.ejs', { horse }))
     .catch(console.error)
 })
 
-app.get('/user', (req, res) => {
+app.get('/user', loggedIn, (req, res) => {
   res.render('user.ejs')
 })
 
-app.get('/queue', (req, res) => {
+app.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
     .sort({ lastVisit: 1 })
@@ -85,13 +87,13 @@ app.get('/queue', (req, res) => {
     .catch(console.error)
 })
 
-app.get('/register', function(req, res) {
+app.get('/register', redirectIfLoggedIn, (req, res) => {
   res.render('register.ejs', {})
 })
 
-app.post('/register', function(req, res, next) {
+app.post('/register', (req, res, next) => {
   console.log('registering user')
-  User.register(new User({ username: req.body.username }), req.body.password, function(err) {
+  User.register(new User({ username: req.body.username }), req.body.password, err => {
     if (err) {
       console.log('error while user register!', err)
       return next(err)
@@ -103,25 +105,25 @@ app.post('/register', function(req, res, next) {
   })
 })
 
-app.get('/login', function(req, res) {
+app.get('/login', redirectIfLoggedIn, (req, res) => {
   res.render('login.ejs', { user: req.user, message: req.flash('error') })
 })
 
 app.post(
   '/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
+  (req, res) => {
     res.redirect('/')
   }
 )
 
-app.get('/logout', function(req, res) {
+app.get('/logout', (req, res) => {
   req.logout()
   res.redirect('/')
 })
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   const err = new Error('Not Found')
   err.status = 404
   next(err)
@@ -132,7 +134,7 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
+  app.use((err, req, res, next) => {
     res.status(err.status || 500)
     res.render('error.ejs', {
       message: err.message,
@@ -143,7 +145,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   res.status(err.status || 500)
   res.render('error.ejs', {
     message: err.message,
