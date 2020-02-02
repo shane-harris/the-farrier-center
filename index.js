@@ -53,74 +53,7 @@ mongoose
 
 mongoose.set('useCreateIndex', true)
 
-const Horse = require('./models/horse')
-
-const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
-
-app.get('/', loggedIn, (req, res) => {
-  res.redirect('/queue')
-})
-
-app.get('/horses', loggedIn, (req, res) => {
-  Horse.find()
-    // sort by id (ascending)
-    .sort({ id: 1 })
-    .then(horses => res.render('horses.ejs', { horses }))
-    .catch(console.error)
-})
-
-app.get('/horse/:id', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('horse.ejs', { horse }))
-    .catch(console.error)
-})
-
-app.get('/user', loggedIn, (req, res) => {
-  res.render('user.ejs')
-})
-
-app.get('/queue', loggedIn, (req, res) => {
-  Horse.find()
-    // sort by lastVisit (ascending)
-    .sort({ lastVisit: 1 })
-    .then(horses => res.render('queue.ejs', { horses }))
-    .catch(console.error)
-})
-
-app.get('/register', redirectIfLoggedIn, (req, res) => {
-  res.render('register.ejs', {})
-})
-
-app.post('/register', (req, res, next) => {
-  console.log('registering user')
-  User.register(new User({ username: req.body.username }), req.body.password, err => {
-    if (err) {
-      console.log('error while user register!', err)
-      return next(err)
-    }
-
-    console.log('user registered!')
-
-    res.redirect('/login')
-  })
-})
-
-app.get('/login', redirectIfLoggedIn, (req, res) => {
-  res.render('login.ejs', { user: req.user, message: req.flash('error') })
-})
-
-app.post(
-  '/login',
-  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  (req, res) => {
-    res.redirect('/')
-  }
-)
-
-app.get('/logout', (req, res) => {
-  req.logout()
-  res.redirect('/')
-})
+app.use(require('./routes'))
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -134,7 +67,7 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     res.status(err.status || 500)
     res.render('error.ejs', {
       message: err.message,
@@ -145,7 +78,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.status || 500)
   res.render('error.ejs', {
     message: err.message,

@@ -1,3 +1,5 @@
+'use strict'
+
 const loggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
