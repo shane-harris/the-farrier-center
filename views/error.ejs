@@ -1,0 +1,8 @@
+<head>
+  <%- include('partials/head', { title: 'Error' }) %>
+</head>
+
+<h2><%= message %></h1>
+  <h3><%= error.status %>
+</h2>
+<pre><%= error.stack %></pre>

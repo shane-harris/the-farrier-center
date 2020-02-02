@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('partials/head', { title: 'Login' }) %>
+</head>
+
+<body>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container"><a class="brand" href="/">Example</a>
+        <ul class="nav">
+          <li><a href="/register">Register</a></li>
+          <li><a href="/login">Log In</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Log In</h2>
+    <div class="alert alert-error"><%= message %></div>
+    <form action="/login" method="post">
+      <div><label>Username</label><input type="text" name="username" /></div>
+      <div><label>Password</label><input type="password" name="password" /></div>
+      <div><input type="submit" value="Log In" /></div>
+    </form>
+  </div>
+</body>
+
+</html>
