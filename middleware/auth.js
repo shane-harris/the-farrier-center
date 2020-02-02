@@ -1,19 +1,15 @@
-var User = require('../models/user')
-
-var middlewareObj = {}
-
-middlewareObj.loggedIn = function(req, res, next) {
+const loggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next()
   }
   res.redirect('/login')
 }
 
-middlewareObj.redirectIfLoggedIn = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.redirect('/')
+const redirectIfLoggedIn = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return next()
   }
-  return next()
+  res.redirect('/')
 }
 
-module.exports = middlewareObj
+module.exports = { loggedIn, redirectIfLoggedIn }
