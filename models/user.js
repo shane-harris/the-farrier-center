@@ -1,14 +1,10 @@
+'use strict'
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const user_schema = new Schema({
-  fname: String,
-  lname: String,
-  password: String,
-  email: String,
-  phone: String
-})
+const User = new Schema({})
 
-const user = mongoose.model('user', user_schema)
+User.plugin(require('passport-local-mongoose'))
 
-module.exports = user
+module.exports = mongoose.model('User', User)

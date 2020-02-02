@@ -2,9 +2,39 @@
 
 require('dotenv').config()
 const express = require('express')
+const path = require('path')
 const mongoose = require('mongoose')
-const app = express()
 const config = require('./config/config.js')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const session = require('cookie-session')
+const bodyParser = require('body-parser')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const flash = require('connect-flash')
+
+const app = express()
+
+app.use('/public', express.static('public'))
+
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'pug')
+
+app.use(logger('dev'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(cookieParser())
+app.use(session({ keys: ['secretkey1', 'secretkey2', '...'] }))
+app.use(flash())
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+const User = require('./models/user')
+passport.use(new LocalStrategy(User.authenticate()))
+
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 let encoded_connection_url =
   'mongodb+srv://' +
@@ -21,46 +51,39 @@ mongoose
     process.exit(1)
   })
 
-const Horse = require('./models/horse')
+mongoose.set('useCreateIndex', true)
 
-app.use('/public', express.static('public'))
+app.use(require('./routes'))
 
-app.get('/', (req, res) => {
-  res.redirect('/queue')
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error('Not Found')
+  err.status = 404
+  next(err)
 })
 
-app.get('/horses', (req, res) => {
-  Horse.find()
-    // sort by id (ascending)
-    .sort({ id: 1 })
-    .then(horses => res.render('horses.ejs', { horses }))
-    .catch(console.error)
-})
+// error handlers
 
-app.get('/horse/:id', (req, res) => {
-  Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('horse.ejs', { horse }))
-    .catch(console.error)
-})
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use((err, req, res) => {
+    res.status(err.status || 500)
+    res.render('error.ejs', {
+      message: err.message,
+      error: err
+    })
+  })
+}
 
-app.get('/new-horse', (req, res) => {
-  res.render('new-horse.ejs')
-})
-
-app.get('/new-medical-analysis', (req, res) => {
-  res.render('new-medical-analysis.ejs')
-})
-
-app.get('/user', (req, res) => {
-  res.render('user.ejs')
-})
-
-app.get('/queue', (req, res) => {
-  Horse.find()
-    // sort by lastVisit (ascending)
-    .sort({ lastVisit: 1 })
-    .then(horses => res.render('queue.ejs', { horses }))
-    .catch(console.error)
+// production error handler
+// no stacktraces leaked to user
+app.use((err, req, res) => {
+  res.status(err.status || 500)
+  res.render('error.ejs', {
+    message: err.message,
+    error: {}
+  })
 })
 
 app.listen(config.port, () => {
