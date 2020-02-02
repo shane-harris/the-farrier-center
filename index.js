@@ -47,6 +47,10 @@ app.get('/new-horse', (req, res) => {
   res.render('new-horse.ejs')
 })
 
+app.get('/new-medical-analysis', (req, res) => {
+  res.render('new-medical-analysis.ejs')
+})
+
 app.get('/user', (req, res) => {
   res.render('user.ejs')
 })
