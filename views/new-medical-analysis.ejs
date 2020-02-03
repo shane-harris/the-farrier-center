@@ -3,24 +3,25 @@
 <body>
 <%- include('partials/header-nav') %>
 <div id="page-container" class="container-fluid">
-    <div class="container-fluid hprofile">
-        <H1>New Medical Analysis for [Please come back and insert horse name here]</H1>
+    <div class="container hprofile">
+        <H1>New Medical Analysis for [Insert horse name here]</H1>
         <form>
             <div class="form-group">
                 <label for="gait">Gait Analysis</label>
-                <textarea class="form-control" id="gait" rows="4" placeholder="It walk nice."></textarea>
+                <textarea class="form-control" id="gait" name="gait" rows="4" placeholder="It walk nice."></textarea>
+
             </div>
             <div class="form-group">
                 <label for="lameness">Lameness Analysis</label>
-                <textarea class="form-control" id="lameness" rows="4" placeholder="This horse is a perfect example of the perfect horse"></textarea>
+                <textarea class="form-control" id="lameness" name="lameness" rows="4" placeholder="This horse is a perfect example of the perfect horse"></textarea>
             </div>
             <div class="form-group">
                 <label for="blemishes">Blemishes Analysis</label>
-                <textarea class="form-control" id="blemishes" rows="4" placeholder="That is the biggest mole I have EVER seen."></textarea>
+                <textarea class="form-control" id="blemishes" name="blemishes" rows="4" placeholder="That is the biggest mole I have EVER seen."></textarea>
             </div>
             <div class="form-group">
                 <label for="laminitus">Laminitus Analysis</label>
-                <textarea class="form-control" id="laminitus" rows="4" placeholder="None, Perfection."></textarea>
+                <textarea class="form-control" id="laminitus" name="laminitus" rows="4" placeholder="None, Perfection."></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
