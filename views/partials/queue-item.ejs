@@ -1,25 +1,32 @@
+<%
+  // Using the lastVisit date from the database, calculate the time since the last visit
+  // Set a color gradient based on the following criteria:
+  // lastVisit < 6 weeks (42 days) = green
+  // 6 weeks (42 days) < lastVisit < 8 weeks (56 days) = yellow
+  // lastVisit >= 8 weeks (56 days) = red
+
+  const date = horse.lastVisit
+  // Get the time (in milliseconds) from the last visit to now
+  const timeSinceLastVisit = new Date() - date
+  // There are 86,400,000 milliseconds in a day
+  const daysSinceLastVisit = Math.floor(timeSinceLastVisit / 86400000)
+
+  let bgColor;
+  // There are 42 days in 6 weeks
+  if (daysSinceLastVisit < 42) {
+    bgColor = 'bg-success'
+  } else if (daysSinceLastVisit < 70) {
+    bgColor = 'bg-warning'
+  } else {
+    bgColor = 'bg-danger'
+  }
+%>
+
 <tr>
   <td><%= horse.name %></td>
   <td>
     <address><%= horse.location %></address>
   </td>
-  <% const date = horse.lastVisit %>
   <td><%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %></td>
-  <%
-    // Get the time (in milliseconds) from the last visit to now
-    const timeSinceLastVisit = new Date() - date
-    // There are 86,400,000 milliseconds in a day
-    const daysSinceLastVisit = Math.floor(timeSinceLastVisit / 86400000)
-
-    let bgColor;
-    // There are 42 days in 6 weeks
-    if (daysSinceLastVisit < 42) {
-      bgColor = 'bg-success'
-    } else if (daysSinceLastVisit < 70) {
-      bgColor = 'bg-warning'
-    } else {
-      bgColor = 'bg-danger'
-    }
-  %>
   <td class="<%= bgColor %>"></td>
 </tr>
