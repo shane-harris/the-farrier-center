@@ -3,7 +3,20 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const User = new Schema({})
+const User = new Schema({
+  fname: String,
+  lname: String,
+  email: {
+    type: String,
+    Required: 'Email address cannot be left blank.',
+    index: { unique: true, dropDups: true }
+  },
+  role: {
+    type: String,
+    default: 'basic',
+    enum: ['user', 'admin']
+  }
+})
 
 User.plugin(require('passport-local-mongoose'))
 
