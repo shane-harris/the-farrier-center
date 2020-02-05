@@ -1,7 +1,6 @@
 'use strict'
 
 require('dotenv').config()
-const bodyParser = require('body-parser')
 const config = require('./config/config.js')
 const cookieParser = require('cookie-parser')
 const express = require('express')
@@ -20,8 +19,8 @@ app.use('/public', express.static('public'))
 app.set('views', path.join(__dirname, 'views'))
 
 app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(session({ keys: ['secretkey1', 'secretkey2', '...'] }))
 app.use(flash())
