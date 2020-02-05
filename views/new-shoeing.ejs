@@ -6,12 +6,14 @@
     <div class="container hprofile">
         <h1>New Shoeing for [Insert horsename here]</h1>
         <form action="">
-
+            <div class="row">
             <%- include('partials/form_shoeing', {hoof: 'Front Left'}) %>
             <%- include('partials/form_shoeing', {hoof: 'Front Right'}) %>
+            </div>
+            <div class="row">
             <%- include('partials/form_shoeing', {hoof: 'Back Left'}) %>
             <%- include('partials/form_shoeing', {hoof: 'Back Right'}) %>
-
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
