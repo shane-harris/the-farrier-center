@@ -33,6 +33,10 @@ router.get('/new-medical-analysis', (req, res) => {
   res.render('new-medical-analysis.ejs')
 })
 
+router.get('/new-shoeing', (req, res) => {
+  res.render('new-shoeing.ejs')
+})
+
 router.get('/user', loggedIn, (req, res) => {
   res.render('user.ejs')
 })

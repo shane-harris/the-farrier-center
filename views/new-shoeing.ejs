@@ -1,0 +1,20 @@
+<%- include('partials/head', { title: 'New Shoeing' }) %>
+
+<body>
+<%- include('partials/header-nav') %>
+<div id="page-container" class="container-fluid">
+    <div class="container hprofile">
+        <h1>New Shoeing for [Insert horsename here]</h1>
+        <form action="">
+
+            <%- include('partials/form_shoeing', {hoof: 'Front Left'}) %>
+            <%- include('partials/form_shoeing', {hoof: 'Front Right'}) %>
+            <%- include('partials/form_shoeing', {hoof: 'Back Left'}) %>
+            <%- include('partials/form_shoeing', {hoof: 'Back Right'}) %>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
