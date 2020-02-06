@@ -29,6 +29,13 @@ router.get('/new-horse', (req, res) => {
   res.render('new-horse.ejs')
 })
 
+router.post('/new-horse', (req, res) => {
+  console.log(req.body)
+  new Horse({
+    name: req.body.name
+  }).save(console.error)
+})
+
 router.get('/new-medical-analysis', (req, res) => {
   res.render('new-medical-analysis.ejs')
 })
