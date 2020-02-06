@@ -35,14 +35,16 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 mongoose
-  .connect(config.mongo_url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(config.mongo_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
   .then(() => console.log('Connected to Database!'))
   .catch(err => {
     console.error(err)
     process.exit(1)
   })
-
-mongoose.set('useCreateIndex', true)
 
 app.use(require('./routes'))
 
