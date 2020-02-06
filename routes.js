@@ -29,6 +29,10 @@ router.get('/user', loggedIn, (req, res) => {
   res.render('user.ejs')
 })
 
+router.get('/admin', loggedIn, isAdmin, (req, res) => {
+  res.render('admin.ejs')
+})
+
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
@@ -71,5 +75,14 @@ router.get('/logout', (req, res) => {
   req.logout()
   res.redirect('/')
 })
+
+function isAdmin(req, res, next) {
+  if (req.user.role === 'admin') {
+    return next();
+  }
+  else {
+    res.redirect('/queue')
+  }
+}
 
 module.exports = router
