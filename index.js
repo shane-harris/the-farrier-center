@@ -34,15 +34,8 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-let encoded_connection_url =
-  'mongodb+srv://' +
-  config.username +
-  ':' +
-  config.password +
-  '@farrier-dev-test-2pgqu.mongodb.net/test?retryWrites=true&w=majority'
-
 mongoose
-  .connect(encoded_connection_url, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(config.mongo_url, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to Database!'))
   .catch(err => {
     console.error(err)
