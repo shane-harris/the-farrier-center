@@ -1,28 +1,26 @@
 'use strict'
 
 require('dotenv').config()
-const express = require('express')
-const path = require('path')
-const mongoose = require('mongoose')
 const config = require('./config/config.js')
-const logger = require('morgan')
 const cookieParser = require('cookie-parser')
-const session = require('cookie-session')
-const bodyParser = require('body-parser')
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+const express = require('express')
 const flash = require('connect-flash')
+const LocalStrategy = require('passport-local').Strategy
+const logger = require('morgan')
+const mongoose = require('mongoose')
+const passport = require('passport')
+const path = require('path')
+const session = require('cookie-session')
 
 const app = express()
 
 app.use('/public', express.static('public'))
 
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'pug')
 
 app.use(logger('dev'))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(session({ keys: ['secretkey1', 'secretkey2', '...'] }))
 app.use(flash())
