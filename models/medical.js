@@ -3,7 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const medicalSchema = new Schema({
+const MedicalSchema = new Schema({
   horse_id: Number,
   date: Date,
   farrier: String,
@@ -13,6 +13,6 @@ const medicalSchema = new Schema({
   laminitus: String
 })
 
-const medical = mongoose.model('medical', medicalSchema)
+const Medical = mongoose.model('medical', MedicalSchema)
 
-module.exports = medical
+module.exports = Medical
