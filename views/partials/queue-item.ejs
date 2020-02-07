@@ -3,7 +3,7 @@
   <td>
     <address><%= horse.location %></address>
   </td>
-  <% const date = horse.lastVisit %>
+  <% const date = typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit %>
   <td><%= `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` %></td>
 
   <%
