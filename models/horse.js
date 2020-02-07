@@ -13,14 +13,7 @@ const HorseSchema = new Schema({
   owner: String,
   vet: String,
   lastVisit: Date,
-  medicalAnalysis: {
-    date: Date,
-    farrier: String,
-    gait: String,
-    lameness: String,
-    blemishes: String,
-    laminitus: String
-  },
+  history: String,
   data: {
     hoof: String,
     hoofImage1: String,
