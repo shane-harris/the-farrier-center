@@ -3,6 +3,8 @@
 <body>
   <%- include('partials/header-nav') %>
 
+  <% const medicalAnalysis = {}%>
+
   <div id="page-container" class="container-fluid">
     <%# Horse Summary %>
     <div class="container hprofile">
@@ -72,27 +74,27 @@
             <h1>Medical Analysis</h1>
           </div>
           <div class="col-sm-4">
-            <% const date = horse.medicalAnalysis.date %>
+            <% const date = new Date() %>
             <h1>Date: <%= `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` %></h1>
           </div>
           <div class="col-sm-4">
-            <h1>Farrier: <%= horse.medicalAnalysis.farrier %></h1>
+            <h1>Farrier: <%= medicalAnalysis.farrier %></h1>
           </div>
         </div>
 
         <div class="row">
           <div class="col-sm-12">
             <h4>Gait Analysis</h4>
-            <p><%= horse.medicalAnalysis.gait %></p>
+            <p><%= medicalAnalysis.gait %></p>
 
             <h4>Lameness</h4>
-            <p><%= horse.medicalAnalysis.lameness %></p>
+            <p><%= medicalAnalysis.lameness %></p>
 
             <h4>Blemishes</h4>
-            <p><%= horse.medicalAnalysis.blemishes %></p>
+            <p><%= medicalAnalysis.blemishes %></p>
 
             <h4>Laminitus</h4>
-            <p><%= horse.medicalAnalysis.laminitus %></p>
+            <p><%= medicalAnalysis.laminitus %></p>
           </div>
         </div>
       </div>
