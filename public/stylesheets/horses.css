@@ -68,3 +68,9 @@
   color: inherit;
   text-decoration: inherit;
 }
+
+.login-alert {
+  color: red;
+  margin: 0px;
+  padding: 0px;
+}
