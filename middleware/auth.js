@@ -14,4 +14,13 @@ const redirectIfLoggedIn = (req, res, next) => {
   res.redirect('/')
 }
 
-module.exports = { loggedIn, redirectIfLoggedIn }
+function isAdmin(req, res, next) {
+  if (req.user.role === 'admin') {
+    return next();
+  }
+  else {
+    res.redirect('/queue')
+  }
+}
+
+module.exports = { loggedIn, redirectIfLoggedIn, isAdmin }

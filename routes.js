@@ -5,7 +5,7 @@ const router = require('express').Router()
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
-const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
+const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
 
 router.get('/', loggedIn, (req, res) => {
   res.redirect('/queue')
@@ -75,14 +75,5 @@ router.get('/logout', (req, res) => {
   req.logout()
   res.redirect('/')
 })
-
-function isAdmin(req, res, next) {
-  if (req.user.role === 'admin') {
-    return next();
-  }
-  else {
-    res.redirect('/queue')
-  }
-}
 
 module.exports = router
