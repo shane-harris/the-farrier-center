@@ -2,6 +2,7 @@
 
 const passport = require('passport')
 const router = require('express').Router()
+const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
@@ -32,12 +33,35 @@ router.get('/new-horse', (req, res) => {
 router.post('/new-horse', (req, res) => {
   console.log(req.body)
   new Horse({
-    name: req.body.name
+    name: req.body.name,
+    gender: req.body.gender,
+    temperament: req.body.temperament,
+    discipline: req.body.discipline,
+    location: req.body.location,
+    owner: req.body.owner,
+    vet: req.body.vet,
+    lastVisit: new Date(),
+    history: req.body.history
   }).save(console.error)
+  res.redirect('/horses')
 })
 
 router.get('/new-medical-analysis', (req, res) => {
   res.render('new-medical-analysis.ejs')
+})
+
+router.post('/new-medical-analysis', (req, res) => {
+  console.log(req.body)
+  new Medical({
+    horse_id: 1000,
+    date: new Date(),
+    farrier: "Default Steve",
+    gait: req.body.gait,
+    lameness: req.body.lameness,
+    blemishes: req.body.blemishes,
+    laminitus: req.body.laminitus
+  }).save(console.error)
+  res.redirect('/horses')
 })
 
 router.get('/new-shoeing', (req, res) => {

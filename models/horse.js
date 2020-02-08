@@ -1,10 +1,11 @@
 'use strict'
 
 const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 const Schema = mongoose.Schema
 
 const HorseSchema = new Schema({
-  id: Number,
   name: String,
   gender: String,
   temperament: String,
@@ -23,6 +24,7 @@ const HorseSchema = new Schema({
     notes: String
   }
 })
+HorseSchema.plugin(AutoIncrement, {inc_field: 'id'})
 
 const Horse = mongoose.model('horses', HorseSchema)
 
