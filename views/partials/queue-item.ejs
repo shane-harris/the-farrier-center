@@ -42,7 +42,7 @@
     return normalizedDays
   }
 
-  const date = horse.lastVisit
+  const date = typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit
   // Get the time (in milliseconds) from the last visit to now
   const timeSinceLastVisit = new Date() - date
   // There are 86,400,000 milliseconds in a day
