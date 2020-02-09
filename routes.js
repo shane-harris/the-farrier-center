@@ -55,7 +55,7 @@ router.post('/new-medical-analysis', (req, res) => {
   new Medical({
     horse_id: 1000,
     date: new Date(),
-    farrier: "Default Steve",
+    farrier: 'Default Steve',
     gait: req.body.gait,
     lameness: req.body.lameness,
     blemishes: req.body.blemishes,

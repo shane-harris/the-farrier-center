@@ -1,7 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const Schema = mongoose.Schema
 
@@ -24,7 +24,7 @@ const HorseSchema = new Schema({
     notes: String
   }
 })
-HorseSchema.plugin(AutoIncrement, {inc_field: 'id'})
+HorseSchema.plugin(AutoIncrement, { inc_field: 'id' })
 
 const Horse = mongoose.model('horses', HorseSchema)
 

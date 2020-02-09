@@ -4,8 +4,8 @@
   "description": "An app for Farriers to manage their clients and build medical reports",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write './**/*.{js,css,json,md}'",
-    "pretest": "eslint --fix './**/*.js'",
+    "format": "prettier --write \"**/*.{js,css,json,md}\"",
+    "pretest": "eslint --fix \"**/*.js\"",
     "test": "PORT=9090 mocha --exit",
     "start": "node index.js"
   },
