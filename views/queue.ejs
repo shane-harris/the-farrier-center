@@ -5,17 +5,17 @@
   <div id="page-container">
     <h2 class="text-center my-3">Queue</h2>
     <div class="text-center">There are 3 horses in your queue</div>
-    <div class="container-sm rounded">
+    <div>
       <table style="border: 1px; border-radius: 15px;" class="table table-striped table-dark">
         <thead>
           <tr>
-            <th scope="col">Horse</th>
+            <th scope="col" style="padding-left: 17px">Horse</th>
             <th scope="col">Location</th>
-            <th scope="col">Last Visit</th>
+            <th scope="col" style="padding-right: 17px;">Last Visit</th>
             <!--<th scope="col"> </th>-->
           </tr>
         </thead>
-        <tbody style="color: black;">
+        <tbody>
           <% for (horse of horses) { %>
           <%-  include('partials/queue-item', { horse }) %>
           <% } %>

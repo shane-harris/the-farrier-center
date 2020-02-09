@@ -86,17 +86,19 @@
     greenVal = 0
     blueVal = 0
   }
+
+  // Get parent table header width/position for child cells
 %>
 
-<tr style="background: rgba(<%= redVal %>,<%= greenVal %>,<%= blueVal %>, .80);">
+<tr style="border-left: 10px solid rgba(<%= redVal %>, <%= greenVal %>, <%= blueVal %>, 60%);
+        border-right: 10px solid rgba(<%= redVal %>, <%= greenVal %>, <%= blueVal %>, 60%);">
   <td><%= horse.name %></td>
   <td>
     <address><%= horse.location %></address>
   </td>
   <td>
-    <!--<div style="border: 3px solid <%= borderColor %>;border-radius: 5px;">-->
-      <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
-    <!--</div>-->
+    <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
   </td>
 </tr>
+
 
