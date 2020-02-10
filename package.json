@@ -4,9 +4,9 @@
   "description": "An app for Farriers to manage their clients and build medical reports",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write './**/*.{js,css,json,md}'",
-    "pretest": "eslint --fix './**/*.js'",
-    "test": "PORT=9090 mocha --exit",
+    "format": "prettier --write \"**/*.{js,css,json,md}\"",
+    "pretest": "eslint --fix \"**/*.js\"",
+    "test": "cross-env PORT=9090 mocha --exit",
     "start": "node index.js"
   },
   "repository": {
@@ -19,6 +19,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.4",
     "cookie-session": "^1.4.0",
+    "cross-env": "^7.0.0",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.2",
     "express": "^4.17.1",
