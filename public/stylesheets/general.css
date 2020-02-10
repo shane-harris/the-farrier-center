@@ -59,3 +59,9 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.password-form {
+  width: 50%;
+  margin: auto;
+  min-width: 350px;
+}
