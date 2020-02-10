@@ -3,7 +3,7 @@
   <td>
     <address><%= horse.location %></address>
   </td>
-  <% const date = horse.lastVisit %>
+  <% const date = typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit %>
   <td><%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %></td>
   <%
     // Get the time (in milliseconds) from the last visit to now
