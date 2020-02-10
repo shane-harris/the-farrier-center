@@ -74,3 +74,32 @@
   margin: 0px;
   padding: 0px;
 }
+
+.button-login {
+  background-color: #008cba;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  width: 75%;
+  height: 35px;
+  transition-duration: 0.4s;
+}
+
+.button-login:hover {
+  background-color: white; /* Green */
+  color: #008cba;
+  border: 2px solid #008cba;
+  border-color: #008cba;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.login-links {
+  color: #008cba;
+}
+
+.login-links:hover {
+  font-weight: bold;
+}
