@@ -16,3 +16,46 @@
   color: inherit;
   text-decoration: inherit;
 }
+
+.login-alert {
+  color: red;
+  margin: 0px;
+  padding: 0px;
+}
+
+.button-login {
+  background-color: #008cba;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  width: 75%;
+  height: 35px;
+  transition-duration: 0.4s;
+}
+
+.button-login:hover {
+  background-color: white; /* Green */
+  color: #008cba;
+  border: 2px solid #008cba;
+  border-color: #008cba;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.login-links {
+  color: #008cba;
+}
+
+.login-links:hover {
+  font-weight: bold;
+}
+
+.form {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
