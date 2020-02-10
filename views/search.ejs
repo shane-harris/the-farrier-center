@@ -1,0 +1,21 @@
+<%- include('partials/head', { title: 'All Horses', css: 'horses' }) %>
+
+<body>
+    <%- include('partials/header-nav') %>
+    <div id="page-container">
+        <h2 class="text-center my-3">Search Results</h2>
+        <div class="text-center">
+            Every horse should be available below. Clicking on a box should navigate to that horse's
+            profile page.
+        </div>
+
+        <div class="container mt-3">
+            <div class="row">
+                <% for (horse of horses) { %>
+                <%-  include('partials/horse-profile', horse) %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
