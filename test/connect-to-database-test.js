@@ -42,7 +42,17 @@ describe('Database tests', function() {
         done()
       })
     })
+
+    it('Should remove the dummyHorse entry from database', function(done) {
+      Horse.deleteOne({ name: 'dummyHorse' }, (err, obj) => {
+        if (err) {
+          throw err
+        }
+        done()
+      })
+    })
   })
   //After all tests are finished close connection
-  //TODO
+  //I am not sure if this is the proper way to handle this
+  mongoose.connection.close()
 })
