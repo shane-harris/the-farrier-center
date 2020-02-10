@@ -1,0 +1,18 @@
+#page-container {
+  position: relative;
+  /*sets footer to bottom even if the page isn't full
+    the 92 is 100 minus the height of the footer*/
+  min-height: 92vh;
+}
+
+#site-footer {
+  position: page;
+  bottom: 0;
+}
+
+.link-unstyled,
+.link-unstyled:link,
+.link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
