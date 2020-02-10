@@ -1,5 +1,6 @@
 # Project Bojack
-Project Bojack is an online application with intention of being used to track the condition of and 
+
+Project Bojack is an online application with intention of being used to track the condition of and
 work done on horses by employees of `The Ferrier Center`.
 
 ## Installing Dependencies
@@ -13,18 +14,20 @@ something wrong with an installed package, you can simply delete that folder and
 again. (Some versions of `npm` support the `npm clean-install` command, which will do this for you).
 
 ## MongoDB Setup
-To Interface with the database first you must create an account on the cluster, to do this 
+
+To Interface with the database first you must create an account on the cluster, to do this
+
 1. Go to https://cloud.mongodb.com and login.
 2. Click on the cluster.
 3. Under the Security header click on `Database Access`.
-4. Click on `ADD NEW USER`. 
-5. Create your account for the database, You should only need the read and write permissions. 
+4. Click on `ADD NEW USER`.
+5. Create your account for the database, You should only need the read and write permissions.
 
 **It is recommended not to use special characters.**
 
 ![Important Locations for cluster access](public/images/ClusterAccess.png)
 
-To get your IDE to connect properly with the cluster you must either find or make a `.env` file in 
+To get your IDE to connect properly with the cluster you must either find or make a `.env` file in
 the root directory of the project and then configure the following two _environment variables_:
 
 ```
