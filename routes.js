@@ -21,18 +21,18 @@ router.get('/horses', loggedIn, (req, res) => {
   Horse.find()
     // sort by id (ascending)
     .sort({ id: 1 })
-    .then(horses => res.render('horses.ejs', { horses }))
+    .then(horses => res.render('horses.ejs', { username: req.user.username, horses: horses }))
     .catch(console.error)
 })
 
 router.get('/horse/:id', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('horse.ejs', { horse }))
+    .then(horse => res.render('horse.ejs', { username: req.user.username, horse: horse }))
     .catch(console.error)
 })
 
 router.get('/user', loggedIn, (req, res) => {
-  res.render('user.ejs')
+  res.render('user.ejs', { username: req.user.username })
 })
 
 router.get('/admin', loggedIn, isAdmin, (req, res) => {
@@ -63,7 +63,7 @@ router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
     .sort({ lastVisit: 1 })
-    .then(horses => res.render('queue.ejs', { horses }))
+    .then(horses => res.render('queue.ejs', { username: req.user.username, horses: horses }))
     .catch(console.error)
 })
 

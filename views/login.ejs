@@ -6,25 +6,35 @@
 </head>
 
 <body>
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-      <div class="container"><a class="brand" href="/">Example</a>
-        <ul class="nav">
-          <li><a href="/register">Register</a></li>
-          <li><a href="/login">Log In</a></li>
-        </ul>
+  <%- include('partials/header-nav', { loggedOut: true }) %>
+  <!--TODO correctly add spacing between hedder and login form
+   correct location of register link-->
+  <div style="min-height: 50px;"></div>
+  <div id="page-container" class="container-fluid password-form col-xl">
+    <div class="container form">
+      <div class="col-xs-1 text-center">
+        <h1>User Login</h1>
       </div>
+      <div class="alert alert-error login-alert"><%= message %></div>
+      <form action="/login" method="post">
+        <div class="form-group">
+          <label for="name">Username</label>
+          <input type="text" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+          <label for="name">Password</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        <div class="col-xs-1 text-center">
+          <button input type="submit" class="button-login" value="Log In">Login</button>
+        </div>
+        <div class="col-xs-1 text-center">
+          <a class="login-links" href="/register">Register</a>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="container">
-    <h2>Log In</h2>
-    <div class="alert alert-error"><%= message %></div>
-    <form action="/login" method="post">
-      <div><label>Username</label><input type="text" name="username" /></div>
-      <div><label>Password</label><input type="password" name="password" /></div>
-      <div><input type="submit" value="Log In" /></div>
-    </form>
-  </div>
+
 </body>
 
 </html>

@@ -1,25 +1,69 @@
-<tr>
-  <td><%= horse.name %></td>
+<%
+  const date = typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit
+  // Get the time (in milliseconds) from the last visit to now
+  const timeSinceLastVisit = new Date() - date
+  // There are 86,400,000 milliseconds in a day
+  const daysSinceLastVisit = Math.floor(timeSinceLastVisit / 86400000)
+%>
+<%- include('queue-item-helper.ejs',{}) %>
+<%
+  let warnDays = 42
+  let alertDays = 56
+  let borderColor
+  let redVal
+  let greenVal
+  let blueVal
+  if (daysSinceLastVisit < warnDays) {
+    // 0 days since visit is the low-limit
+    // warnDays days since visit is the high-limit
+    // For Green->Yellow gradient we want a hex value from 0-ff (0-255) (low-high) returned
+    // Setting endValue to 1 causes getHex to normalize up from 0 to ff (0-255)
+    let endValue = 1
+    let hexValue = getHex(daysSinceLastVisit, 0, warnDays, endValue)
+    // Sets the 'borderColor' string.
+    // This is useful if you don't want to utilize the rgb() or rgba() method
+    borderColor = '#' + hexValue + 'ff00'
+    // Sets independent red, green and blue values
+    // This is useful if you want to utilize the rgb() or rgba() method
+    redVal = getDecimal(daysSinceLastVisit, 0, warnDays, endValue)
+    greenVal = 255
+    blueVal = 0
+  } else if (daysSinceLastVisit < alertDays) {
+    // warnDays days since visit is the low-limit
+    // alertDays days since visit is the high-limit
+    // For Yellow->Red gradient we want a hex value from ff-0 (255-0) (low-high) returned
+    // Setting endValue to 0 causes getHex to normalize down from 255 to 0
+    let endValue = 0
+    let hexValue = getHex(daysSinceLastVisit, warnDays, alertDays, endValue)
+    // Sets the 'borderColor' string.
+    // This is useful if you don't want to utilize the rgb() or rgba() method
+    borderColor = '#ff' + hexValue + '00'
+    // Sets independent red, green and blue values
+    // This is useful if you want to utilize the rgb() or rgba() method
+    redVal = 255
+    greenVal = getDecimal(daysSinceLastVisit, warnDays, alertDays, endValue)
+    blueVal = 0
+  } else {
+    // Sets the 'borderColor' string.
+    // This is useful if you don't want to utilize the rgb() or rgba() method
+    borderColor = '#ff0000'
+    // Sets independent red, green and blue values
+    // This is useful if you want to utilize the rgb() or rgba() method
+    redVal = 255
+    greenVal = 0
+    blueVal = 0
+  }
+%>
+
+<tr style="border-left: 10px solid rgba(<%= redVal %>, <%= greenVal %>, <%= blueVal %>, 60%);
+        border-right: 10px solid rgba(<%= redVal %>, <%= greenVal %>, <%= blueVal %>, 60%);">
+  <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>
   <td>
     <address><%= horse.location %></address>
   </td>
-  <% const date = typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit %>
-  <td><%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %></td>
-  <%
-    // Get the time (in milliseconds) from the last visit to now
-    const timeSinceLastVisit = new Date() - date
-    // There are 86,400,000 milliseconds in a day
-    const daysSinceLastVisit = Math.floor(timeSinceLastVisit / 86400000)
-
-    let bgColor;
-    // There are 42 days in 6 weeks
-    if (daysSinceLastVisit < 42) {
-      bgColor = 'bg-success'
-    } else if (daysSinceLastVisit < 70) {
-      bgColor = 'bg-warning'
-    } else {
-      bgColor = 'bg-danger'
-    }
-  %>
-  <td class="<%= bgColor %>"></td>
+  <td>
+    <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
+  </td>
 </tr>
+
+
