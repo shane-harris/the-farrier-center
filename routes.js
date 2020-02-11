@@ -5,6 +5,7 @@ const router = require('express').Router()
 const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
+const Shoeing = require('./models/shoeing')
 
 const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
 
@@ -40,20 +41,21 @@ router.post('/new-horse', (req, res) => {
     location: req.body.location,
     owner: req.body.owner,
     vet: req.body.vet,
-    lastVisit: new Date(),
     history: req.body.history
   }).save(console.error)
   res.redirect('/horses')
 })
 
-router.get('/new-medical-analysis', (req, res) => {
-  res.render('new-medical-analysis.ejs')
+router.get('/horse/:id/new-medical-analysis', (req, res) => {
+  Horse.findOne({ id: req.params.id })
+    .then(horse => res.render('new-medical-analysis.ejs', { horse }))
+    .catch(console.error)
 })
 
-router.post('/new-medical-analysis', (req, res) => {
+router.post('/horse/:id/new-medical-analysis', (req, res) => {
   console.log(req.body)
   new Medical({
-    horse_id: 1000,
+    horse_id: req.params.id,
     date: new Date(),
     farrier: 'Default Steve',
     gait: req.body.gait,
@@ -61,7 +63,7 @@ router.post('/new-medical-analysis', (req, res) => {
     blemishes: req.body.blemishes,
     laminitus: req.body.laminitus
   }).save(console.error)
-  res.redirect('/horses')
+  res.redirect(`/horse/${req.params.id}`)
 })
 
 router.get('/new-shoeing', (req, res) => {

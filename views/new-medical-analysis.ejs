@@ -4,8 +4,8 @@
 <%- include('partials/header-nav') %>
 <div id="page-container" class="container-fluid">
     <div class="container hprofile">
-        <H1>New Medical Analysis for [Insert horse name here]</H1>
-        <form action="/new-medical-analysis" method="post">
+        <H1>New Medical Analysis for <%= horse.name %></H1>
+        <form action="/horse/<%= horse.id %>/new-medical-analysis" method="post">
             <div class="form-group">
                 <label for="gait">Gait Analysis</label>
                 <textarea class="form-control" id="gait" name="gait" rows="4" placeholder="It walk nice."></textarea>
