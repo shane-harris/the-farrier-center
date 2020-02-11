@@ -40,8 +40,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-
 mongoose.set('useCreateIndex', true)
 
 // Configure routes, as specified in 'routes.js'

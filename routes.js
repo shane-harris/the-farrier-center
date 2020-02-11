@@ -38,9 +38,25 @@ router.get('/admin', loggedIn, isAdmin, (req, res) => {
   res.render('admin.ejs')
 })
 
-router.post('/admin', sendEmail, (req, res, next) => {
-  console.log('sending registration link')
+router.post('/admin', (req, res, next) => {
 
+  var role = 'user'
+
+  if (req.body.adminCheck == 'on') {
+    console.log('registering admin user')
+    role = 'admin'
+  }
+
+  User.register(new User({ username: req.body.username, role: role }), req.body.password, err => {
+    if (err) {
+      console.log('error while user register!', err)
+      return next(err)
+    }
+
+    console.log('user registered!')
+
+    res.redirect('/login')
+  })
 })
 
 router.get('/queue', loggedIn, (req, res) => {
