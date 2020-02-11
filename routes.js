@@ -76,4 +76,11 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
+router.get('/search', loggedIn, (req, res) => {
+  Horse.find()
+    // sort by lastVisit (ascending)
+    .then(horses => res.render('search.ejs', { username: req.user.username, horses: horses }))
+    .catch(console.error)
+})
+
 module.exports = router
