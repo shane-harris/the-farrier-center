@@ -54,6 +54,7 @@ router.post('/admin-register', (req, res, next) => {
     }
 
     console.log('user registered!')
+    res.redirect('/admin')
   })
 })
 
