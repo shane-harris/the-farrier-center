@@ -62,10 +62,15 @@
 
     <div class="container form">
       <div class="row justify-content-center">
-        <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button"
-          aria-expanded="false" aria-controls="medical">
-          Show Medical Analysis
+        <div class="pad">
+          <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button"
+            aria-expanded="false" aria-controls="medical">
+            Show Medical Analysis
         </a>
+        </div>
+        <div class="pad">
+          <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-medical-analysis">New Medical Analysis</a>
+        </div>
       </div>
 
       <div class="collapse" id="medical">
@@ -103,10 +108,15 @@
     <%# Horse Most Recent Shoeing %>
     <div class="container form">
       <div class="row justify-content-center">
-        <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
-          aria-expanded="false" aria-controls="medical">
-          Show Shoeing Report
-        </a>
+        <div class="pad">
+          <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
+            aria-expanded="false" aria-controls="medical">
+            Show Shoeing Report
+          </a>
+        </div>
+        <div class="pad">
+          <a type="button" class="btn btn-dark" href="/new-shoeing">New Shoeing</a>
+        </div>
       </div>
       <div id="shoeing" class="collapse">
         <div class="row">
