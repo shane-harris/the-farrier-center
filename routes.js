@@ -3,6 +3,7 @@
 const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
+const jwt = require('jsonwebtoken')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
@@ -56,7 +57,7 @@ router.post('/admin-register', (req, res, next) => {
   })
 })
 
-router.post('/send-email', sendEmail, (req, res, next) => {})
+router.post('/send-email', sendEmail, (req, res, next) => { })
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
@@ -67,6 +68,16 @@ router.get('/queue', loggedIn, (req, res) => {
 })
 
 router.get('/register', redirectIfLoggedIn, (req, res) => {
+  res.render('register.ejs', {})
+})
+
+router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
+
+  jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
+    if (err) return res.sendStatus(403)
+    req.email = email
+  })
+
   res.render('register.ejs', {})
 })
 
