@@ -31,11 +31,11 @@ router.get('/horse/:id', loggedIn, (req, res) => {
     .catch(console.error)
 })
 
-router.get('/new-horse', (req, res) => {
-  res.render('new-horse.ejs')
+router.get('/new-horse', loggedIn, (req, res) => {
+  res.render('new-horse.ejs', { name: req.user.username })
 })
 
-router.post('/new-horse', (req, res) => {
+router.post('/new-horse', loggedIn, (req, res) => {
   console.log(req.body)
   new Horse({
     name: req.body.name,
@@ -50,13 +50,13 @@ router.post('/new-horse', (req, res) => {
   res.redirect('/horses')
 })
 
-router.get('/horse/:id/new-medical-analysis', (req, res) => {
+router.get('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .then(horse => res.render('new-medical-analysis.ejs', { horse }))
     .catch(console.error)
 })
 
-router.post('/horse/:id/new-medical-analysis', (req, res) => {
+router.post('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
   console.log(req.body)
   new Medical({
     horse_id: req.params.id,
@@ -70,7 +70,7 @@ router.post('/horse/:id/new-medical-analysis', (req, res) => {
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.get('/new-shoeing', (req, res) => {
+router.get('/new-shoeing', loggedIn, (req, res) => {
   res.render('new-shoeing.ejs')
 })
 
