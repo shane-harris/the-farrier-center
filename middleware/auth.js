@@ -16,7 +16,7 @@ const redirectIfLoggedIn = (req, res, next) => {
 
 function isAdmin(req, res, next) {
   if (req.user.role === 'admin') {
-    return next();
+    return next()
   }
   else {
     res.redirect('/queue')

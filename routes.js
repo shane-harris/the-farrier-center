@@ -3,7 +3,6 @@
 const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
-const nodemailer = require("nodemailer");
 const Horse = require('./models/horse')
 const User = require('./models/user')
 

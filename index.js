@@ -40,20 +40,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-let encoded_connection_url =
-  'mongodb+srv://' +
-  config.username +
-  ':' +
-  config.password +
-  '@farrier-dev-test-2pgqu.mongodb.net/test?retryWrites=true&w=majority'
 
-mongoose
-  .connect(encoded_connection_url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to Database!'))
-  .catch(err => {
-    console.error(err)
-    process.exit(1)
-  })
 
 mongoose.set('useCreateIndex', true)
 
