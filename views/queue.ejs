@@ -15,7 +15,7 @@
         </thead>
         <tbody>
           <% for (horse of horses) { %>
-          <%-  include('partials/queue-item', { horse }) %>
+          <%-  include('partials/queue-item', { horse, scripts }) %>
           <% } %>
         </tbody>
       </table>
