@@ -52,7 +52,7 @@ router.post('/new-horse', loggedIn, (req, res) => {
 
 router.get('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('new-medical-analysis.ejs', { horse }))
+    .then(horse => res.render('new-medical-analysis.ejs', { horse, name: req.user.username }))
     .catch(console.error)
 })
 
@@ -71,7 +71,7 @@ router.post('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
 })
 
 router.get('/new-shoeing', loggedIn, (req, res) => {
-  res.render('new-shoeing.ejs')
+  res.render('new-shoeing.ejs', { name: req.user.username })
 })
 
 router.get('/user', loggedIn, (req, res) => {
