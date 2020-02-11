@@ -3,7 +3,7 @@
 <body>
 <%- include('partials/header-nav') %>
 <div id="page-container" class="container-fluid">
-    <div class="container hprofile">
+    <div class="container form">
         <h1>New Shoeing for [Insert horsename here]</h1>
         <form action="" method="">
 
@@ -15,8 +15,8 @@
                 <%- include('partials/form-shoeing', {hoof: 'Back Left'}) %>
                 <%- include('partials/form-shoeing', {hoof: 'Back Right'}) %>
             </div>
-            <div class="row hprofile">
-                <div class="column hprofile" id="shoes">
+            <div class="row form">
+                <div class="column form" id="shoes">
                     <label for="shoes"><H3>Shoes</H3></label>
                     <%- include('partials/checkbox', {name: "pads", displayName: "Pads"}) %>
                     <%- include('partials/checkbox', {name: "straightbarshoe", displayName: "Straight Bar Shoe"}) %>
@@ -27,7 +27,7 @@
                     <%- include('partials/checkbox', {name: "wideweb", displayName: "Wide Web"}) %>
                     <%- include('partials/checkbox', {name: "narrowweb", displayName: "Narrow Web"}) %>
                 </div>
-                <div class="column hprofile" id="materials">
+                <div class="column form" id="materials">
                     <label for="materials"><H3>Materials</H3></label>
                     <%- include('partials/checkbox', {name: "limbbrace", displayName: "Limb Brace"}) %>
                     <%- include('partials/checkbox', {name: "aluminium", displayName: "Aluminium"}) %>
@@ -39,7 +39,7 @@
                     <%- include('partials/checkbox', {name: "pourin", displayName: "Pour In"}) %>
                     <%- include('partials/checkbox', {name: "glue", displayName: "Glue"}) %>
                 </div>
-                <div class="column hprofile" id="services">
+                <div class="column form" id="services">
                     <label for="services"><H3>Services</H3></label>
                     <%- include('partials/checkbox', {name: "drilltap", displayName: "Drill & Tap"}) %>
                     <%- include('partials/checkbox', {name: "gluerepair", displayName: "Glue Repair"}) %>
@@ -49,7 +49,7 @@
                     <%- include('partials/checkbox', {name: "surgeonconsult", displayName: "Surgeon Consult"}) %>
                 </div>
 
-                <div class="column hprofile">
+                <div class="column form">
                     <label class="control-label" for="other"><H3>Other:</H3></label>
                     <input type="text" class="form-control " id="other" name="other">
                 </div>
