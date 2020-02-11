@@ -36,7 +36,7 @@ router.get('/user', loggedIn, (req, res) => {
 })
 
 router.get('/admin', loggedIn, isAdmin, (req, res) => {
-  res.render('admin.ejs')
+  res.render('admin.ejs', { username: req.user.username })
 })
 
 router.post('/admin-register', (req, res, next) => {
