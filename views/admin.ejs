@@ -1,7 +1,8 @@
 <%- include('partials/head', { title: 'Administration' }) %>
 
 <body>
-    <%- include('partials/header-nav') %>
-    <h1>TODO</h1>
-
+    <form action="/admin" method="post">
+        <div><label>Email</label><input type="text" name="email" /></div>
+        <div><input type="submit" value="Send" /></div>
+    </form>
 </body>

@@ -3,9 +3,11 @@
 const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
+const nodemailer = require("nodemailer");
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
+const { sendEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
 
 // Serve contents of 'public' folder to the client
@@ -35,6 +37,11 @@ router.get('/user', loggedIn, (req, res) => {
 
 router.get('/admin', loggedIn, isAdmin, (req, res) => {
   res.render('admin.ejs')
+})
+
+router.post('/admin', sendEmail, (req, res, next) => {
+  console.log('sending registration link')
+
 })
 
 router.get('/queue', loggedIn, (req, res) => {
