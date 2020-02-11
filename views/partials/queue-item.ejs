@@ -1,26 +1,16 @@
-<tr>
-  <td><%= horse.name %></td>
+<%
+  const { lastVisitDate, computeBorderColor } = scripts
+  const date = lastVisitDate(horse)
+  const borderColor = computeBorderColor(horse)
+%>
+
+<tr style="border-left: 10px solid <%= borderColor %>;
+          border-right: 10px solid <%= borderColor %>;">
+  <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>
   <td>
     <address><%= horse.location %></address>
   </td>
-  <% const date = typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit %>
-  <td><%= `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` %></td>
-
-  <%
-    // Get the time (in milliseconds) from the last visit to now
-    const timeSinceLastVisit = new Date() - date
-    // There are 86,400,000 milliseconds in a day
-    const daysSinceLastVisit = Math.floor(timeSinceLastVisit / 86400000)
-    
-    let bgColor;
-    // There are 42 days in 6 weeks
-    if (daysSinceLastVisit < 42) {
-      bgColor = 'bg-success'
-    } else if (daysSinceLastVisit < 70) {
-      bgColor = 'bg-warning'
-    } else {
-      bgColor = 'bg-danger'
-    }
-  %>
-  <td class="<%= bgColor %>"></td>
+  <td>
+    <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
+  </td>
 </tr>

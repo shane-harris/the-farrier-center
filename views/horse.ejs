@@ -1,7 +1,7 @@
-<%- include('partials/head', { title: 'Horse Profile' }) %>
+<%- include('partials/head', { title: 'Horse Profile', css: 'horse' }) %>
 
 <body>
-  <%- include('partials/header-nav') %>
+  <%- include('partials/header-nav', {name: username}) %>
 
   <% const medicalAnalysis = {}%>
 

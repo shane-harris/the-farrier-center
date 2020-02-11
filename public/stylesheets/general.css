@@ -1,0 +1,67 @@
+#page-container {
+  position: relative;
+  /*sets footer to bottom even if the page isn't full
+    the 92 is 100 minus the height of the footer*/
+  min-height: 92vh;
+}
+
+#site-footer {
+  position: page;
+  bottom: 0;
+}
+
+.link-unstyled,
+.link-unstyled:link,
+.link-unstyled:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.login-alert {
+  color: red;
+  margin: 0px;
+  padding: 0px;
+}
+
+.button-login {
+  background-color: #008cba;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  width: 75%;
+  height: 35px;
+  transition-duration: 0.4s;
+}
+
+.button-login:hover {
+  background-color: white; /* Green */
+  color: #008cba;
+  border: 2px solid #008cba;
+  border-color: #008cba;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.login-links {
+  color: #008cba;
+}
+
+.login-links:hover {
+  font-weight: bold;
+}
+
+.form {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.password-form {
+  width: 50%;
+  margin: auto;
+  min-width: 350px;
+}

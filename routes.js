@@ -1,6 +1,7 @@
 'use strict'
 
 const passport = require('passport')
+const express = require('express')
 const router = require('express').Router()
 const Medical = require('./models/medical')
 const Horse = require('./models/horse')
@@ -8,6 +9,9 @@ const User = require('./models/user')
 const Shoeing = require('./models/shoeing')
 
 const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
+
+// Serve contents of 'public' folder to the client
+router.use('/public', express.static('public'))
 
 router.get('/', loggedIn, (req, res) => {
   res.redirect('/queue')
@@ -17,13 +21,13 @@ router.get('/horses', loggedIn, (req, res) => {
   Horse.find()
     // sort by id (ascending)
     .sort({ id: 1 })
-    .then(horses => res.render('horses.ejs', { horses }))
+    .then(horses => res.render('horses.ejs', { username: req.user.username, horses: horses }))
     .catch(console.error)
 })
 
 router.get('/horse/:id', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('horse.ejs', { horse }))
+    .then(horse => res.render('horse.ejs', { username: req.user.username, horse: horse }))
     .catch(console.error)
 })
 
@@ -71,14 +75,20 @@ router.get('/new-shoeing', (req, res) => {
 })
 
 router.get('/user', loggedIn, (req, res) => {
-  res.render('user.ejs')
+  res.render('user.ejs', { username: req.user.username })
 })
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
     .sort({ lastVisit: 1 })
-    .then(horses => res.render('queue.ejs', { horses }))
+    .then(horses =>
+      res.render('queue.ejs', {
+        username: req.user.username,
+        horses: horses,
+        scripts: require('./scripts/queue-item')
+      })
+    )
     .catch(console.error)
 })
 
