@@ -35,10 +35,10 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.locals.currentUser = req.user
-  next();
-});
+  next()
+})
 
 mongoose.set('useCreateIndex', true)
 

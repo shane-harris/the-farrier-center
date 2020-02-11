@@ -38,8 +38,7 @@ router.get('/admin', loggedIn, isAdmin, (req, res) => {
   res.render('admin.ejs')
 })
 
-router.post('/admin', (req, res, next) => {
-
+router.post('/admin-register', (req, res, next) => {
   var role = 'user'
 
   if (req.body.adminCheck == 'on') {
@@ -54,10 +53,10 @@ router.post('/admin', (req, res, next) => {
     }
 
     console.log('user registered!')
-
-    res.redirect('/login')
   })
 })
+
+router.post('/send-email', sendEmail, (req, res, next) => {})
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()

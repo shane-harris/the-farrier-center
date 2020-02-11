@@ -1,6 +1,6 @@
-"use strict";
-const nodemailer = require("nodemailer");
-var jwt = require('jsonwebtoken');
+'use strict'
+const nodemailer = require('nodemailer')
+var jwt = require('jsonwebtoken')
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -8,26 +8,29 @@ const transporter = nodemailer.createTransport({
         pass: process.env.GMAIL_PASS
     }
 })
-const sendEmail = (req, res, next) => {
-    jwt.sign(
-        req.body.email,
-        process.env.JWT_KEY,
-        {
-            expiresIn: '7d',
-        },
-        (err, emailToken) => {
-            const url = `http://localhost:8000/register/${emailToken}`;
+const sendEmail = async (req, res, next) => {
+    try {
+        const token = jwt.sign(
+            {
+                email: req.body.email
+            },
 
-            transporter.sendMail({
-                to: req.body.email,
-                subject: 'Welcome to The Farrier Center',
-                html: `Create Your Account: <a href="${url}">${url}</a>`,
-            })
-        },
-    )
+            process.env.JWT_KEY,
+            {
+                expiresIn: '12h'
+            }
+        )
 
+        const url = `http://localhost:8000/register/${token}`
+
+        await transporter.sendMail({
+            to: req.body.email,
+            subject: 'Welcome to The Farrier Center',
+            html: `Create Your Account: <a href="${url}">${url}</a>`
+        })
+    } catch (e) {
+        console.log(e)
+    }
+    res.redirect('/admin')
 }
-
 module.exports = { sendEmail }
-
-

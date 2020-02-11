@@ -3,7 +3,8 @@
 <body>
     <%- include('partials/header-nav') %>
     <div id="page-container" class="container">
-        <form action="/admin" method="post">
+        <h2>Create User</h2>
+        <form action="/admin-register" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" name="username" id="username"
@@ -19,6 +20,14 @@
                 <label class="form-check-label" for="adminCheck">Make Admin</label>
             </div>
             <button type="submit" class="btn btn-primary mt-1">Submit</button>
+        </form>
+        <h2>Email User Registration Form</h2>
+        <form action="/send-email" method="post">
+            <div class="form-group">
+                <input type="email" class="form-control" name='email' id='email'
+                    placeholder="Enter email">
+            </div>
+            <button type="submit" class="btn btn-primary mt-1">Send</button>
         </form>
     </div>
     <%- include('partials/footer') %>
