@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken')
 const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
-const Shoeing = require('./models/shoeing')
 
 const { sendEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
@@ -103,7 +102,7 @@ router.post('/admin-register', (req, res, next) => {
   })
 })
 
-router.post('/send-email', sendEmail, (req, res, next) => {})
+router.post('/send-email', sendEmail)
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
