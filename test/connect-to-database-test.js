@@ -1,7 +1,7 @@
 'use strict'
 const mongoose = require('mongoose')
 const config = require('../config/config.js')
-let Horse = require('../models/horse') //imports the horse model.
+const Horse = require('../models/horse')
 const chai = require('chai')
 chai.use(require('chai-http'))
 chai.should()
