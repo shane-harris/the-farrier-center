@@ -3,10 +3,12 @@
 const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
+const jwt = require('jsonwebtoken')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
-const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
+const { sendEmail } = require('./middleware/emailer')
+const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
 
 // Serve contents of 'public' folder to the client
 router.use('/public', express.static('public'))
@@ -33,6 +35,31 @@ router.get('/user', loggedIn, (req, res) => {
   res.render('user.ejs', { username: req.user.username })
 })
 
+router.get('/admin', loggedIn, isAdmin, (req, res) => {
+  res.render('admin.ejs', { username: req.user.username })
+})
+
+router.post('/admin-register', (req, res, next) => {
+  var role = 'user'
+
+  if (req.body.adminCheck == 'on') {
+    console.log('registering admin user')
+    role = 'admin'
+  }
+
+  User.register(new User({ username: req.body.username, role: role }), req.body.password, err => {
+    if (err) {
+      console.log('error while user register!', err)
+      return next(err)
+    }
+
+    console.log('user registered!')
+    res.redirect('/admin')
+  })
+})
+
+router.post('/send-email', sendEmail, (req, res, next) => { })
+
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
@@ -48,6 +75,16 @@ router.get('/queue', loggedIn, (req, res) => {
 })
 
 router.get('/register', redirectIfLoggedIn, (req, res) => {
+  res.render('register.ejs', {})
+})
+
+router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
+
+  jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
+    if (err) return res.sendStatus(403)
+    req.email = email
+  })
+
   res.render('register.ejs', {})
 })
 

@@ -35,6 +35,14 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
+//middleware that exposes the user object from the request into the response page
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user
+  next()
+})
+
+mongoose.set('useCreateIndex', true)
+
 // Configure routes, as specified in 'routes.js'
 app.use(require('./routes'))
 
