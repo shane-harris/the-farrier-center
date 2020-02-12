@@ -1,0 +1,66 @@
+<%- include('partials/head', { title: 'New Shoeing' }) %>
+
+<body>
+<%- include('partials/header-nav') %>
+<div id="page-container" class="container-fluid">
+    <div class="container form">
+        <h1>New Shoeing for [Insert horsename here]</h1>
+        <form action="" method="">
+
+            <div class="row">
+                <%- include('partials/form-shoeing', {hoof: 'Front Left'}) %>
+                <%- include('partials/form-shoeing', {hoof: 'Front Right'}) %>
+            </div>
+            <div class="row">
+                <%- include('partials/form-shoeing', {hoof: 'Back Left'}) %>
+                <%- include('partials/form-shoeing', {hoof: 'Back Right'}) %>
+            </div>
+            <div class="row form">
+                <div class="column form" id="shoes">
+                    <label for="shoes"><H3>Shoes</H3></label>
+                    <%- include('partials/checkbox', {name: "pads", displayName: "Pads"}) %>
+                    <%- include('partials/checkbox', {name: "straightbarshoe", displayName: "Straight Bar Shoe"}) %>
+                    <%- include('partials/checkbox', {name: "eggbar", displayName: "Egg Bar"}) %>
+                    <%- include('partials/checkbox', {name: "specialbarshoe", displayName: "Specialty Barshoe"}) %>
+                    <%- include('partials/checkbox', {name: "rolledtoe", displayName: "Rolled Toe"}) %>
+                    <%- include('partials/checkbox', {name: "onionheel", displayName: "Onion Heel"}) %>
+                    <%- include('partials/checkbox', {name: "wideweb", displayName: "Wide Web"}) %>
+                    <%- include('partials/checkbox', {name: "narrowweb", displayName: "Narrow Web"}) %>
+                </div>
+                <div class="column form" id="materials">
+                    <label for="materials"><H3>Materials</H3></label>
+                    <%- include('partials/checkbox', {name: "limbbrace", displayName: "Limb Brace"}) %>
+                    <%- include('partials/checkbox', {name: "aluminium", displayName: "Aluminium"}) %>
+                    <%- include('partials/checkbox', {name: "titanium", displayName: "Titanium"}) %>
+                    <%- include('partials/checkbox', {name: "poly", displayName: "Poly"}) %>
+                    <%- include('partials/checkbox', {name: "impressionmaterials", displayName: "Impression Materials"}) %>
+                    <%- include('partials/checkbox', {name: "glueonshoes", displayName: "Glue-on Shoe"}) %>
+                    <%- include('partials/checkbox', {name: "equilibrium", displayName: "Equilibrium"}) %>
+                    <%- include('partials/checkbox', {name: "pourin", displayName: "Pour In"}) %>
+                    <%- include('partials/checkbox', {name: "glue", displayName: "Glue"}) %>
+                </div>
+                <div class="column form" id="services">
+                    <label for="services"><H3>Services</H3></label>
+                    <%- include('partials/checkbox', {name: "drilltap", displayName: "Drill & Tap"}) %>
+                    <%- include('partials/checkbox', {name: "gluerepair", displayName: "Glue Repair"}) %>
+                    <%- include('partials/checkbox', {name: "quartercrackrepair", displayName: "Quarter Crack Repair"}) %>
+                    <%- include('partials/checkbox', {name: "resection", displayName: "Resection"}) %>
+                    <%- include('partials/checkbox', {name: "rehabilitation", displayName: "Rehabilitation Service"}) %>
+                    <%- include('partials/checkbox', {name: "surgeonconsult", displayName: "Surgeon Consult"}) %>
+                </div>
+
+                <div class="column form">
+                    <label class="control-label" for="other"><H3>Other:</H3></label>
+                    <input type="text" class="form-control " id="other" name="other">
+                </div>
+            </div>
+
+            <div class="">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
