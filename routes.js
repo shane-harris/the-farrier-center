@@ -64,7 +64,13 @@ router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
     .sort({ lastVisit: 1 })
-    .then(horses => res.render('queue.ejs', { username: req.user.username, horses: horses }))
+    .then(horses =>
+      res.render('queue.ejs', {
+        username: req.user.username,
+        horses: horses,
+        scripts: require('./scripts/queue-item')
+      })
+    )
     .catch(console.error)
 })
 
