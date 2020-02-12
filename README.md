@@ -44,3 +44,13 @@ In `.env`, you can specify the desired port number, e.g.:
 ```
 PORT=80
 ```
+
+## Set up NodeMailer credentials and Jsonwebtokens
+
+In `.env`, add the following lines
+
+```
+GMAIL_USER='farrierdev@gmail.com'
+GMAIL_PASS='farierdevsacstate'
+JWT_KEY='bb8710e8f071a10891b1e256a69c0e4c5fbd7c8724e7202703093f6327b4ff625461e516e6a8dcd35c1d60309a4b3c56b4f2a322a1b049255dca82d331b30d41'
+```
