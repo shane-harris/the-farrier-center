@@ -8,7 +8,12 @@ chai.should()
 
 describe('Database tests', () => {
   before(done => {
-    mongoose.connect(config.mongo_url)
+    mongoose.connect(config.mongo_url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false
+    })
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error'))
     db.once('open', () => {
