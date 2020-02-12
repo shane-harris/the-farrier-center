@@ -4,8 +4,9 @@
   const borderColor = computeBorderColor(horse)
 %>
 
-<tr style="border-left: 10px solid <%= borderColor %>;
-          border-right: 10px solid <%= borderColor %>;">
+<tr style="--borderColor: <%= borderColor %>;
+          border-left: 10px solid var(--borderColor);
+          border-right: 10px solid var(--borderColor);">
   <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>
   <td>
     <address><%= horse.location %></address>
