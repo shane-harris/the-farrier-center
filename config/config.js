@@ -2,9 +2,10 @@
 
 require('dotenv').config()
 const config = {
-  username: process.env.MONGO_USER,
-  password: process.env.MONGO_PASS,
-  port: process.env.PORT || 8000
+  port: process.env.PORT || 8000,
+  mongo_url:
+    `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}` +
+    '@farrier-dev-test-2pgqu.mongodb.net/test?retryWrites=true&w=majority'
 }
 
 module.exports = config

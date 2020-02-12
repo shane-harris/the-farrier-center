@@ -1,6 +1,5 @@
 'use strict'
 
-require('dotenv').config()
 const config = require('./config/config.js')
 const cookieParser = require('cookie-parser')
 const express = require('express')
@@ -14,10 +13,9 @@ const session = require('cookie-session')
 
 const app = express()
 
-app.use('/public', express.static('public'))
-
 app.set('views', path.join(__dirname, 'views'))
 
+// Set up various middleware
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -25,32 +23,27 @@ app.use(cookieParser())
 app.use(session({ keys: ['secretkey1', 'secretkey2', '...'] }))
 app.use(flash())
 
+// Passport middleware is used for user session tracking and authentication
 app.use(passport.initialize())
 app.use(passport.session())
 
+// Establish how passport will go about authenticating users
 const User = require('./models/user')
 passport.use(new LocalStrategy(User.authenticate()))
 
+// Establish how passport will send user information over the network
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
-let encoded_connection_url =
-  'mongodb+srv://' +
-  config.username +
-  ':' +
-  config.password +
-  '@farrier-dev-test-2pgqu.mongodb.net/test?retryWrites=true&w=majority'
-
-mongoose
-  .connect(encoded_connection_url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to Database!'))
-  .catch(err => {
-    console.error(err)
-    process.exit(1)
-  })
+//middleware that exposes the user object from the request into the response page
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user
+  next()
+})
 
 mongoose.set('useCreateIndex', true)
 
+// Configure routes, as specified in 'routes.js'
 app.use(require('./routes'))
 
 // catch 404 and forward to error handler
@@ -59,8 +52,6 @@ app.use((req, res, next) => {
   err.status = 404
   next(err)
 })
-
-// error handlers
 
 // development error handler
 // will print stacktrace
@@ -84,6 +75,20 @@ app.use((err, req, res) => {
   })
 })
 
+// Connect to the database
+mongoose
+  .connect(config.mongo_url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => console.log('Connected to Database!'))
+  .catch(err => {
+    console.error(err)
+    process.exit(1)
+  })
+
+// Listen for user requests
 app.listen(config.port, () => {
   console.log(`Example app listening on port ${config.port}!`)
 })
