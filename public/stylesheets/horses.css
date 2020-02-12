@@ -1,15 +1,7 @@
-#page-container {
-  position: relative;
-  /*sets footer to bottom even if the page isn't full
-    the 92 is 100 minus the height of the footer*/
-  min-height: 92vh;
-}
+@import 'general.css';
+
 #popup {
   display: none;
-}
-
-.horse-profile:hover {
-  border: solid lightblue;
 }
 
 .horse-profile {
@@ -28,43 +20,10 @@
   background-repeat: no-repeat;
 }
 
+.horse-profile:hover {
+  border: solid lightblue;
+}
+
 .horse-profile.bg-alt {
   background: #abb1b8;
-}
-
-#site-footer {
-  position: page;
-  bottom: 0;
-}
-
-.password-form {
-  width: 50%;
-  margin: auto;
-}
-
-#site-footer {
-  position: page;
-  bottom: 0;
-}
-
-.hprofile {
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.shoeing {
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 2px;
-}
-
-.link-unstyled,
-.link-unstyled:link,
-.link-unstyled:hover {
-  color: inherit;
-  text-decoration: inherit;
 }
