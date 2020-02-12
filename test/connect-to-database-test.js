@@ -3,12 +3,12 @@ const mongoose = require('mongoose')
 const config = require('../config/config.js')
 let Horse = require('../models/horse') //imports the horse model.
 
-describe('Database tests', function() {
-  before(function(done) {
+describe('Database tests', () => {
+  before(done => {
     mongoose.connect(config.mongo_url)
     const db = mongoose.connection
     db.on('error', console.error.bind(console, 'connection error'))
-    db.once('open', function() {
+    db.once('open', () => {
       console.log('We are connected to test database!')
       done()
     })
@@ -19,16 +19,16 @@ describe('Database tests', function() {
     done()
   })
 
-  describe('Test Creation and Reading from db', function() {
+  describe('Test Creation and Reading from db', () => {
     //Save object with 'name' value of 'dummyHorse"
-    it('New name saved to test database', function(done) {
+    it('New name saved to test database', done => {
       var testName = Horse({
         name: 'dummyHorse'
       })
       testName.save(done)
     })
 
-    it('Should retrieve data from test database', function(done) {
+    it('Should retrieve data from test database', done => {
       //Look up the 'dummyHorse' object previously saved.
       Horse.find({ name: 'dummyHorse' }, (err, name) => {
         if (err) {
@@ -41,8 +41,8 @@ describe('Database tests', function() {
       })
     })
 
-    it('Should remove the dummyHorse entry from database', function(done) {
-      Horse.deleteOne({ name: 'dummyHorse' }, (err, obj) => {
+    it('Should remove the dummyHorse entry from database', done => {
+      Horse.deleteOne({ name: 'dummyHorse' }, err => {
         if (err) {
           throw err
         }
