@@ -2,6 +2,9 @@
 const mongoose = require('mongoose')
 const config = require('../config/config.js')
 let Horse = require('../models/horse') //imports the horse model.
+const chai = require('chai')
+chai.use(require('chai-http'))
+chai.should()
 
 describe('Database tests', () => {
   before(done => {
@@ -10,44 +13,27 @@ describe('Database tests', () => {
     db.on('error', console.error.bind(console, 'connection error'))
     db.once('open', () => {
       console.log('We are connected to test database!')
-      done()
+      new Horse({ name: 'dummyHorse' }).save(done)
     })
   })
 
   after(done => {
-    mongoose.connection.close()
-    done()
+    // Delete all dummy horses, in case they start to accumulate
+    Horse.deleteMany({ name: 'dummyHorse' })
+      .then(() => done())
+      .catch(done)
+      .finally(() => mongoose.connection.close())
   })
 
   describe('Test Creation and Reading from db', () => {
-    //Save object with 'name' value of 'dummyHorse"
-    it('New name saved to test database', done => {
-      var testName = Horse({
-        name: 'dummyHorse'
-      })
-      testName.save(done)
-    })
-
     it('Should retrieve data from test database', done => {
       //Look up the 'dummyHorse' object previously saved.
-      Horse.find({ name: 'dummyHorse' }, (err, name) => {
-        if (err) {
-          throw err
-        }
-        if (name.length === 0) {
-          throw new Error('No data!')
-        }
-        done()
-      })
-    })
-
-    it('Should remove the dummyHorse entry from database', done => {
-      Horse.deleteOne({ name: 'dummyHorse' }, err => {
-        if (err) {
-          throw err
-        }
-        done()
-      })
+      Horse.findOne({ name: 'dummyHorse' })
+        .then(horse => {
+          horse.name.should.equal('dummyHorse')
+          done()
+        })
+        .catch(done)
     })
   })
 })
