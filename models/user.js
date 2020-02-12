@@ -8,7 +8,7 @@ const User = new Schema({
   lname: String,
   email: {
     type: String,
-    Required: 'Email address cannot be left blank.',
+    required: 'Email address cannot be left blank.',
     index: { unique: true, dropDups: true }
   },
   role: {
