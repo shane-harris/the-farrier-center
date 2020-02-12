@@ -44,6 +44,7 @@ In `.env`, you can specify the desired port number, e.g.:
 ```
 PORT=80
 ```
+
 ## Set up NodeMailer credentials and Jsonwebtokens
 
 In `.env`, add the following lines

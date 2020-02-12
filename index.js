@@ -36,7 +36,7 @@ passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
 //middleware that exposes the user object from the request into the response page
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.locals.currentUser = req.user
   next()
 })

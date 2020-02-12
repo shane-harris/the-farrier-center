@@ -4,8 +4,10 @@ const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
 const jwt = require('jsonwebtoken')
+const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
+const Shoeing = require('./models/shoeing')
 
 const { sendEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
@@ -29,6 +31,49 @@ router.get('/horse/:id', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .then(horse => res.render('horse.ejs', { username: req.user.username, horse: horse }))
     .catch(console.error)
+})
+
+router.get('/new-horse', loggedIn, (req, res) => {
+  res.render('new-horse.ejs', { name: req.user.username })
+})
+
+router.post('/new-horse', loggedIn, (req, res) => {
+  console.log(req.body)
+  new Horse({
+    name: req.body.name,
+    gender: req.body.gender,
+    temperament: req.body.temperament,
+    discipline: req.body.discipline,
+    location: req.body.location,
+    owner: req.body.owner,
+    vet: req.body.vet,
+    history: req.body.history
+  }).save(console.error)
+  res.redirect('/horses')
+})
+
+router.get('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
+  Horse.findOne({ id: req.params.id })
+    .then(horse => res.render('new-medical-analysis.ejs', { horse, name: req.user.username }))
+    .catch(console.error)
+})
+
+router.post('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
+  console.log(req.body)
+  new Medical({
+    horse_id: req.params.id,
+    date: new Date(),
+    farrier: 'Default Steve',
+    gait: req.body.gait,
+    lameness: req.body.lameness,
+    blemishes: req.body.blemishes,
+    laminitus: req.body.laminitus
+  }).save(console.error)
+  res.redirect(`/horse/${req.params.id}`)
+})
+
+router.get('/new-shoeing', loggedIn, (req, res) => {
+  res.render('new-shoeing.ejs', { name: req.user.username })
 })
 
 router.get('/user', loggedIn, (req, res) => {
@@ -58,7 +103,7 @@ router.post('/admin-register', (req, res, next) => {
   })
 })
 
-router.post('/send-email', sendEmail, (req, res, next) => { })
+router.post('/send-email', sendEmail, (req, res, next) => {})
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
@@ -79,7 +124,6 @@ router.get('/register', redirectIfLoggedIn, (req, res) => {
 })
 
 router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
-
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
     if (err) return res.sendStatus(403)
     req.email = email
