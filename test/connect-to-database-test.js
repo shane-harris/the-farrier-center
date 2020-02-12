@@ -1,58 +1,53 @@
 'use strict'
 const mongoose = require('mongoose')
 const config = require('../config/config.js')
-let Horse = require('../models/horse') //imports the horse model.
+const Horse = require('../models/horse')
+const chai = require('chai')
+chai.use(require('chai-http'))
+chai.should()
 
-let encoded_connection_url =
-  'mongodb+srv://' +
-  config.username +
-  ':' +
-  config.password +
-  '@farrier-dev-test-2pgqu.mongodb.net/test?retryWrites=true&w=majority'
-
-describe('Database tests', function() {
-  before(function(done) {
-    mongoose.connect(encoded_connection_url)
-    const db = mongoose.connection
-    db.on('error', console.error.bind(console, 'connection error'))
-    db.once('open', function() {
-      console.log('We are connected to test database!')
-      done()
-    })
+describe('Database tests', () => {
+  before(done => {
+    mongoose
+      .connect(config.mongo_url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+      })
+      .then(() => {
+        console.log('We are connected to test database!')
+      })
+      .catch(console.error.bind(console, 'connection error'))
   })
 
-  describe('Test Creation and Reading from db', function() {
-    //Save object with 'name' value of 'dummyHorse"
-    it('New name saved to test database', function(done) {
-      var testName = Horse({
-        name: 'dummyHorse'
-      })
-      testName.save(done)
-    })
+  after(done => {
+    // Delete all dummy horses, in case they start to accumulate
+    Horse.deleteMany({ name: 'dummyHorse' })
+      .then(() => done())
+      .catch(done)
+      .finally(() => mongoose.connection.close())
+  })
 
-    it('Should retrieve data from test database', function(done) {
+  beforeEach(done => {
+    // Delete any dummy horses already in the DB
+    Horse.deleteMany({ name: 'dummyHorse' })
+      .then(() => {
+        // If deletion succeeded, save a new dummy horse to the DB
+        new Horse({ name: 'dummyHorse' }).save(done)
+      })
+      .catch(done)
+  })
+
+  describe('Reading a horse from the db', () => {
+    it('Should retrieve data from test database', done => {
       //Look up the 'dummyHorse' object previously saved.
-      Horse.find({ name: 'dummyHorse' }, (err, name) => {
-        if (err) {
-          throw err
-        }
-        if (name.length === 0) {
-          throw new Error('No data!')
-        }
-        done()
-      })
-    })
-
-    it('Should remove the dummyHorse entry from database', function(done) {
-      Horse.deleteOne({ name: 'dummyHorse' }, (err, obj) => {
-        if (err) {
-          throw err
-        }
-        done()
-      })
+      Horse.findOne({ name: 'dummyHorse' })
+        .then(horse => {
+          horse.name.should.equal('dummyHorse')
+          done()
+        })
+        .catch(done)
     })
   })
-  //After all tests are finished close connection
-  //I am not sure if this is the proper way to handle this
-  mongoose.connection.close()
 })
