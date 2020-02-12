@@ -17,7 +17,6 @@ describe('Database tests', () => {
       })
       .then(() => {
         console.log('We are connected to test database!')
-        new Horse({ name: 'dummyHorse' }).save(done)
       })
       .catch(console.error.bind(console, 'connection error'))
   })
@@ -30,7 +29,17 @@ describe('Database tests', () => {
       .finally(() => mongoose.connection.close())
   })
 
-  describe('Test Creation and Reading from db', () => {
+  beforeEach(done => {
+    // Delete any dummy horses already in the DB
+    Horse.deleteMany({ name: 'dummyHorse' })
+      .then(() => {
+        // If deletion succeeded, save a new dummy horse to the DB
+        new Horse({ name: 'dummyHorse' }).save(done)
+      })
+      .catch(done)
+  })
+
+  describe('Reading a horse from the db', () => {
     it('Should retrieve data from test database', done => {
       //Look up the 'dummyHorse' object previously saved.
       Horse.findOne({ name: 'dummyHorse' })
