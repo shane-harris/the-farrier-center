@@ -3,10 +3,14 @@
 const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
+const jwt = require('jsonwebtoken')
+const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
+const Shoeing = require('./models/shoeing')
 
-const { loggedIn, redirectIfLoggedIn } = require('./middleware/auth')
+const { sendEmail } = require('./middleware/emailer')
+const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
 
 // Serve contents of 'public' folder to the client
 router.use('/public', express.static('public'))
@@ -29,19 +33,102 @@ router.get('/horse/:id', loggedIn, (req, res) => {
     .catch(console.error)
 })
 
+router.get('/new-horse', loggedIn, (req, res) => {
+  res.render('new-horse.ejs', { name: req.user.username })
+})
+
+router.post('/new-horse', loggedIn, (req, res) => {
+  console.log(req.body)
+  new Horse({
+    name: req.body.name,
+    gender: req.body.gender,
+    temperament: req.body.temperament,
+    discipline: req.body.discipline,
+    location: req.body.location,
+    owner: req.body.owner,
+    vet: req.body.vet,
+    history: req.body.history
+  }).save(console.error)
+  res.redirect('/horses')
+})
+
+router.get('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
+  Horse.findOne({ id: req.params.id })
+    .then(horse => res.render('new-medical-analysis.ejs', { horse, name: req.user.username }))
+    .catch(console.error)
+})
+
+router.post('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
+  console.log(req.body)
+  new Medical({
+    horse_id: req.params.id,
+    date: new Date(),
+    farrier: 'Default Steve',
+    gait: req.body.gait,
+    lameness: req.body.lameness,
+    blemishes: req.body.blemishes,
+    laminitus: req.body.laminitus
+  }).save(console.error)
+  res.redirect(`/horse/${req.params.id}`)
+})
+
+router.get('/new-shoeing', loggedIn, (req, res) => {
+  res.render('new-shoeing.ejs', { name: req.user.username })
+})
+
 router.get('/user', loggedIn, (req, res) => {
   res.render('user.ejs', { username: req.user.username })
 })
+
+router.get('/admin', loggedIn, isAdmin, (req, res) => {
+  res.render('admin.ejs', { username: req.user.username })
+})
+
+router.post('/admin-register', (req, res, next) => {
+  var role = 'user'
+
+  if (req.body.adminCheck == 'on') {
+    console.log('registering admin user')
+    role = 'admin'
+  }
+
+  User.register(new User({ username: req.body.username, role: role }), req.body.password, err => {
+    if (err) {
+      console.log('error while user register!', err)
+      return next(err)
+    }
+
+    console.log('user registered!')
+    res.redirect('/admin')
+  })
+})
+
+router.post('/send-email', sendEmail, (req, res, next) => {})
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
     .sort({ lastVisit: 1 })
-    .then(horses => res.render('queue.ejs', { username: req.user.username, horses: horses }))
+    .then(horses =>
+      res.render('queue.ejs', {
+        username: req.user.username,
+        horses: horses,
+        scripts: require('./scripts/queue-item')
+      })
+    )
     .catch(console.error)
 })
 
 router.get('/register', redirectIfLoggedIn, (req, res) => {
+  res.render('register.ejs', {})
+})
+
+router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
+  jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
+    if (err) return res.sendStatus(403)
+    req.email = email
+  })
+
   res.render('register.ejs', {})
 })
 

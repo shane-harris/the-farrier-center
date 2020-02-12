@@ -1,0 +1,30 @@
+<%- include('partials/head', { title: 'New Medical Analysis' }) %>
+
+<body>
+<%- include('partials/header-nav') %>
+<div id="page-container" class="container-fluid">
+    <div class="container form">
+        <H1>New Medical Analysis for <%= horse.name %></H1>
+        <form action="/horse/<%= horse.id %>/new-medical-analysis" method="post">
+            <div class="form-group">
+                <label for="gait">Gait Analysis</label>
+                <textarea class="form-control" id="gait" name="gait" rows="4" placeholder="It walk nice."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="lameness">Lameness Analysis</label>
+                <textarea class="form-control" id="lameness" name="lameness" rows="4" placeholder="This horse is a perfect example of the perfect horse"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="blemishes">Blemishes Analysis</label>
+                <textarea class="form-control" id="blemishes" name="blemishes" rows="4" placeholder="That is the biggest mole I have EVER seen."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="laminitus">Laminitus Analysis</label>
+                <textarea class="form-control" id="laminitus" name="laminitus" rows="4" placeholder="None, Perfection."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" value="medical">Submit</button>
+        </form>
+    </div>
+</div>
+<%- include('partials/footer') %>
+</body>
