@@ -23,25 +23,6 @@ function getHex(days, rangeStart, rangeEnd, endValue) {
   return hexString
 }
 
-function getDecimal(days, rangeStart, rangeEnd, endValue) {
-  let normalizedDays = (days - rangeStart) / (rangeEnd - rangeStart)
-  console.log('======================')
-  console.log('Days Since Last Visit: ' + days)
-  console.log('Range Start: ' + rangeStart)
-  console.log('Range End: ' + rangeEnd)
-  console.log('End Value: ' + endValue)
-  console.log('Normalized Days: ' + normalizedDays)
-  if (endValue === 1) {
-    // Puts the normalizedDays on the scale from 0-255 in hex
-    normalizedDays *= 255
-  } else {
-    // Puts the normalizedDays on the scale from 255-0 in hex
-    normalizedDays = (1.0 - normalizedDays) * 255
-  }
-  normalizedDays = Math.floor(normalizedDays)
-  return normalizedDays
-}
-
 function lastVisitDate(horse) {
   return typeof horse.lastVisit === 'undefined' ? new Date() : horse.lastVisit
 }
@@ -56,9 +37,6 @@ function computeBorderColor(horse) {
   let warnDays = 42
   let alertDays = 56
   let borderColor
-  let redVal
-  let greenVal
-  let blueVal
   if (daysSinceLastVisit < warnDays) {
     // 0 days since visit is the low-limit
     // warnDays days since visit is the high-limit
@@ -69,11 +47,6 @@ function computeBorderColor(horse) {
     // Sets the 'borderColor' string.
     // This is useful if you don't want to utilize the rgb() or rgba() method
     borderColor = '#' + hexValue + 'ff00'
-    // Sets independent red, green and blue values
-    // This is useful if you want to utilize the rgb() or rgba() method
-    redVal = getDecimal(daysSinceLastVisit, 0, warnDays, endValue)
-    greenVal = 255
-    blueVal = 0
   } else if (daysSinceLastVisit < alertDays) {
     // warnDays days since visit is the low-limit
     // alertDays days since visit is the high-limit
@@ -84,20 +57,10 @@ function computeBorderColor(horse) {
     // Sets the 'borderColor' string.
     // This is useful if you don't want to utilize the rgb() or rgba() method
     borderColor = '#ff' + hexValue + '00'
-    // Sets independent red, green and blue values
-    // This is useful if you want to utilize the rgb() or rgba() method
-    redVal = 255
-    greenVal = getDecimal(daysSinceLastVisit, warnDays, alertDays, endValue)
-    blueVal = 0
   } else {
     // Sets the 'borderColor' string.
     // This is useful if you don't want to utilize the rgb() or rgba() method
     borderColor = '#ff0000'
-    // Sets independent red, green and blue values
-    // This is useful if you want to utilize the rgb() or rgba() method
-    redVal = 255
-    greenVal = 0
-    blueVal = 0
   }
 
   return borderColor
