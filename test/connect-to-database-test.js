@@ -8,18 +8,18 @@ chai.should()
 
 describe('Database tests', () => {
   before(done => {
-    mongoose.connect(config.mongo_url, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false
-    })
-    const db = mongoose.connection
-    db.on('error', console.error.bind(console, 'connection error'))
-    db.once('open', () => {
-      console.log('We are connected to test database!')
-      new Horse({ name: 'dummyHorse' }).save(done)
-    })
+    mongoose
+      .connect(config.mongo_url, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+      })
+      .then(() => {
+        console.log('We are connected to test database!')
+        new Horse({ name: 'dummyHorse' }).save(done)
+      })
+      .catch(console.error.bind(console, 'connection error'))
   })
 
   after(done => {
