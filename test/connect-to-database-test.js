@@ -14,6 +14,11 @@ describe('Database tests', function() {
     })
   })
 
+  after(done => {
+    mongoose.connection.close()
+    done()
+  })
+
   describe('Test Creation and Reading from db', function() {
     //Save object with 'name' value of 'dummyHorse"
     it('New name saved to test database', function(done) {
@@ -45,7 +50,4 @@ describe('Database tests', function() {
       })
     })
   })
-  //After all tests are finished close connection
-  //I am not sure if this is the proper way to handle this
-  mongoose.connection.close()
 })
