@@ -66,4 +66,11 @@ function computeBorderColor(horse) {
   return borderColor
 }
 
-module.exports = { lastVisitDate, computeBorderColor }
+function computeBorderStyle(horse) {
+  return `"
+  border-left: 10px solid ${computeBorderColor(horse)};
+  border-right: 10px solid ${computeBorderColor(horse)};
+  "`
+}
+
+module.exports = { lastVisitDate, computeBorderStyle }
