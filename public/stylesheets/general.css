@@ -69,3 +69,7 @@
 .pad {
   padding: 5px;
 }
+
+nav {
+  background-color: var(--nav-color);
+}
