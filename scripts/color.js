@@ -7,6 +7,7 @@ const accent = '#FFC535'
 const border = '#386150'
 const primaryText = '#386150'
 const secondaryText = '#000'
+const tertiaryText = '#fff'
 
 module.exports = () => {
   return `
@@ -18,6 +19,7 @@ module.exports = () => {
     --border-color: ${border};
     --primary-text-color: ${primaryText};
     --secondary-text-color: ${secondaryText};
+    --tertiary-text-color: ${tertiaryText};
   }
   `
 }

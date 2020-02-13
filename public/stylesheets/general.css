@@ -92,11 +92,12 @@ body {
   box-shadow: none;
 }
 
-.btn-primary {
+.btn {
   background-color: var(--primary-text-color);
   border-color: var(--primary-text-color);
+  color: var(--tertiary-text-color);
 }
-.btn-primary:hover {
+.btn:hover {
   background-color: var(--accent-color);
   border-color: var(--accent-color);
   color: var(--secondary-text-color);
