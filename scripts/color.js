@@ -1,11 +1,13 @@
 'use strict'
 
-const navColor = '#42240c'
+const navColor = '#3A2B29'
+const bgColor = '#232528'
 
 module.exports = () => {
   return `
   :root {
-    --nav-color: ${navColor}
+    --nav-color: ${navColor};
+    --bg-color: ${bgColor};
   }
   `
 }

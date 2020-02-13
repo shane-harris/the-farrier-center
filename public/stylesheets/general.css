@@ -73,3 +73,7 @@
 nav {
   background-color: var(--nav-color);
 }
+
+body {
+  background-color: var(--bg-color);
+}
