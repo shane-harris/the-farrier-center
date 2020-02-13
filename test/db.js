@@ -15,10 +15,8 @@ describe('Database tests', () => {
         useCreateIndex: true,
         useFindAndModify: false
       })
-      .then(() => {
-        console.log('We are connected to test database!')
-      })
-      .catch(console.error.bind(console, 'connection error'))
+      .then(() => done())
+      .catch(done)
   })
 
   after(done => {
