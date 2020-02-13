@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.GMAIL_PASS
   }
 })
-const sendEmail = async (req, res, next) => {
+const sendEmail = async (req, res) => {
   try {
     const token = jwt.sign(
       {
