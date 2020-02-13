@@ -152,6 +152,8 @@ router.get('/user/theme', loggedIn, (req, res) => {
 
 router.post('/user/theme', (req, res) => {
   console.log(`Changing theme for ${req.user.username} to ${req.body.theme}`)
+  req.user.theme = req.body.theme
+  req.user.save()
   res.redirect('/user/theme')
 })
 
