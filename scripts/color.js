@@ -1,7 +1,7 @@
 'use strict'
 
 const themes = {
-  forestTheme: {
+  Forest: {
     nav: '#3A2B29',
     bg: '#232528',
     fg: '#3A2B29',
@@ -11,7 +11,7 @@ const themes = {
     secondaryText: '#000',
     tertiaryText: '#fff'
   },
-  darkTheme: {
+  Dark: {
     nav: '#222',
     bg: '#333',
     fg: '#222',
@@ -23,9 +23,8 @@ const themes = {
   }
 }
 
-const color = themes.darkTheme
-
-module.exports = () => {
+module.exports = theme => {
+  const color = themes[theme]
   return `
   :root {
     --nav-color: ${color.nav};
