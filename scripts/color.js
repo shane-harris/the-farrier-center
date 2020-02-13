@@ -23,7 +23,13 @@ const themes = {
   }
 }
 
-module.exports = theme => {
+const themeList = userTheme =>
+  Object.keys(themes).map(theme => {
+    console.log(theme, userTheme)
+    return { name: theme, selected: theme === userTheme ? true : false }
+  })
+
+const colorStyle = theme => {
   const color = themes[theme]
   return `
   :root {
@@ -38,3 +44,5 @@ module.exports = theme => {
   }
   `
 }
+
+module.exports = { colorStyle, themes: themeList }

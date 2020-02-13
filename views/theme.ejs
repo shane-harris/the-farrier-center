@@ -9,7 +9,6 @@
         <div class="form-group">
           <label>Theme:</label>
           <select class="form-control" name="theme">
-            <% const themes = [{ name: 'Dark', selected: true }, { name: 'Forest', selected: false }] %>
             <% for (theme of themes) { %>
             <%- include('partials/theme-option', theme) %>
             <% } %>
