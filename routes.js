@@ -146,4 +146,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
+router.get('/user/theme', loggedIn, (req, res) => {
+  res.render('theme.ejs', { user: req.user })
+})
+
 module.exports = router
