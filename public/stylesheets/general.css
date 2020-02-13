@@ -101,3 +101,7 @@ body {
   border-color: var(--accent-color);
   color: var(--secondary-text-color);
 }
+
+a {
+  color: var(--primary-text-color);
+}
