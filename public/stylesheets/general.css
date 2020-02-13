@@ -77,3 +77,26 @@ nav {
 body {
   background-color: var(--bg-color);
 }
+
+.table,
+.form,
+.form-control,
+.form-control:focus {
+  background-color: var(--fg-color);
+  border-color: var(--border-color);
+  color: var(--primary-text-color);
+}
+.form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-text-color);
+  border-color: var(--primary-text-color);
+}
+.btn-primary:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--secondary-text-color);
+}

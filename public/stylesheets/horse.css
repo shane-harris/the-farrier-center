@@ -6,8 +6,3 @@
   padding: 20px;
   margin-top: 2px;
 }
-
-.table,
-.form {
-  color: var(--fg-text-color);
-}
