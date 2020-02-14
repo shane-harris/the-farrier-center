@@ -3,12 +3,21 @@
 const passport = require('passport')
 const express = require('express')
 const router = require('express').Router()
+const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
-const { sendEmail } = require('./middleware/emailer')
+const { sendRegEmail, sendPassResetEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
+
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS
+  }
+})
 
 // Serve contents of 'public' folder to the client
 router.use('/public', express.static('public'))
@@ -58,7 +67,80 @@ router.post('/admin-register', (req, res, next) => {
   })
 })
 
-router.post('/send-email', sendEmail, (req, res, next) => { })
+router.post('/send-email', (req, res, next) => { })
+
+router.post('/forgot-password', (req, res, next) => {
+  User.findOne({ email: req.body.email }, (err, user) => {
+    if (!user) {
+      req.flash('error', 'could not find account with that email adress')
+      return res.redirect('login')
+    }
+  })
+  try {
+    const token = jwt.sign(
+      {
+        email: req.body.email
+      },
+
+      process.env.JWT_KEY,
+      {
+        expiresIn: '1h'
+      }
+    )
+
+    const url = `http://localhost:8000/reset-password/${token}`
+
+    transporter.sendMail({
+      to: req.body.email,
+      subject: 'Reset Your Password',
+      html: `Follow the link to reset your password: <a href="${url}">${url}</a>`
+    })
+  } catch (e) {
+    console.log(e)
+  }
+  // not actually an error
+  req.flash('error', 'link to reset password sent you email')
+  return res.redirect('login')
+})
+
+router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
+
+  jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
+    if (err) return res.sendStatus(403)
+    req.email = email
+  })
+  res.render('reset-password.ejs', { token: req.params.token })
+})
+
+router.post('/reset-password/:token', (req, res, next) => {
+  var userEmail
+  jwt.verify(req.params.token, process.env.JWT_KEY, (err, message) => {
+    if (err) return res.sendStatus(403)
+    userEmail = message.email
+  })
+  User.findOne({ email: userEmail }, (err, user) => {
+
+    if (err) {
+      res.sendStatus(500)
+    }
+    else {
+      if (user) {
+        user.setPassword(req.body.password1, err => {
+          if (err) {
+            res.json({ success: false, message: 'Unable to update password.' });
+          }
+        })
+        user.save()
+        req.flash('error', 'successfuly changed password')
+        res.redirect('/login')
+      }
+      else {
+        res.sendStatus(500)
+      }
+    }
+  })
+
+})
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
