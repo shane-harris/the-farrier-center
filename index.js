@@ -41,6 +41,8 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(require('./middleware/style'))
+
 // Configure routes, as specified in 'routes.js'
 app.use(require('./routes'))
 

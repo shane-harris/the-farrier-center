@@ -146,4 +146,15 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
+router.get('/user/theme', loggedIn, (req, res) => {
+  res.render('theme.ejs', { user: req.user })
+})
+
+router.post('/user/theme', (req, res) => {
+  console.log(`Changing theme for ${req.user.username} to ${req.body.theme}`)
+  req.user.theme = req.body.theme
+  req.user.save()
+  res.redirect('/user/theme')
+})
+
 module.exports = router

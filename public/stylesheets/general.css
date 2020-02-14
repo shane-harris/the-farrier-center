@@ -24,7 +24,7 @@
 }
 
 .button-login {
-  background-color: #008cba;
+  background-color: var(--accent-color);
   border: none;
   border-radius: 12px;
   color: white;
@@ -36,16 +36,15 @@
 }
 
 .button-login:hover {
-  background-color: white; /* Green */
-  color: #008cba;
-  border: 2px solid #008cba;
-  border-color: #008cba;
+  background-color: var(--tertiary-text-color);
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
   font-weight: bold;
   text-decoration: underline;
 }
 
 .login-links {
-  color: #008cba;
+  color: var(--primary-text-color);
 }
 
 .login-links:hover {
@@ -68,4 +67,45 @@
 
 .pad {
   padding: 5px;
+}
+
+nav {
+  background-color: var(--nav-color);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--primary-text-color);
+}
+
+.table,
+.form,
+.form-control,
+.form-control:focus {
+  background-color: var(--fg-color);
+  border-color: var(--border-color);
+  color: var(--primary-text-color);
+}
+.form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: none;
+}
+
+.btn {
+  background-color: var(--primary-text-color);
+  border-color: var(--primary-text-color);
+  color: var(--tertiary-text-color);
+}
+.btn:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--secondary-text-color);
+}
+
+a {
+  color: var(--primary-text-color);
+}
+
+a:hover {
+  color: var(--accent-color);
 }

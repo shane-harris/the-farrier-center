@@ -7,15 +7,16 @@ const User = new Schema({
   fname: String,
   lname: String,
   email: {
-    type: String,
-    required: 'Email address cannot be left blank.',
-    index: { unique: true, dropDups: true }
+    type: String
+    // required: 'Email address cannot be left blank.',
+    // index: { unique: true, dropDups: true }
   },
   role: {
     type: String,
     default: 'user',
     enum: ['user', 'admin']
-  }
+  },
+  theme: String
 })
 
 User.plugin(require('passport-local-mongoose'))
