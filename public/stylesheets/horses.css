@@ -4,34 +4,25 @@
   display: none;
 }
 
-.hprofile {
-  border: 1px solid black;
-  border-radius: 10px;
-  padding: 20px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
 .horse-profile {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-top: 200px;
   padding-bottom: 40px;
 
-  border: solid cadetblue;
+  border: solid var(--border-color);
   font-size: 18px;
   text-align: center;
+  color: var(--primary-text-color);
 
   background-image: url('../images/horse_profile.png');
   background-position: top center;
   background-size: 90%;
   background-repeat: no-repeat;
+
+  background-color: var(--fg-color);
 }
 
 .horse-profile:hover {
-  border: solid lightblue;
-}
-
-.horse-profile.bg-alt {
-  background: #abb1b8;
+  border: solid var(--accent-color);
 }

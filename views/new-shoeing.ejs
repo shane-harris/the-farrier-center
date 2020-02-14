@@ -1,0 +1,29 @@
+<%- include('partials/head', { title: 'New Shoeing' }) %>
+
+<body>
+  <%- include('partials/header-nav') %>
+  <div id="page-container" class="container-fluid">
+    <div class="container form">
+      <h1>New Shoeing for [Insert horsename here]</h1>
+      <form action="" method="">
+
+        <div class="row">
+          <%- include('partials/shoeing-input-form', {hoof: 'Front Left'}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Front Right'}) %>
+        </div>
+        <div class="row">
+          <%- include('partials/shoeing-input-form', {hoof: 'Back Left'}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Back Right'}) %>
+        </div>
+
+        <%- include('partials/shoeing-checkboxes') %>
+
+        <div class="">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+</body>
