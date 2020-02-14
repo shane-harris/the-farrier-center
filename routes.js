@@ -9,7 +9,7 @@ const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
-const { sendRegEmail, sendPassResetEmail } = require('./middleware/emailer')
+const { sendRegEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
 
 const transporter = nodemailer.createTransport({
@@ -169,7 +169,7 @@ router.post('/reset-password/:token', (req, res, next) => {
   })
 
 })
-router.post('/send-email', sendEmail)
+router.post('/send-email', sendRegEmail)
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
