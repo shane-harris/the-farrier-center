@@ -42,6 +42,12 @@ router.post('/new-horse', loggedIn, (req, res) => {
   res.redirect('/horses')
 })
 
+router.get('/horse/:id/update-horse', loggedIn, (req, res) => {
+  Horse.findOne({ id: req.params.id })
+    .then(horse => res.render('update-horse.ejs', { horse, name: req.user.username }))
+    .catch(console.error)
+})
+
 router.get('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .then(horse => res.render('new-medical-analysis.ejs', { horse, name: req.user.username }))
