@@ -153,14 +153,15 @@ router.post('/reset-password/:token', (req, res, next) => {
     }
     else {
       if (user) {
-        user.setPassword(req.body.password1, err => {
+        user.setPassword(req.body.password1, (err, user) => {
           if (err) {
             res.json({ success: false, message: 'Unable to update password.' });
           }
+          user.save()
+          req.flash('error', 'successfuly changed password')
+          res.redirect('/login')
         })
-        user.save()
-        req.flash('error', 'successfuly changed password')
-        res.redirect('/login')
+
       }
       else {
         res.sendStatus(500)
