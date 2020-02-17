@@ -78,28 +78,28 @@ body {
   color: var(--primary-text-color);
 }
 
-.table,
 .form,
 .form-control,
 .form-control:focus {
-  background-color: var(--fg-color);
+  background-color: var(--input-bg-color);
   border-color: var(--border-color);
   color: var(--primary-text-color);
 }
 .form-control:focus {
-  border-color: var(--accent-color);
+  background-color: var(--input-bg-focus-color);
+  border-color: var(--border-focus-color);
   box-shadow: none;
 }
 
 .btn {
-  background-color: var(--primary-text-color);
-  border-color: var(--primary-text-color);
-  color: var(--tertiary-text-color);
+  background-color: var(--button-color);
+  border-color: var(--button-color);
+  color: var(--button-text-color);
 }
 .btn:hover {
-  background-color: var(--accent-color);
-  border-color: var(--accent-color);
-  color: var(--secondary-text-color);
+  background-color: var(--button-hover-color);
+  border-color: var(--button-hover-color);
+  color: var(--button-text-hover-color);
 }
 
 a {
