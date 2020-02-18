@@ -1,7 +1,7 @@
 <p>Horse Picture here</p>
 <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" name="name"
+    <label for="name">Name(*)</label>
+    <input type="text" class="form-control" id="name" name="name" value="<%= horse.name %>"
            placeholder="Enter Horse Name Here" required>
 </div>
 
@@ -54,24 +54,24 @@
 </div>
 
 <div class="form-group">
-    <label for="location">Location</label>
-    <input type="text" class="form-control" id="name" name="location"
+    <label for="location">Location(*)</label>
+    <input type="text" class="form-control" id="name" name="location" value="<%= horse.location %>"
            placeholder="1234 James Town Rd." required>
 </div>
 
 <div class="form-group">
-    <label for="owner">Owner</label>
-    <input type="name" class="form-control" id="owner" name="owner"
+    <label for="owner">Owner(*)</label>
+    <input type="name" class="form-control" id="owner" name="owner" value="<%= horse.owner %>"
            placeholder="Enter the owner's name here" required>
 </div>
 
 <div class="form-group">
     <label for="vet">Veterinarian</label>
-    <input type="name" class="form-control" id="vet" name="vet"
+    <input type="name" class="form-control" id="vet" name="vet" value="<%= horse.vet %>"
            placeholder="Enter the vet's name here">
 </div>
 <div class="form-group">
     <label for="history">History</label>
-    <textarea class="form-control" id="history" name="history" rows="4"
+    <textarea class="form-control" id="history" name="history" rows="4" value="<%= horse.history %>"
               placeholder="Please be a happy history"></textarea>
 </div>
