@@ -1,11 +1,11 @@
-<%- include('partials/head', { title: 'Update Horse' }) %>
+<%- include('partials/head', { title: `Update ${horse.name}` }) %>
 
 <body>
 <%- include('partials/header-nav') %>
 <div id="page-container" class="container-fluid">
     <div class="container form">
         <H1>Update <%= horse.name %></H1>
-        <form action="/update-horse" method="post">
+        <form action="/horse/<%= horse.id%>/update-horse" method="post">
 
             <%- include('partials/horse-input-fields') %>
 

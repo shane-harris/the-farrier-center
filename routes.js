@@ -48,6 +48,22 @@ router.get('/horse/:id/update-horse', loggedIn, (req, res) => {
     .catch(console.error)
 })
 
+router.post('/horse/:id/update-horse', loggedIn, (req, res) => {
+  console.log(req.body)
+  Horse.findOne({ id: req.params.id }).then(horse => {
+    horse.name = req.body.name
+    horse.gender = req.body.gender
+    horse.temperament = req.body.temperament
+    horse.discipline = req.body.discipline
+    horse.location = req.body.location
+    horse.owner = req.body.owner
+    horse.vet = req.body.vet
+    horse.history = req.body.history
+    horse.save()
+  })
+  res.redirect(`/horse/${req.params.id}`)
+})
+
 router.get('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .then(horse => res.render('new-medical-analysis.ejs', { horse, name: req.user.username }))
