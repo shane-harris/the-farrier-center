@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken')
 const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
-const Shoeing = require('./models/shoeing')
 
 const { sendEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
@@ -39,16 +38,7 @@ router.get('/new-horse', loggedIn, (req, res) => {
 
 router.post('/new-horse', loggedIn, (req, res) => {
   console.log(req.body)
-  new Horse({
-    name: req.body.name,
-    gender: req.body.gender,
-    temperament: req.body.temperament,
-    discipline: req.body.discipline,
-    location: req.body.location,
-    owner: req.body.owner,
-    vet: req.body.vet,
-    history: req.body.history
-  }).save(console.error)
+  new Horse(req.body).save(console.error)
   res.redirect('/horses')
 })
 
@@ -64,10 +54,7 @@ router.post('/horse/:id/new-medical-analysis', loggedIn, (req, res) => {
     horse_id: req.params.id,
     date: new Date(),
     farrier: 'Default Steve',
-    gait: req.body.gait,
-    lameness: req.body.lameness,
-    blemishes: req.body.blemishes,
-    laminitus: req.body.laminitus
+    ...req.body
   }).save(console.error)
   res.redirect(`/horse/${req.params.id}`)
 })
@@ -84,26 +71,22 @@ router.get('/admin', loggedIn, isAdmin, (req, res) => {
   res.render('admin.ejs', { username: req.user.username })
 })
 
-router.post('/admin-register', (req, res, next) => {
-  var role = 'user'
+router.post('/admin-register', (req, res) => {
+  const role = req.body.adminCheck === 'on' ? 'admin' : 'user'
 
-  if (req.body.adminCheck == 'on') {
-    console.log('registering admin user')
-    role = 'admin'
+  if (role === 'admin') {
+    console.log('Registering admin user')
   }
 
-  User.register(new User({ username: req.body.username, role: role }), req.body.password, err => {
-    if (err) {
-      console.log('error while user register!', err)
-      return next(err)
-    }
-
-    console.log('user registered!')
-    res.redirect('/admin')
-  })
+  User.register(new User({ username: req.body.username, role }), req.body.password)
+    .then(() => {
+      console.log('User registered!')
+      res.redirect('/admin')
+    })
+    .catch(err => console.error('Error while registering user!', err))
 })
 
-router.post('/send-email', sendEmail, (req, res, next) => {})
+router.post('/send-email', sendEmail)
 
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
@@ -168,6 +151,17 @@ router.get('/search', loggedIn, (req, res) => {
     // sort by lastVisit (ascending)
     .then(horses => res.render('search.ejs', { username: req.user.username, horses: horses }))
     .catch(console.error)
+})
+
+router.get('/user/theme', loggedIn, (req, res) => {
+  res.render('theme.ejs', { user: req.user })
+})
+
+router.post('/user/theme', (req, res) => {
+  console.log(`Changing theme for ${req.user.username} to ${req.body.theme}`)
+  req.user.theme = req.body.theme
+  req.user.save()
+  res.redirect('/user/theme')
 })
 
 module.exports = router

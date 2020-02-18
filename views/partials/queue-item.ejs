@@ -1,11 +1,9 @@
 <%
-  const { lastVisitDate, computeBorderColor } = scripts
+  const { lastVisitDate, computeBorderStyle } = scripts
   const date = lastVisitDate(horse)
-  const borderColor = computeBorderColor(horse)
 %>
 
-<tr style="border-left: 10px solid <%= borderColor %>;
-          border-right: 10px solid <%= borderColor %>;">
+<tr style=<%- computeBorderStyle(horse) %>>
   <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>
   <td>
     <address><%= horse.location %></address>
