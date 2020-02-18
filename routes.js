@@ -8,8 +8,7 @@ const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
-const { sendEmail } = require('./middleware/emailer')
-const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
+const { loggedIn, redirectIfLoggedIn, isAdmin, sendEmail } = require('./middleware/auth')
 
 // Serve contents of 'public' folder to the client
 router.use('/public', express.static('public'))
