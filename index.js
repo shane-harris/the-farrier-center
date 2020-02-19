@@ -54,9 +54,6 @@ app.use('/user', userRoutes)
 app.use('/admin', adminRoutes)
 app.use('/horse', horseRoutes)
 
-//Left to accomadate routes added during Sprint 5
-app.use(require('./routes'))
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found')
