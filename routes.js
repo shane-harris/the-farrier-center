@@ -95,40 +95,41 @@ router.post('/admin-register', (req, res) => {
     .catch(err => console.error('Error while registering user!', err))
 })
 
-router.post('/send-email', (req, res, next) => { })
-
 router.post('/forgot-password', (req, res, next) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       req.flash('error', 'could not find account with that email adress')
       return res.redirect('login')
     }
-  })
-  try {
-    const token = jwt.sign(
-      {
-        email: req.body.email
-      },
+    else {
+      try {
+        const token = jwt.sign(
+          {
+            email: req.body.email
+          },
 
-      process.env.JWT_KEY,
-      {
-        expiresIn: '1h'
+          process.env.JWT_KEY,
+          {
+            expiresIn: '1h'
+          }
+        )
+
+        const url = `http://localhost:8000/reset-password/${token}`
+
+        transporter.sendMail({
+          to: req.body.email,
+          subject: 'Reset Your Password',
+          html: `Follow the link to reset your password: <a href="${url}">${url}</a>`
+        })
+      } catch (e) {
+        console.log(e)
       }
-    )
+      // not actually an error
+      req.flash('error', 'link to reset password sent you email')
+      return res.redirect('login')
+    }
+  })
 
-    const url = `http://localhost:8000/reset-password/${token}`
-
-    transporter.sendMail({
-      to: req.body.email,
-      subject: 'Reset Your Password',
-      html: `Follow the link to reset your password: <a href="${url}">${url}</a>`
-    })
-  } catch (e) {
-    console.log(e)
-  }
-  // not actually an error
-  req.flash('error', 'link to reset password sent you email')
-  return res.redirect('login')
 })
 
 router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
