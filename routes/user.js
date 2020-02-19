@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 router.use('/public', express.static('public'))
 
 router.get('/', loggedIn, (req, res) => {
-  res.render('user.ejs')
+  res.render('user.ejs', { username: req.user.username })
 })
 
 router.get('/theme', loggedIn, (req, res) => {
