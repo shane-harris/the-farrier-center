@@ -105,31 +105,4 @@ router.post('/reset-password/:token', (req, res, next) => {
 
 })
 
-router.get('/register', redirectIfLoggedIn, (req, res) => {
-  res.render('register.ejs', {})
-})
-
-router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
-  jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
-    if (err) return res.sendStatus(403)
-    req.email = email
-  })
-
-  res.render('register.ejs', {})
-})
-
-router.post('/register', (req, res, next) => {
-  console.log('registering user')
-  User.register(new User({ username: req.body.username }), req.body.password, err => {
-    if (err) {
-      console.log('error while user register!', err)
-      return next(err)
-    }
-
-    console.log('user registered!')
-
-    res.redirect('/login')
-  })
-})
-
 module.exports = router
