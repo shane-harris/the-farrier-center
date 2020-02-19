@@ -1,7 +1,7 @@
 <%- include('partials/head', { title: 'Horse Profile', css: 'horse' }) %>
 
 <body>
-  <%- include('partials/header-nav', {name: username}) %>
+  <%- include('partials/header-nav') %>
 
   <% const medicalAnalysis = {}%>
 
@@ -116,7 +116,7 @@
           </a>
         </div>
         <div class="pad">
-          <a type="button" class="btn btn-dark" href="/new-shoeing">New Shoeing</a>
+          <a type="button" class="btn btn-dark" href="/horse/new-shoeing">New Shoeing</a>
         </div>
       </div>
       <div id="shoeing" class="collapse">

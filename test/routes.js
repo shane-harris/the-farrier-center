@@ -6,10 +6,10 @@ chai.should()
 const app = require('../index')
 
 describe('Routes', () => {
-  describe('GET /horses', () => {
+  describe('GET /horse/all', () => {
     let req
     before(() => {
-      return (req = chai.request(app).get('/horses'))
+      return (req = chai.request(app).get('/horse/all'))
     })
 
     it('should get the horses page', () => {
@@ -72,10 +72,10 @@ describe('Routes', () => {
     })
   })
 
-  describe('GET /queue', () => {
+  describe('GET /horse/queue', () => {
     let req
     before(() => {
-      return (req = chai.request(app).get('/queue'))
+      return (req = chai.request(app).get('/horse/queue'))
     })
 
     it('should get the queue page', () => {

@@ -54,3 +54,68 @@ GMAIL_USER='farrierdev@gmail.com'
 GMAIL_PASS='farierdevsacstate'
 JWT_KEY='bb8710e8f071a10891b1e256a69c0e4c5fbd7c8724e7202703093f6327b4ff625461e516e6a8dcd35c1d60309a4b3c56b4f2a322a1b049255dca82d331b30d41'
 ```
+
+## Set up new routes and revisions
+
+Routes have beed extracted to a new folder, routes, and new files index.js, horse.js, user.js index.js and updated to work with this new structure
+
+Routes now fit under a general route prefix. The current files are below.
+
+```
+/
+/user
+/horse
+/admin
+```
+
+For example all routes related to horse go in the horse.js file under routes. Some have been updated.
+
+```
+/horse
+/horse/all
+/horse/:id
+/horse/new
+```
+
+For routes like register, login and logout they reside in the index.js file.
+
+```
+/login
+/logout
+/register
+```
+
+Admin related routes are in admin.js some have been updated.
+
+```
+/admin
+/admin/register
+```
+
+Add new routes to the appropriate file in the routes folder. The prefix is automatically added by index.js in the root folder.
+
+A /horse/:id/delete route would be added in a route method as
+
+```
+router.post("/:id/delete", ...
+```
+
+NOT as
+
+```
+router.post("/horse/:id/delete"...
+```
+
+When refering to a route in a redirect or html form action use the whole route name including the prefix.
+
+For example a redirect to /horse/:id/ no matter from which file it is called even inside horse.js router file uses this exact spelling
+
+```
+/horse/:id/
+```
+
+NOT
+
+```
+/:id/
+```
