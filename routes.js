@@ -9,7 +9,6 @@ const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
 
-const { sendRegEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
 
 

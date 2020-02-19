@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const { sendRegEmail } = require('./middleware/emailer')
-const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
+const nodemailer = require('nodemailer')
+const User = require('../models/user')
+var jwt = require('jsonwebtoken')
+const { loggedIn, redirectIfLoggedIn } = require('../middleware/auth')
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -32,7 +34,7 @@ router.post('/forgot-password', (req, res, next) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       req.flash('error', 'could not find account with that email adress')
-      return res.redirect('login')
+      return res.redirect('/login')
     }
     else {
       try {
@@ -47,7 +49,7 @@ router.post('/forgot-password', (req, res, next) => {
           }
         )
 
-        const url = `http://localhost:8000/reset-password/${token}`
+        const url = `http://localhost:8000/user/reset-password/${token}`
 
         transporter.sendMail({
           to: req.body.email,
@@ -59,7 +61,7 @@ router.post('/forgot-password', (req, res, next) => {
       }
       // not actually an error
       req.flash('error', 'link to reset password sent you email')
-      return res.redirect('login')
+      return res.redirect('/login')
     }
   })
 

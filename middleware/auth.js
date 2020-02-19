@@ -34,7 +34,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.GMAIL_PASS
   }
 })
-const sendEmail = async (req, res) => {
+const sendRegEmail = async (req, res) => {
   try {
     const token = jwt.sign(
       {
@@ -60,4 +60,4 @@ const sendEmail = async (req, res) => {
   res.redirect('/admin')
 }
 
-module.exports = { loggedIn, redirectIfLoggedIn, isAdmin, sendEmail }
+module.exports = { loggedIn, redirectIfLoggedIn, isAdmin, sendRegEmail }
