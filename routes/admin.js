@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
-const { isAdmin, sendEmail } = require('../middleware/auth')
+const { isAdmin, sendRegEmail } = require('../middleware/auth')
 
 router.use(isAdmin)
 router.use('/public', express.static('public'))
@@ -25,6 +25,6 @@ router.post('/register', (req, res) => {
     .catch(err => console.error('Error while registering user!', err))
 })
 
-router.post('/send-email', sendEmail)
+router.post('/send-email', sendRegEmail)
 
 module.exports = router
