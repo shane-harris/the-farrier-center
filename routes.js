@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
+const url = require('url')
 
 const { loggedIn, redirectIfLoggedIn, isAdmin, sendEmail } = require('./middleware/auth')
 

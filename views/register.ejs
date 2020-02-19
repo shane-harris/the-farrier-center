@@ -1,7 +1,32 @@
 <%- include('partials/head', { title: 'Register' }) %>
+<!--user: testuser  pass:test
+for admin access-->
 
-<form action="/register" method="post">
-  <div><label>Username</label><input type="text" name="username" /></div>
-  <div><label>Password</label><input type="password" name="password" /></div>
-  <div><input type="submit" value="Register" /></div>
-</form>
+<body>
+  <%- include('partials/header-nav', { loggedOut: true }) %>
+  <div style="min-height: 50px;"></div>
+  <div id="page-container" class="container-fluid password-form col-xl">
+    <div class="container form">
+      <div class="col-xs-1 text-center">
+        <h1>Registration</h1>
+      </div>
+
+      <form action="/register" method="post">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" class="form-control" name="username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" name="password" />
+        </div>
+        <div class="col-xs-1 text-center">
+          <button input type="submit" class="button-login" value="Register">Register</button>
+        </div>
+        <div class="col-xs-1 text-center">
+          <a class="login-links" href="/login">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

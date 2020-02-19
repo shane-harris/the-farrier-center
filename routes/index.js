@@ -2,7 +2,9 @@ const passport = require('passport')
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+const url = require('url')
 const User = require('../models/user')
+const Horse = require('../models/horse')
 const { loggedIn, redirectIfLoggedIn } = require('../middleware/auth')
 
 router.use('/public', express.static('public'))
@@ -49,6 +51,25 @@ router.post(
 router.get('/logout', (req, res) => {
   req.logout()
   res.redirect('/')
+})
+
+router.get('/search', loggedIn, (req, res) => {
+  Horse.find()
+    // sort by id (ascending)
+    .sort({ id: 1 })
+    .then(horses => res.render('search.ejs', { username: req.user.username, horses: horses }))
+    .catch(console.error)
+  console.log(req.body, 'Im in GET')
+})
+
+router.post('/search', (req, res) => {
+  res.redirect(
+    url.format({
+      pathname: '/search',
+      query: req.body.query
+    })
+  )
+  //console.log(req.body)
 })
 
 module.exports = router
