@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const Medical = require('./models/medical')
 const Horse = require('./models/horse')
 const User = require('./models/user')
+const url = require('url')
 
 const { sendEmail } = require('./middleware/emailer')
 const { loggedIn, redirectIfLoggedIn, isAdmin } = require('./middleware/auth')
@@ -148,9 +149,21 @@ router.get('/logout', (req, res) => {
 
 router.get('/search', loggedIn, (req, res) => {
   Horse.find()
-    // sort by lastVisit (ascending)
+    // sort by id (ascending)
+    .sort({ id: 1 })
     .then(horses => res.render('search.ejs', { username: req.user.username, horses: horses }))
     .catch(console.error)
+  console.log(req.body, 'Im in GET')
+})
+
+router.post('/search', (req, res) => {
+  res.redirect(
+    url.format({
+      pathname: '/search',
+      query: req.body.query
+    })
+  )
+  //console.log(req.body)
 })
 
 router.get('/user/theme', loggedIn, (req, res) => {
