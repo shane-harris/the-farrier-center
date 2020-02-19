@@ -32,7 +32,7 @@ router.post('/theme', loggedIn, (req, res) => {
   res.redirect('/user/theme')
 })
 
-router.post('/forgot-password', (req, res, next) => {
+router.post('/forgot-password', (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       req.flash('error', 'could not find account with that email adress')
@@ -75,7 +75,7 @@ router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
   res.render('reset-password.ejs', { token: req.params.token })
 })
 
-router.post('/reset-password/:token', (req, res, next) => {
+router.post('/reset-password/:token', (req, res) => {
   var userEmail
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, message) => {
     if (err) return res.sendStatus(403)
