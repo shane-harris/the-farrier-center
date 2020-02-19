@@ -6,7 +6,8 @@
 </div>
 
 <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="gender" id="radioMale" value="Male">
+    <input class="form-check-input" type="radio" name="gender" id="radioMale" value="Male"
+    <%- horse.gender === 'Male' ? "selected" : '' %> >
     <label class="form-check-label" for="radioMale">
         <H2>Male</H2>
     </label>
@@ -14,7 +15,7 @@
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="gender" id="radioFemale"
-           value="Female">
+           value="Female" <%- horse.gender === 'Female' ? "selected" : '' %> >
     <label class="form-check-label" for="radioFemale">
         <H2>Female</H2>
     </label>
