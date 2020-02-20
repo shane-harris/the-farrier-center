@@ -5,7 +5,7 @@
   <div id="page-container" class="container-fluid">
     <div class="container form">
       <h1>New Shoeing for <%= horse.name %></h1>
-      <form action="/horse/<%= horse.id %>/new-shoeing" method="post">
+        <form action="/horse/<%= horse.id %>/new-shoeing" method="post">
 
         <div class="row">
           <%- include('partials/shoeing-input-form', {hoof: 'Front Left'}) %>
@@ -19,7 +19,7 @@
         <%- include('partials/shoeing-checkboxes') %>
 
         <div class="">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" value="'shoeing">Submit</button>
         </div>
 
       </form>

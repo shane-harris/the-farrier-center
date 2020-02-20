@@ -1,7 +1,7 @@
 'use strict'
 
 const mongoose = require('mongoose')
-const AutoIncrement = require('mongoose-sequence')(mongoose)
+//const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const Schema = mongoose.Schema
 
@@ -13,8 +13,11 @@ const HorseshoeSchema = new Schema({
   shoeSize: Number,
   notes: String
 })
-HorseshoeSchema.plugin(AutoIncrement, { inc_field: 'id' })
+//Does a horseshoe need a horse Id if it only exists in a report which must have that
+// horses ID?
 
-const Horseshoe = mongoose.model('horses', HorseshoeSchema)
+//HorseshoeSchema.plugin(AutoIncrement, { inc_field: 'id' })
+
+const Horseshoe = mongoose.model('horseshoe', HorseshoeSchema)
 
 module.exports = Horseshoe

@@ -4,6 +4,7 @@ const express = require('express')
 const router = express.Router()
 const Medical = require('../models/medical')
 const Horse = require('../models/horse')
+const Shoeing = require('../models/shoeing')
 const { loggedIn } = require('../middleware/auth')
 
 router.use('/public', express.static('public'))
@@ -65,6 +66,17 @@ router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
 
 router.get('/:id/new-shoeing', loggedIn, (req, res) => {
   res.render('new-shoeing.ejs')
+})
+
+router.post('/:id/new-shoeing', loggedIn, (req, res) => {
+  console.log(req.body)
+  new Shoeing({
+    horse_id: req.params.id,
+    date: new Date(), //returns todays date
+    farrier: 'Default Steve',
+    ...req.body
+  }).save(console.error)
+  res.redirect(`/horse/${req.params.id}`)
 })
 
 module.exports = router
