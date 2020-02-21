@@ -1,0 +1,33 @@
+.button-login {
+  background-color: var(--button-color);
+  border: none;
+  border-radius: 12px;
+  color: var(--button-text-color);
+  text-align: center;
+  display: inline-block;
+  width: 75%;
+  height: 35px;
+  transition-duration: 0.4s;
+}
+
+.button-login:hover {
+  background-color: var(--button-hover-color);
+  color: var(--button-text-hover-color);
+  border: 2px solid var(--button-border-color);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.login-alert {
+  color: red;
+  margin: 0px;
+  padding: 0px;
+}
+
+.login-links {
+  color: var(--primary-text-color);
+}
+
+.login-links:hover {
+  font-weight: bold;
+}
