@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express')
 const router = express.Router()
 const Medical = require('../models/medical')
@@ -61,7 +63,7 @@ router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.get('/new-shoeing', loggedIn, (req, res) => {
+router.get('/:id/new-shoeing', loggedIn, (req, res) => {
   res.render('new-shoeing.ejs')
 })
 

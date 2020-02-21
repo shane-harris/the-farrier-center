@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express')
 const router = express.Router()
 const nodemailer = require('nodemailer')
@@ -30,13 +32,12 @@ router.post('/theme', loggedIn, (req, res) => {
   res.redirect('/user')
 })
 
-router.post('/forgot-password', (req, res, next) => {
+router.post('/forgot-password', (req, res) => {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
       req.flash('error', 'could not find account with that email adress')
       return res.redirect('/login')
-    }
-    else {
+    } else {
       try {
         const token = jwt.sign(
           {
@@ -64,11 +65,9 @@ router.post('/forgot-password', (req, res, next) => {
       return res.redirect('/login')
     }
   })
-
 })
 
 router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
-
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
     if (err) return res.sendStatus(403)
     req.email = email
@@ -76,35 +75,30 @@ router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
   res.render('reset-password.ejs', { token: req.params.token })
 })
 
-router.post('/reset-password/:token', (req, res, next) => {
+router.post('/reset-password/:token', (req, res) => {
   var userEmail
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, message) => {
     if (err) return res.sendStatus(403)
     userEmail = message.email
   })
   User.findOne({ email: userEmail }, (err, user) => {
-
     if (err) {
       res.sendStatus(500)
-    }
-    else {
+    } else {
       if (user) {
         user.setPassword(req.body.password1, (err, user) => {
           if (err) {
-            res.json({ success: false, message: 'Unable to update password.' });
+            res.json({ success: false, message: 'Unable to update password.' })
           }
           user.save()
           req.flash('error', 'successfuly changed password')
           res.redirect('/login')
         })
-
-      }
-      else {
+      } else {
         res.sendStatus(500)
       }
     }
   })
-
 })
 
 module.exports = router
