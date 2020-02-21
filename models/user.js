@@ -11,6 +11,7 @@ const User = new Schema({
     // required: 'Email address cannot be left blank.',
     // index: { unique: true, dropDups: true }
   },
+  phone: String,
   role: {
     type: String,
     default: 'user',
