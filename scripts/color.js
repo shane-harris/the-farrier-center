@@ -30,6 +30,8 @@ const themes = {
     linkHover: yellow,
     loginText: yellow,
     nav: coal,
+    navText: ivory,
+    navTextHover: white,
     primaryText: ivory,
     queue: coal,
     queueText: ivory
@@ -49,6 +51,8 @@ const themes = {
     linkHover: cadetblue,
     loginText: cadetblue,
     nav: oceanblue,
+    navText: white,
+    navTextHover: lightblue,
     primaryText: black,
     queue: turqoisegray,
     queueText: black
@@ -68,6 +72,8 @@ const themes = {
     linkHover: firgreen,
     loginText: firgreen,
     nav: coffee,
+    navText: ivory,
+    navTextHover: white,
     primaryText: firgreen,
     queue: coffee,
     queueText: ivory
@@ -123,6 +129,8 @@ const colorStyle = theme => {
     --link-hover-color: ${color.linkHover};
     --login-text-color: ${color.loginText};
     --nav-color: ${color.nav};
+    --nav-text-color: ${color.navText};
+    --nav-text-hover-color: ${color.navTextHover};
     --primary-text-color: ${color.primaryText};
     --queue-color: ${color.queue};
     --queue-text-color: ${color.queueText};
