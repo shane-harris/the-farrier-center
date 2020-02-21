@@ -12,6 +12,7 @@ const themes = {
     buttonTextHover: '#ffc535',
     fg: '#222',
     linkHover: '#ffc535',
+    loginText: '#ffc535',
     nav: '#222',
     primaryText: '#aaa',
     queue: '#222',
@@ -30,6 +31,7 @@ const themes = {
     inputBg: '#fff',
     inputBgFocus: '#eeeef5',
     linkHover: 'cadetblue',
+    loginText: 'cadetblue',
     nav: '#033860',
     primaryText: '#000',
     queue: '#033860',
@@ -48,6 +50,7 @@ const themes = {
     inputBg: '#232528',
     inputBgFocus: '#37383B',
     linkHover: '#386150',
+    loginText: '#386150',
     nav: '#3A2B29',
     primaryText: '#386150',
     queue: '#3A2B29',
@@ -102,6 +105,7 @@ const colorStyle = theme => {
     --input-bg-color: ${color.inputBg};
     --input-bg-focus-color: ${color.inputBgFocus};
     --link-hover-color: ${color.linkHover};
+    --login-text-color: ${color.loginText};
     --nav-color: ${color.nav};
     --primary-text-color: ${color.primaryText};
     --queue-color: ${color.queue};

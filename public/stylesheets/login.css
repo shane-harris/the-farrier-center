@@ -31,3 +31,7 @@
 .login-links:hover {
   font-weight: bold;
 }
+
+.form-control:focus {
+  color: var(--login-text-color);
+}
