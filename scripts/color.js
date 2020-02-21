@@ -4,6 +4,7 @@ const black = 'black'
 const coal = '#222'
 const slate = '#333'
 const ivory = '#aaa'
+const dimwhite = '#ddd'
 const white = 'white'
 const yellow = '#ffc535'
 const cadetblue = 'cadetblue'
@@ -76,7 +77,7 @@ const themes = {
     navTextHover: white,
     primaryText: firgreen,
     queue: coffee,
-    queueText: ivory
+    queueText: dimwhite
   }
 }
 
