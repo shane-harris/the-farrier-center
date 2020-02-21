@@ -24,5 +24,5 @@
 }
 
 .horse-profile:hover {
-  border: solid var(--accent-color);
+  border: solid var(--border-hover-color);
 }
