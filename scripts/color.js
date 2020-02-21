@@ -55,11 +55,37 @@ const themes = {
   }
 }
 
+/**
+ * Returns a list the names of all available themes, and whether they are selected by the current
+ * user.
+ *
+ * @param {String} userTheme The theme selected by the current user
+ * @returns [{ name: {String}, selected: {Boolean} }]
+ *
+ * @example If there are three available themes, 'Dark', 'Light' and 'Forest', and userTheme is
+ * 'Light', this will return the following:
+ *
+ * [
+ *   { name: 'Dark', selected: false },
+ *   { name: 'Light', selected: true },
+ *   { name: 'Forest', selected: false }
+ * ]
+ *
+ */
+
 const themeList = userTheme =>
   Object.keys(themes).map(theme => {
     return { name: theme, selected: theme === userTheme ? true : false }
   })
 
+/**
+ * Returns a CSS style which defines a number of color variables. These variables are loaded
+ * dynamically based on the selected theme.
+ *
+ * @param {*} [theme] The user's selected theme (no parameter indicates that the user has not
+ * selected a theme, and the default should be used)
+ * @returns {String}
+ */
 const colorStyle = theme => {
   const color = theme !== undefined ? themes[theme] : themes.Dark
   return `
