@@ -1,60 +1,75 @@
 'use strict'
 
+const black = 'black'
+const coal = '#222'
+const slate = '#333'
+const ivory = '#aaa'
+const white = 'white'
+const yellow = '#ffc535'
+const cadetblue = 'cadetblue'
+const lightblue = 'lightblue'
+const lightbluegray = '#eeeef5'
+const oceanblue = '#033860'
+const coffee = '#3a2b29'
+const firgreen = '#386150'
+const darksteel = '#232528'
+const blueslate = '#37383b'
+
 const themes = {
   Dark: {
-    bg: '#333',
-    border: '#000',
-    borderHover: '#ffc535',
-    button: '#ffc535',
-    buttonBorderHover: '#ffc535',
-    buttonHover: '#222',
-    buttonText: '#222',
-    buttonTextHover: '#ffc535',
-    fg: '#222',
-    linkHover: '#ffc535',
-    loginText: '#ffc535',
-    nav: '#222',
-    primaryText: '#aaa',
-    queue: '#222',
-    queueText: '#aaa'
+    bg: slate,
+    border: black,
+    borderHover: yellow,
+    button: yellow,
+    buttonBorderHover: yellow,
+    buttonHover: coal,
+    buttonText: coal,
+    buttonTextHover: yellow,
+    fg: coal,
+    linkHover: yellow,
+    loginText: yellow,
+    nav: coal,
+    primaryText: ivory,
+    queue: coal,
+    queueText: ivory
   },
   Light: {
-    bg: '#fff',
-    border: 'cadetblue',
-    borderHover: 'lightblue',
-    button: 'cadetblue',
-    buttonBorderHover: 'cadetblue',
-    buttonHover: 'white',
-    buttonText: 'white',
-    buttonTextHover: 'cadetblue',
-    fg: '#fff',
-    inputBg: '#fff',
-    inputBgFocus: '#eeeef5',
-    linkHover: 'cadetblue',
-    loginText: 'cadetblue',
-    nav: '#033860',
-    primaryText: '#000',
-    queue: '#033860',
-    queueText: 'white'
+    bg: white,
+    border: cadetblue,
+    borderHover: lightblue,
+    button: cadetblue,
+    buttonBorderHover: cadetblue,
+    buttonHover: white,
+    buttonText: white,
+    buttonTextHover: cadetblue,
+    fg: white,
+    inputBg: white,
+    inputBgFocus: lightbluegray,
+    linkHover: cadetblue,
+    loginText: cadetblue,
+    nav: oceanblue,
+    primaryText: black,
+    queue: oceanblue,
+    queueText: white
   },
   Forest: {
-    bg: '#232528',
-    border: '#386150',
-    borderHover: '#3A2B29',
-    button: '#386150',
-    buttonBorderHover: '#386150',
-    buttonHover: '#3A2B29',
-    buttonText: '#3A2B29',
-    buttonTextHover: '#386150',
-    fg: '#232528',
-    inputBg: '#232528',
-    inputBgFocus: '#37383B',
-    linkHover: '#386150',
-    loginText: '#386150',
-    nav: '#3A2B29',
-    primaryText: '#386150',
-    queue: '#3A2B29',
-    queueText: '#aaa'
+    bg: darksteel,
+    border: firgreen,
+    borderHover: coffee,
+    button: firgreen,
+    buttonBorderHover: firgreen,
+    buttonHover: coffee,
+    buttonText: coffee,
+    buttonTextHover: firgreen,
+    fg: darksteel,
+    inputBg: darksteel,
+    inputBgFocus: blueslate,
+    linkHover: firgreen,
+    loginText: firgreen,
+    nav: coffee,
+    primaryText: firgreen,
+    queue: coffee,
+    queueText: ivory
   }
 }
 
