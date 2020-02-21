@@ -10,3 +10,8 @@
 #right-col {
   padding-right: 17px;
 }
+
+#queue {
+  background-color: var(--queue-color);
+  color: var(--queue-text-color);
+}
