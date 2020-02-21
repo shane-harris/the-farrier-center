@@ -14,6 +14,7 @@ const themes = {
     border: '#000',
     borderHover: '#ffc535',
     queue: '#222',
+    queueText: '#aaa',
     primaryText: '#aaa',
     secondaryText: '#000',
     tertiaryText: '#fff'
@@ -31,6 +32,7 @@ const themes = {
     border: 'cadetblue',
     borderHover: 'lightblue',
     queue: '#033860',
+    queueText: 'white',
     primaryText: '#000',
     secondaryText: '#fff',
     tertiaryText: '#fff',
@@ -50,6 +52,7 @@ const themes = {
     border: '#386150',
     borderHover: '#3A2B29',
     queue: '#3A2B29',
+    queueText: '#aaa',
     primaryText: '#386150',
     secondaryText: '#000',
     tertiaryText: '#fff',
@@ -80,6 +83,7 @@ const colorStyle = theme => {
     --button-hover-color: ${color.buttonHover};
     --primary-text-color: ${color.primaryText};
     --queue-color: ${color.queue};
+    --queue-text-color: ${color.queueText};
     --secondary-text-color: ${color.secondaryText};
     --tertiary-text-color: ${color.tertiaryText};
     --input-bg-color: ${color.inputBg};

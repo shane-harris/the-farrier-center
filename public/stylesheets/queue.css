@@ -13,4 +13,5 @@
 
 #queue {
   background-color: var(--queue-color);
+  color: var(--queue-text-color);
 }
