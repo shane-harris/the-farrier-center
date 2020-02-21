@@ -14,6 +14,7 @@ const coffee = '#3a2b29'
 const firgreen = '#386150'
 const darksteel = '#232528'
 const blueslate = '#37383b'
+const turqoisegray = '#7d9fa0'
 
 const themes = {
   Dark: {
@@ -49,8 +50,8 @@ const themes = {
     loginText: cadetblue,
     nav: oceanblue,
     primaryText: black,
-    queue: oceanblue,
-    queueText: white
+    queue: turqoisegray,
+    queueText: black
   },
   Forest: {
     bg: darksteel,
