@@ -15,9 +15,7 @@ const themes = {
     borderHover: '#ffc535',
     queue: '#222',
     queueText: '#aaa',
-    primaryText: '#aaa',
-    secondaryText: '#000',
-    tertiaryText: '#fff'
+    primaryText: '#aaa'
   },
   Light: {
     nav: '#033860',
@@ -34,8 +32,6 @@ const themes = {
     queue: '#033860',
     queueText: 'white',
     primaryText: '#000',
-    secondaryText: '#fff',
-    tertiaryText: '#fff',
     inputBg: '#fff',
     inputBgFocus: '#eeeef5'
   },
@@ -54,8 +50,6 @@ const themes = {
     queue: '#3A2B29',
     queueText: '#aaa',
     primaryText: '#386150',
-    secondaryText: '#000',
-    tertiaryText: '#fff',
     inputBg: '#232528',
     inputBgFocus: '#37383B'
   }
@@ -84,8 +78,6 @@ const colorStyle = theme => {
     --primary-text-color: ${color.primaryText};
     --queue-color: ${color.queue};
     --queue-text-color: ${color.queueText};
-    --secondary-text-color: ${color.secondaryText};
-    --tertiary-text-color: ${color.tertiaryText};
     --input-bg-color: ${color.inputBg};
     --input-bg-focus-color: ${color.inputBgFocus}
   }
