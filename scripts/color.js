@@ -5,21 +5,59 @@ const themes = {
     nav: '#222',
     bg: '#333',
     fg: '#222',
-    accent: '#FFC535',
+    accent: '#ffc535',
+    button: '#ffc535',
+    buttonText: '#222',
+    buttonHover: '#222',
+    buttonTextHover: '#ffc535',
+    buttonBorderHover: '#ffc535',
     border: '#000',
+    borderHover: '#ffc535',
+    queue: '#222',
+    queueText: '#aaa',
     primaryText: '#aaa',
     secondaryText: '#000',
     tertiaryText: '#fff'
   },
+  Light: {
+    nav: '#033860',
+    bg: '#fff',
+    fg: '#fff',
+    accent: 'cadetblue',
+    button: 'cadetblue',
+    buttonText: 'white',
+    buttonHover: 'white',
+    buttonTextHover: 'cadetblue',
+    buttonBorderHover: 'cadetblue',
+    border: 'cadetblue',
+    borderHover: 'lightblue',
+    queue: '#033860',
+    queueText: 'white',
+    primaryText: '#000',
+    secondaryText: '#fff',
+    tertiaryText: '#fff',
+    inputBg: '#fff',
+    inputBgFocus: '#eeeef5'
+  },
   Forest: {
     nav: '#3A2B29',
     bg: '#232528',
-    fg: '#3A2B29',
-    accent: '#FFC535',
+    fg: '#232528',
+    accent: '#386150',
+    button: '#386150',
+    buttonText: '#3A2B29',
+    buttonHover: '#3A2B29',
+    buttonTextHover: '#386150',
+    buttonBorderHover: '#386150',
     border: '#386150',
+    borderHover: '#3A2B29',
+    queue: '#3A2B29',
+    queueText: '#aaa',
     primaryText: '#386150',
     secondaryText: '#000',
-    tertiaryText: '#fff'
+    tertiaryText: '#fff',
+    inputBg: '#232528',
+    inputBgFocus: '#37383B'
   }
 }
 
@@ -37,9 +75,19 @@ const colorStyle = theme => {
     --fg-color: ${color.fg};
     --accent-color: ${color.accent};
     --border-color: ${color.border};
+    --border-hover-color: ${color.borderHover};
+    --button-color: ${color.button};
+    --button-text-color: ${color.buttonText};
+    --button-border-color: ${color.buttonBorderHover};
+    --button-text-hover-color: ${color.buttonTextHover};
+    --button-hover-color: ${color.buttonHover};
     --primary-text-color: ${color.primaryText};
+    --queue-color: ${color.queue};
+    --queue-text-color: ${color.queueText};
     --secondary-text-color: ${color.secondaryText};
     --tertiary-text-color: ${color.tertiaryText};
+    --input-bg-color: ${color.inputBg};
+    --input-bg-focus-color: ${color.inputBgFocus}
   }
   `
 }

@@ -10,10 +10,15 @@ const mongoose = require('mongoose')
 const passport = require('passport')
 const path = require('path')
 const session = require('cookie-session')
+const indexRoutes = require('./routes/index')
+const userRoutes = require('./routes/user')
+const adminRoutes = require('./routes/admin')
+const horseRoutes = require('./routes/horse')
 
 const app = express()
 
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.static(__dirname + '/public'))
 
 // Set up various middleware
 app.use(logger('dev'))
@@ -43,8 +48,11 @@ app.use((req, res, next) => {
 
 app.use(require('./middleware/style'))
 
-// Configure routes, as specified in 'routes.js'
-app.use(require('./routes'))
+// Configure routes
+app.use('/', indexRoutes)
+app.use('/user', userRoutes)
+app.use('/admin', adminRoutes)
+app.use('/horse', horseRoutes)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
