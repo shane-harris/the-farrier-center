@@ -7,7 +7,7 @@
         <H1>Update <%= horse.name %></H1>
         <form action="/horse/<%= horse.id%>/update-horse" method="post">
 
-            <%- include('partials/horse-input-fields') %>
+            <%- include('partials/horse-input-fields', {updateable: true}) %>
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

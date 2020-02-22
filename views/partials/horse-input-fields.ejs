@@ -1,7 +1,7 @@
 <p>Horse Picture here</p>
 <div class="form-group">
     <label for="name">Name(*)</label>
-    <input type="text" class="form-control" id="name" name="name" value="<%= horse.name %>"
+    <input type="text" class="form-control" id="name" name="name" value="<%= updateable ? horse.name : '' %>"
            placeholder="Enter Horse Name Here" required>
 </div>
 
@@ -10,7 +10,7 @@
 </div>
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="gender" id="radioMale" value="Male"
-    <%- horse.gender === 'Male' ? "checked" : '' %> >
+    <%- updateable && horse.gender === 'Male' ? "checked" : '' %> >
     <label class="form-check-label" for="radioMale">
         <H2>Male</H2>
     </label>
@@ -18,7 +18,7 @@
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="gender" id="radioFemale"
-           value="Female" <%- horse.gender === 'Female' ? "checked" : '' %> >
+           value="Female" <%- updateable && horse.gender === 'Female' ? "checked" : '' %>  >
     <label class="form-check-label" for="radioFemale">
         <H2>Female</H2>
     </label>
@@ -59,23 +59,23 @@
 
 <div class="form-group">
     <label for="location">Location(*)</label>
-    <input type="text" class="form-control" id="name" name="location" value="<%= horse.location %>"
+    <input type="text" class="form-control" id="name" name="location" value="<%= updateable ? horse.location : '' %>"
            placeholder="1234 James Town Rd." required>
 </div>
 
 <div class="form-group">
     <label for="owner">Owner(*)</label>
-    <input type="name" class="form-control" id="owner" name="owner" value="<%= horse.owner %>"
+    <input type="name" class="form-control" id="owner" name="owner" value="<%= updateable ? horse.owner : '' %>"
            placeholder="Enter the owner's name here" required>
 </div>
 
 <div class="form-group">
     <label for="vet">Veterinarian</label>
-    <input type="name" class="form-control" id="vet" name="vet" value="<%= horse.vet %>"
+    <input type="name" class="form-control" id="vet" name="vet" value="<%= updateable ? horse.vet : '' %>"
            placeholder="Enter the vet's name here">
 </div>
 <div class="form-group">
     <label for="history">History</label>
     <textarea class="form-control" id="history" name="history" rows="4"
-              placeholder="Please be a happy history"><%= horse.history %></textarea>
+              placeholder="Please be a happy history"><%= updateable ? horse.history : '' %></textarea>
 </div>
