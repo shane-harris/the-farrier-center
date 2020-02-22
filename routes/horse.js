@@ -48,6 +48,9 @@ router.get('/:id', loggedIn, (req, res) => {
 
 router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
+    //TODO Request Help on doing second database call and handling no return
+    //How can I accomplish Updateable = true in here?
+    //set updateabl: false in new-medical-analysis.ejs
     .then(horse => res.render('new-medical-analysis.ejs', { horse }))
     .catch(console.error)
 })
