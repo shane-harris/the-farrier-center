@@ -77,5 +77,13 @@ a {
 }
 
 a:hover {
-  color: var(--accent-color);
+  color: var(--link-hover-color);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: var(--nav-text-color);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: var(--nav-text-hover-color);
 }
