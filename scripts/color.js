@@ -82,6 +82,35 @@ const themes = {
 }
 
 /**
+ * Returns true if 'char' is an upper case character
+ *
+ * @param {String} char
+ * @returns {Boolean}
+ */
+const isUpperCase = char => char === char.toUpperCase() && char !== char.toLowerCase()
+
+/**
+ * Takes a camelCase string and converts it to kebab-case.
+ * Note that this assumes a string starting in a lower-case letter.
+ *
+ * @example
+ * toKebabCase('aVariableName') // -> 'a-variable-name'
+ *
+ * @param {String} string
+ * @returns {String}
+ */
+const toKebabCase = string =>
+  [...string]
+    .map(char => {
+      if (isUpperCase(char)) {
+        return `-${char.toLowerCase()}`
+      } else {
+        return char
+      }
+    })
+    .join('')
+
+/**
  * Returns a list the names of all available themes, and whether they are selected by the current
  * user.
  *
@@ -98,7 +127,6 @@ const themes = {
  * ]
  *
  */
-
 const themeList = userTheme =>
   Object.keys(themes).map(theme => {
     return { name: theme, selected: theme === userTheme ? true : false }
