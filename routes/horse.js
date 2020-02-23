@@ -47,23 +47,14 @@ router.get('/:id', loggedIn, (req, res) => {
 })
 
 router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
-  Promise.all([Horse.findOne({ id: req.params.id }), Medical.find({ horse_id: req.params.id })])
+  Promise.all([
+    Horse.findOne({ id: req.params.id }),
+    Medical.find({ horse_id: req.params.id }).sort({ date: -1 })
+  ]) //sorts medicals by most recent date first
     .then(values => {
       const [horse, medicals] = values
       const updateable = medicals.length !== 0
-
-      // Get the latest medical report:
-      // Sort all medical reports, latest first, and then...
-      const medical = medicals.sort((a, b) => {
-        if (a.date > b.date) {
-          return -1
-        }
-        if (a.date === b.date) {
-          return 0
-        } else {
-          return 1
-        }
-      })[0] //...takes the first one.
+      const medical = medicals[0] //grab the first medical report
       res.render('new-medical-analysis.ejs', { horse, medical, updateable })
     })
     .catch(console.error)
