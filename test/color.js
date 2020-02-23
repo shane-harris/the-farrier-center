@@ -81,7 +81,7 @@ describe('Color module', () => {
           --button-border-color: #111;
           --nav-text-hover-color: #222;
         }
-        `.replace(/^( {2})+/gm, '')
+        `.replace(/^( {2})+/gm, '') // Strip indentation
       )
     })
   })
