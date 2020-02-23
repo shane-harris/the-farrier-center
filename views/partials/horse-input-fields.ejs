@@ -1,12 +1,16 @@
 <p>Horse Picture here</p>
 <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" name="name"
+    <label for="name">Name(*)</label>
+    <input type="text" class="form-control" id="name" name="name" value="<%= updateable ? horse.name : '' %>"
            placeholder="Enter Horse Name Here" required>
 </div>
 
+<div>
+<label for="gender">Gender</label>
+</div>
 <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="gender" id="radioMale" value="Male">
+    <input class="form-check-input" type="radio" name="gender" id="radioMale" value="Male"
+    <%- updateable && horse.gender === 'Male' ? "checked" : '' %> >
     <label class="form-check-label" for="radioMale">
         <H2>Male</H2>
     </label>
@@ -14,7 +18,7 @@
 
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="gender" id="radioFemale"
-           value="Female">
+           value="Female" <%- updateable && horse.gender === 'Female' ? "checked" : '' %>  >
     <label class="form-check-label" for="radioFemale">
         <H2>Female</H2>
     </label>
@@ -23,7 +27,7 @@
 <div class="form-group">
     <label for="temperament">Temperament:</label>
     <select class="form-control" id="temperament" name="temperament">
-        <option selected disabled>Select Temperament</option>
+        <option<%- updateable && horse.temperament != undefined ? `\>${horse.temperament}` : ' selected disabled>Select Temperament' %></option>
         <option>Old</option>
         <option>Hurting</option>
         <option>Spoiled</option>
@@ -38,7 +42,7 @@
 <div class="form-group">
     <label for="discipline">Discipline:</label>
     <select class="form-control" id="discipline" name="discipline">
-        <option selected disabled>Select Discipline</option>
+        <option<%- updateable && horse.discipline != undefined ? `\>${horse.discipline}` : ' selected disabled>Select Discipline' %></option>
         <option>Jumping</option>
         <option>Trail</option>
         <option>Pleasure</option>
@@ -54,24 +58,24 @@
 </div>
 
 <div class="form-group">
-    <label for="location">Location</label>
-    <input type="text" class="form-control" id="name" name="location"
+    <label for="location">Location(*)</label>
+    <input type="text" class="form-control" id="name" name="location" value="<%= updateable ? horse.location : '' %>"
            placeholder="1234 James Town Rd." required>
 </div>
 
 <div class="form-group">
-    <label for="owner">Owner</label>
-    <input type="name" class="form-control" id="owner" name="owner"
+    <label for="owner">Owner(*)</label>
+    <input type="name" class="form-control" id="owner" name="owner" value="<%= updateable ? horse.owner : '' %>"
            placeholder="Enter the owner's name here" required>
 </div>
 
 <div class="form-group">
     <label for="vet">Veterinarian</label>
-    <input type="name" class="form-control" id="vet" name="vet"
+    <input type="name" class="form-control" id="vet" name="vet" value="<%= updateable ? horse.vet : '' %>"
            placeholder="Enter the vet's name here">
 </div>
 <div class="form-group">
     <label for="history">History</label>
     <textarea class="form-control" id="history" name="history" rows="4"
-              placeholder="Please be a happy history"></textarea>
+              placeholder="Please be a happy history"><%= updateable ? horse.history : '' %></textarea>
 </div>
