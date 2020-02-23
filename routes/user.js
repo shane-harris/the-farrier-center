@@ -67,6 +67,7 @@ router.post('/forgot-password', (req, res) => {
   })
 })
 
+//change password while not logged in
 router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
     if (err) return res.sendStatus(403)
@@ -98,6 +99,21 @@ router.post('/reset-password/:token', (req, res) => {
         res.sendStatus(500)
       }
     }
+  })
+})
+
+//change password while logged in
+router.post('/update-password', (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.sendStatus(500)
+    }
+    user.changePassword(req.body.currentpass, req.body.newpass, (err, user) => {
+      if (err) {
+        res.redirect('/user')
+      }
+      res.redirect('/user')
+    })
   })
 })
 

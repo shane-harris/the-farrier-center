@@ -1,6 +1,6 @@
 <%- include('partials/head', { title: 'User Profile', css: 'user' }) %>
 
-<body class="">
+<body>
   <%- include('partials/header-nav', {name: user.username}) %>
   <div class="container" id="page-container">
     <div class="row w-75">
@@ -17,7 +17,7 @@
 
           <!-- Tab One-->
           <div class="tab-pane fade show active" id="tabone" role="tabpanel">
-            <form class="form" method="post">
+            <form class="form" action="/user/update-info" method="post">
               <div class="form-group">
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name="first_name" id="first_name"
@@ -51,30 +51,27 @@
 
           <!-- Tab Two-->
           <div class="tab-pane fade" id="tabtwo" role="tabpanel">
-            <form class="form" method="post">
+            <form class="form" action="/user/update-password" method="post"
+              oninput='confirmpass.setCustomValidity(confirmpass.value != newpass.value ? "Passwords do not match." : "")'>
               <h4>Change Password</h4>
               <br>
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="col-md-12">
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-10">
-                    <input type="password" class="form-control" placeholder='current password'
-                      name="currentpass"> </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-10">
-                    <input type="password" class="form-control" placeholder='new password'
-                      name="newpass"> </div>
-                </div>
-                <div class="form-group row">
-                  <div class="col-10">
-                    <input type="password" class="form-control" placeholder='confirm password'
-                      name="confirmpass"> </div>
-                </div>
-              </div><button type="submit" class="btn btn-primary">Update</button>
+              <div class="form-group row">
+                <div class="col-6">
+                  <input type="password" class="form-control" placeholder='current password'
+                    name="currentpass"> </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-6">
+                  <input type="password" class="form-control" placeholder='new password'
+                    name="newpass"> </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-6">
+                  <input type="password" class="form-control" placeholder='confirm password'
+                    name="confirmpass"> </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Update</button>
           </div>
 
           <!-- Tab Three-->
