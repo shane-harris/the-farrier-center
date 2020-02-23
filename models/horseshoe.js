@@ -6,12 +6,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const HorseshoeSchema = new Schema({
-  hoof: String,
-  hoofImage1: String,
-  hoofImage2: String,
-  shoeType: String,
+  jobType: String, //full, half, trim
   shoeSize: Number,
-  notes: String
+  notes: String,
+
+  hoofImage1: String,
+  hoofImage2: String
 })
 //Does a horseshoe need a horse Id if it only exists in a report which must have that
 // horses ID?

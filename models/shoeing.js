@@ -24,6 +24,7 @@ const ShoeingSchema = new Schema({
     type: Schema.Types.ObjectID,
     ref: 'Horseshoe'
   },
+
   pads: Boolean,
   straightbarshoe: Boolean,
   eggbar: Boolean,

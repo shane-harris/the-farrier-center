@@ -4,6 +4,7 @@ const express = require('express')
 const router = express.Router()
 const Medical = require('../models/medical')
 const Horse = require('../models/horse')
+const Horseshoe = require('../models/horseshoe')
 const Shoeing = require('../models/shoeing')
 const { loggedIn } = require('../middleware/auth')
 
@@ -74,6 +75,14 @@ router.post('/:id/new-shoeing', loggedIn, (req, res) => {
     horse_id: req.params.id,
     date: new Date(), //returns todays date
     farrier: 'Default Steve',
+    frontLeft: new Horseshoe({
+      jobType: req.body.frontLeftShoe, //full, half, trim
+      shoeSize: req.body.frontLeftSize,
+      notes: req.body.frontLeftNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+
     ...req.body
   }).save(console.error)
   res.redirect(`/horse/${req.params.id}`)
