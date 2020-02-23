@@ -18,6 +18,24 @@ const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 
 const themes = {
+  Black: {
+    nav: '#1e1e1e',
+    bg: '#000000',
+    fg: '#000000',
+    accent: '#00ff00',
+    button: '#ffffff',
+    buttonText: '#000000',
+    buttonHover: '#000000',
+    buttonTextHover: '#ffffff',
+    buttonBorderHover: '#ffffff',
+    border: '#ffffff',
+    borderHover: '#00ff00',
+    queue: '#222',
+    queueText: '#ffffff',
+    primaryText: '#ffffff',
+    secondaryText: '#000',
+    tertiaryText: '#00ff00'
+  },
   Dark: {
     bg: slate,
     border: black,

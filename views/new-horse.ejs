@@ -7,7 +7,7 @@
       <H1>New Horse</H1>
       <form action="/horse/new" method="post">
 
-        <%- include('partials/horse-input-fields') %>
+        <%- include('partials/horse-input-fields', {updateable: false}) %>
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
