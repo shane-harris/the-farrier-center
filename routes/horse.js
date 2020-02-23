@@ -51,16 +51,19 @@ router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
     .then(values => {
       const [horse, medicals] = values
       const updateable = medicals.length !== 0
+
+      // Get the latest medical report:
+      // Sort all medical reports, latest first, and then...
       const medical = medicals.sort((a, b) => {
-        if (a > b) {
+        if (a.date > b.date) {
           return -1
         }
-        if (a === b) {
+        if (a.date === b.date) {
           return 0
         } else {
           return 1
         }
-      })[0]
+      })[0] //...takes the first one.
       res.render('new-medical-analysis.ejs', { horse, medical, updateable })
     })
     .catch(console.error)
