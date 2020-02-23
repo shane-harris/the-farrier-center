@@ -7,7 +7,7 @@
       <H1>New Medical Analysis for <%= horse.name %></H1>
       <form action="/horse/<%= horse.id %>/new-medical-analysis" method="post">
 
-        <%- include('partials/medical-input-fields', {editable: true, updateable: false}) %>
+        <%- include('partials/medical-input-fields', {editable: true}) %>
 
         <button type="submit" class="btn btn-primary" value="medical">Submit</button>
       </form>

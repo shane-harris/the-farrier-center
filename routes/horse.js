@@ -47,11 +47,22 @@ router.get('/:id', loggedIn, (req, res) => {
 })
 
 router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id })
-    //TODO Request Help on doing second database call and handling no return
-    //How can I accomplish Updateable = true in here?
-    //set updateabl: false in new-medical-analysis.ejs
-    .then(horse => res.render('new-medical-analysis.ejs', { horse }))
+  Promise.all([Horse.findOne({ id: req.params.id }), Medical.find({ horse_id: req.params.id })])
+    .then(values => {
+      const [horse, medicals] = values
+      const updateable = medicals.length !== 0
+      const medical = medicals.sort((a, b) => {
+        if (a > b) {
+          return -1
+        }
+        if (a === b) {
+          return 0
+        } else {
+          return 1
+        }
+      })[0]
+      res.render('new-medical-analysis.ejs', { horse, medical, updateable })
+    })
     .catch(console.error)
 })
 
