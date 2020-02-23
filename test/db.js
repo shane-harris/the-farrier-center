@@ -48,4 +48,4 @@ describe('Database tests', () => {
         .catch(done)
     })
   })
-})
+}).timeout(10000)
