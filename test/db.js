@@ -48,6 +48,6 @@ if (process.env.TEST_DB !== 'false') {
           })
           .catch(done)
       })
-    })
+    }).timeout(10000)
   }).timeout(10000)
 }
