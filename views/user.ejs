@@ -20,25 +20,24 @@
             <form class="form" action="/user/update-info" method="post">
               <div class="form-group">
                 <div class="col-xs-6">
-                  <input type="text" class="form-control" name="first_name" id="first_name"
+                  <input type="text" class="form-control" name="fname" id="first_name"
                     value=<%- user.fname %>>
                 </div>
               </div>
               <div class="form-group">
 
                 <div class="col-xs-6">
-                  <input type="text" class="form-control" name="last_name" id="last_name"
+                  <input type="text" class="form-control" name="lname" id="last_name"
                     value=<%- user.lname %>>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-xs-6">
-                  <input type="text" class="form-control bfh-phone" data-format="+1 (ddd) ddd-dddd"
-                    value=<%- user.phone %>>
+                  <input type="text" class="form-control" name='phone' value=<%- user.phone %>>
                 </div>
               </div>
               <div class="col-xs-6">
-                <input type="text" class="form-control" name="email" id="email"
+                <input type="text" class="form-control" name="email" readonly="true" id="email"
                   value=<%- user.email %>>
               </div>
               <div class="form-group">

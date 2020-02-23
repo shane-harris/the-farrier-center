@@ -108,12 +108,29 @@ router.post('/update-password', (req, res) => {
     if (err) {
       res.sendStatus(500)
     }
-    user.changePassword(req.body.currentpass, req.body.newpass, (err, user) => {
-      if (err) {
-        res.redirect('/user')
-      }
+    else {
+      user.changePassword(req.body.currentpass, req.body.newpass, (err, user) => {
+        if (err) {
+          res.redirect('/user')
+        }
+      })
+    }
+    res.redirect('/user')
+  })
+})
+
+router.post('/update-info', (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
       res.redirect('/user')
-    })
+    }
+    else {
+      user.fname = req.body.fname
+      user.lname = req.body.lname
+      user.phone = req.body.phone
+      user.save()
+      res.redirect('/user')
+    }
   })
 })
 
