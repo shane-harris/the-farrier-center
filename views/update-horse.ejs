@@ -5,7 +5,7 @@
 <div id="page-container" class="container-fluid">
     <div class="container form">
         <H1>Update <%= horse.name %></H1>
-        <form action="/horse/<%= horse.id%>/update-horse" method="post">
+        <form action="/horse/<%= horse.id%>/update" method="post">
 
             <%- include('partials/horse-input-fields', {updateable: true}) %>
 

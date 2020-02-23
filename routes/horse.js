@@ -67,7 +67,7 @@ router.get('/:id/new-shoeing', loggedIn, (req, res) => {
   res.render('new-shoeing.ejs')
 })
 
-router.get('/:id/update-horse', loggedIn, (req, res) => {
+router.get('/:id/update', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .then(horse => res.render('update-horse.ejs', { horse, name: req.user.username }))
     .catch(console.error)
