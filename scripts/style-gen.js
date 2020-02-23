@@ -71,7 +71,7 @@ const cssVar = (theme, varName) => `--${toKebabCase(varName)}-color: ${theme[var
  * selected a theme, and the default should be used)
  * @returns {String}
  */
-const colorStyle = theme => {
+const generateStyle = theme => {
   const color = theme !== undefined && themes[theme] !== undefined ? themes[theme] : themes.Dark
   return `
   :root {
@@ -82,4 +82,4 @@ const colorStyle = theme => {
   `.replace(/^( {2})+/gm, '') // Strip indentation
 }
 
-module.exports = { colorStyle, themes: themeList }
+module.exports = { generateStyle, themes: themeList }

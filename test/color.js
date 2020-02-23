@@ -4,13 +4,13 @@ const rewire = require('rewire')
 const chai = require('chai')
 chai.should()
 
-const color = rewire('../scripts/color.js')
+const color = rewire('../scripts/style-gen.js')
 
 const isUpperCase = color.__get__('isUpperCase')
 const toKebabCase = color.__get__('toKebabCase')
 const cssVar = color.__get__('cssVar')
 
-const { colorStyle, themes } = color
+const { generateStyle, themes } = color
 
 describe('Color module', () => {
   describe('isUpperCase', () => {
@@ -67,14 +67,14 @@ describe('Color module', () => {
     })
   })
 
-  describe('colorStyle', () => {
+  describe('generateStyle', () => {
     // Mock the themes variable in 'color.js'
     before(() => color.__set__('themes', mockThemes))
     // Unmock the themes variable in 'color.js'
     after(() => color.__set__('themes', require('../scripts/themes')))
 
     it('Should generate the correct CSS style string', () => {
-      colorStyle('ThemeA').should.equal(
+      generateStyle('ThemeA').should.equal(
         `
         :root {
           --button-color: #000;
