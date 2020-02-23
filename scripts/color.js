@@ -131,7 +131,7 @@ const themeList = userTheme =>
  * @returns {String}
  */
 const colorStyle = theme => {
-  const color = theme !== undefined ? themes[theme] : themes.Dark
+  const color = theme !== undefined && themes[theme] !== undefined ? themes[theme] : themes.Dark
   return `
   :root {
     --bg-color: ${color.bg};
