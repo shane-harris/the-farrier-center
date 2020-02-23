@@ -43,8 +43,14 @@ router.post('/new', loggedIn, (req, res) => {
 })
 
 router.get('/:id', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('horse.ejs', { horse: horse }))
+  Promise.all([
+    Horse.findOne({ id: req.params.id }),
+    Shoeing.find({ id: req.body.horse_id }).sort({ date: 1 })
+  ])
+    .then(values => {
+      const [horse, shoeingReports] = values
+      res.render('horse.ejs', { horse: horse, shoeingReportDate: shoeingReports[0].date })
+    })
     .catch(console.error)
 })
 

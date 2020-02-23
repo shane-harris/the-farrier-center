@@ -125,7 +125,11 @@
             <h1>Recent Shoeing</h1>
           </div>
           <div class="col-sm-4">
-            <h1>Date: 11/13/19</h1>
+            <h1 id="shoeingDate">
+              Date: <%= `${shoeingReportDate.getUTCMonth() + 1}/
+                         ${shoeingReportDate.getUTCDate()}/${shoeingReportDate.getUTCFullYear()}`
+                         .replace(/\n( )*/gm, '') %>
+            </h1>
           </div>
           <div class="col-sm-4">
             <h1>Farrier: Steve</h1>
