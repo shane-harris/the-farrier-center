@@ -7,6 +7,7 @@ const ShoeingSchema = new Schema({
   horse_id: Number,
   date: Date,
   farrier: String,
+
   frontLeft: {
     type: Schema.Types.ObjectID,
     ref: 'Horseshoe'
@@ -23,7 +24,6 @@ const ShoeingSchema = new Schema({
     type: Schema.Types.ObjectID,
     ref: 'Horseshoe'
   },
-
   pads: Boolean,
   straightbarshoe: Boolean,
   eggbar: Boolean,
