@@ -8,9 +8,17 @@
   <div id="page-container" class="container-fluid">
     <%# Horse Summary %>
     <div class="container form">
+      <div class="dropdown" align="right">
+        <button class="btn dropdown-toggle fa fa-edit" type="button" data-toggle="dropdown"></button>
+        <ul class="dropdown-menu">
+          <li><a href="/horse/<%= horse.id %>/update">Update</a></li>
+          <li><a href="#">Delete (does not work yet)</a></li>
+        </ul>
+      </div>
       <div class="row">
         <div class="col-sm-4">
-          <img alt="Horse" class="img-fluid float-left" src="../public/images/horse_profile.png" />
+          <%//Back%>
+          <img alt="Horse" class="img-fluid float-left bg-white" src="../public/images/horse_profile.png" />
         </div>
         <div class="col-sm-4">
           <table class="table table-borderless">
@@ -46,14 +54,11 @@
                 <th scope="row">Vet</th>
                 <td><%= horse.vet %></td>
               </tr>
+              <tr>
+                <th scope="row">History</th>
+                <td><%= horse.history %></td>
+              </tr>
             </tbody>
-          </table>
-
-          <table class="table">
-            <thead>
-              <tr></tr>
-            </thead>
-            <tbody></tbody>
           </table>
         </div>
       </div>
@@ -69,7 +74,7 @@
           </a>
         </div>
         <div class="pad">
-          <a type="button" class="btn btn-dark"
+          <a type="button" class="btn"
             href="/horse/<%= horse.id %>/new-medical-analysis">New Medical Analysis</a>
         </div>
       </div>
@@ -116,7 +121,7 @@
           </a>
         </div>
         <div class="pad">
-          <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New Shoeing</a>
+          <a type="button" class="btn" href="/horse/<%= horse.id %>/new-shoeing">New Shoeing</a>
         </div>
       </div>
       <div id="shoeing" class="collapse">
