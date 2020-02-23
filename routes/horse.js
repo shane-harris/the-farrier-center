@@ -73,7 +73,7 @@ router.get('/:id/update-horse', loggedIn, (req, res) => {
     .catch(console.error)
 })
 
-router.post('/:id/update-horse', loggedIn, (req, res) => {
+router.post('/:id/update', loggedIn, (req, res) => {
   console.log(req.body)
   Horse.findOne({ id: req.params.id }).then(horse => {
     horse.name = req.body.name
