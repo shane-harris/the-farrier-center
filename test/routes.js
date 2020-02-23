@@ -3,7 +3,6 @@ const chai = require('chai')
 chai.use(require('chai-http'))
 chai.should()
 
-process.env.NODE_ENV = 'test'
 const app = require('../index')
 
 describe('Routes', () => {
