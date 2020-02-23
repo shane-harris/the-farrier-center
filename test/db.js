@@ -46,6 +46,6 @@ describe('Database tests', () => {
           done()
         })
         .catch(done)
-    })
+    }).timeout(10000)
   })
 }).timeout(10000)
