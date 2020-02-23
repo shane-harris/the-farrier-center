@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 router.use('/public', express.static('public'))
 
 router.get('/', loggedIn, (req, res) => {
-  res.render('user.ejs')
+  res.render('user.ejs', { username: req.user.username })
 })
 
 router.get('/theme', loggedIn, (req, res) => {
@@ -29,7 +29,7 @@ router.post('/theme', loggedIn, (req, res) => {
   console.log(`Changing theme for ${req.user.username} to ${req.body.theme}`)
   req.user.theme = req.body.theme
   req.user.save()
-  res.redirect('/user/theme')
+  res.redirect('/user')
 })
 
 router.post('/forgot-password', (req, res) => {
