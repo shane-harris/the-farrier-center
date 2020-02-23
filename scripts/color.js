@@ -2,6 +2,7 @@
 
 const black = 'black'
 const coal = '#222'
+const charcoal = '#1e1e1e'
 const slate = '#333'
 const ivory = '#aaa'
 const dimwhite = '#ddd'
@@ -16,26 +17,9 @@ const firgreen = '#386150'
 const darksteel = '#232528'
 const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
+const neongreen = '#0f0'
 
 const themes = {
-  Black: {
-    nav: '#1e1e1e',
-    bg: '#000000',
-    fg: '#000000',
-    accent: '#00ff00',
-    button: '#ffffff',
-    buttonText: '#000000',
-    buttonHover: '#000000',
-    buttonTextHover: '#ffffff',
-    buttonBorderHover: '#ffffff',
-    border: '#ffffff',
-    borderHover: '#00ff00',
-    queue: '#222',
-    queueText: '#ffffff',
-    primaryText: '#ffffff',
-    secondaryText: '#000',
-    tertiaryText: '#00ff00'
-  },
   Dark: {
     bg: slate,
     border: black,
@@ -75,6 +59,25 @@ const themes = {
     primaryText: black,
     queue: turqoisegray,
     queueText: black
+  },
+  Black: {
+    bg: black,
+    border: white,
+    borderHover: neongreen,
+    button: white,
+    buttonBorderHover: white,
+    buttonHover: black,
+    buttonText: black,
+    buttonTextHover: white,
+    fg: black,
+    inputBg: black,
+    inputBgFocus: black,
+    nav: charcoal,
+    navText: ivory,
+    navTextHover: white,
+    primaryText: white,
+    queue: coal,
+    queueText: white
   },
   Forest: {
     bg: darksteel,
