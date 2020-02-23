@@ -82,6 +82,27 @@ router.post('/:id/new-shoeing', loggedIn, (req, res) => {
       hoofImage1: null,
       hoofImage2: null
     }),
+    frontRight: new Horseshoe({
+      jobType: req.body.frontRightShoe,
+      shoeSize: req.body.frontRightSize,
+      notes: req.body.frontRightNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+    backLeft: new Horseshoe({
+      jobType: req.body.backLeftShoe,
+      shoeSize: req.body.backLeftSize,
+      notes: req.body.backLeftNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+    backRight: new Horseshoe({
+      jobType: req.body.backRightShoe,
+      shoeSize: req.body.backRightSize,
+      notes: req.body.backRightNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
 
     ...req.body
   }).save(console.error)
