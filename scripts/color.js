@@ -54,6 +54,16 @@ const themeList = userTheme =>
   })
 
 /**
+ * Convert variable name to css variable declaration based on its value in `theme`
+ *
+ * @param {Object} theme The theme to take the color value from
+ * @param {String} varName The name of a property in `theme` from which to make a css variable
+ * declaration
+ * @returns {String} A css variable declaration
+ */
+const cssVar = (theme, varName) => `--${toKebabCase(varName)}-color: '${theme[varName]}';`
+
+/**
  * Returns a CSS style which defines a number of color variables. These variables are loaded
  * dynamically based on the selected theme.
  *

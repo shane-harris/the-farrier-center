@@ -8,6 +8,7 @@ const color = rewire('../scripts/color.js')
 
 const isUpperCase = color.__get__('isUpperCase')
 const toKebabCase = color.__get__('toKebabCase')
+const cssVar = color.__get__('cssVar')
 
 const { colorStyle, themes } = color
 
@@ -43,6 +44,31 @@ describe('Color module', () => {
       toKebabCase('aMultiWordString').should.equal('a-multi-word-string')
       toKebabCase('aStringWithQuiteAFewWords').should.equal('a-string-with-quite-a-few-words')
     })
+  })
+
+  const mockThemes = {
+    ThemeA: {
+      button: '#000',
+      buttonBorder: '#111',
+      navTextHover: '#222'
+    }
+  }
+
+  describe('cssVar', () => {
+    it("Should convert 'button' correctly", () => {
+      cssVar(mockThemes.ThemeA, 'button').should.equal("--button-color: '#000';")
+    })
+    it("Should convert 'buttonBorder' correctly", () => {
+      cssVar(mockThemes.ThemeA, 'buttonBorder').should.equal("--button-border-color: '#111';")
+    })
+    it("Should convert 'navTextHover' correctly", () => {
+      cssVar(mockThemes.ThemeA, 'navTextHover').should.equal("--nav-text-hover-color: '#222';")
+    })
+  })
+
+  describe('colorStyle', () => {
+    before(() => color.__set__('themes', mockThemes))
+    after(() => color.__set__('themes', require('../scripts/themes')))
   })
 
   describe('themes', () => {
