@@ -61,13 +61,13 @@ const themeList = userTheme =>
  * declaration
  * @returns {String} A css variable declaration
  */
-const cssVar = (theme, varName) => `--${toKebabCase(varName)}-color: '${theme[varName]}';`
+const cssVar = (theme, varName) => `--${toKebabCase(varName)}-color: ${theme[varName]};`
 
 /**
  * Returns a CSS style which defines a number of color variables. These variables are loaded
  * dynamically based on the selected theme.
  *
- * @param {*} [theme] The user's selected theme (no parameter indicates that the user has not
+ * @param {String} [theme] The user's selected theme (no parameter indicates that the user has not
  * selected a theme, and the default should be used)
  * @returns {String}
  */
@@ -75,27 +75,11 @@ const colorStyle = theme => {
   const color = theme !== undefined && themes[theme] !== undefined ? themes[theme] : themes.Dark
   return `
   :root {
-    --bg-color: ${color.bg};
-    --border-color: ${color.border};
-    --border-hover-color: ${color.borderHover};
-    --button-color: ${color.button};
-    --button-border-color: ${color.buttonBorderHover};
-    --button-hover-color: ${color.buttonHover};
-    --button-text-color: ${color.buttonText};
-    --button-text-hover-color: ${color.buttonTextHover};
-    --fg-color: ${color.fg};
-    --input-bg-color: ${color.inputBg};
-    --input-bg-focus-color: ${color.inputBgFocus};
-    --link-hover-color: ${color.linkHover};
-    --login-text-color: ${color.loginText};
-    --nav-color: ${color.nav};
-    --nav-text-color: ${color.navText};
-    --nav-text-hover-color: ${color.navTextHover};
-    --primary-text-color: ${color.primaryText};
-    --queue-color: ${color.queue};
-    --queue-text-color: ${color.queueText};
+    ${Object.keys(color)
+      .map(style => cssVar(color, style))
+      .join('\n  ')}
   }
-  `
+  `.replace(/^( {2})+/gm, '') // Strip indentation
 }
 
 module.exports = { colorStyle, themes: themeList }

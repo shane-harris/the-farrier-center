@@ -28,6 +28,7 @@ describe('Color module', () => {
       isUpperCase('.').should.be.false
       isUpperCase('/').should.be.false
       isUpperCase('-').should.be.false
+      isUpperCase('2').should.be.false
     })
   })
 
@@ -56,19 +57,33 @@ describe('Color module', () => {
 
   describe('cssVar', () => {
     it("Should convert 'button' correctly", () => {
-      cssVar(mockThemes.ThemeA, 'button').should.equal("--button-color: '#000';")
+      cssVar(mockThemes.ThemeA, 'button').should.equal('--button-color: #000;')
     })
     it("Should convert 'buttonBorder' correctly", () => {
-      cssVar(mockThemes.ThemeA, 'buttonBorder').should.equal("--button-border-color: '#111';")
+      cssVar(mockThemes.ThemeA, 'buttonBorder').should.equal('--button-border-color: #111;')
     })
     it("Should convert 'navTextHover' correctly", () => {
-      cssVar(mockThemes.ThemeA, 'navTextHover').should.equal("--nav-text-hover-color: '#222';")
+      cssVar(mockThemes.ThemeA, 'navTextHover').should.equal('--nav-text-hover-color: #222;')
     })
   })
 
   describe('colorStyle', () => {
+    // Mock the themes variable in 'color.js'
     before(() => color.__set__('themes', mockThemes))
+    // Unmock the themes variable in 'color.js'
     after(() => color.__set__('themes', require('../scripts/themes')))
+
+    it('Should generate the correct CSS style string', () => {
+      colorStyle('ThemeA').should.equal(
+        `
+        :root {
+          --button-color: #000;
+          --button-border-color: #111;
+          --nav-text-hover-color: #222;
+        }
+        `.replace(/^( {2})+/gm, '')
+      )
+    })
   })
 
   describe('themes', () => {
@@ -98,12 +113,6 @@ describe('Color module', () => {
         selectedThemes.length.should.equal(1)
         selectedThemes[0].name.should.equal('Light')
       })
-    })
-  })
-
-  describe('colorStyle', () => {
-    it('Should return a string', () => {
-      colorStyle().should.be.a('string')
     })
   })
 })
