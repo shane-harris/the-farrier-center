@@ -2,10 +2,6 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Horses = require('./horse')
-const Medicals = require('./medical')
-const Shoeings = require('./shoeing')
-const Users = require('./user')
 
 const ImageSchema = new Schema({
   ref_id: {
