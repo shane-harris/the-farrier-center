@@ -81,9 +81,8 @@ router.post('/new', loggedIn, parser.single('image'), (req, res) => {
 router.get('/:id', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
     .populate('image')
-    .exec(function(err, horse) {
-      res.render('horse.ejs', { horse: horse })
-    })
+    .then(horse => res.render('horse.ejs', { horse: horse }))
+    .catch(console.error)
 })
 
 router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
