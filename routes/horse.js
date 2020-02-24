@@ -1,13 +1,39 @@
 'use strict'
-
+//Import NPM modules
 const express = require('express')
 const router = express.Router()
+
+//Import mongoose models
 const Medical = require('../models/medical')
 const Horse = require('../models/horse')
+const Image = require('../models/image')
+
+//import middlewares
 const { loggedIn } = require('../middleware/auth')
+
+const multer = require('multer')
+const cloudinary = require('cloudinary')
+const cloudinaryStorage = require('multer-storage-cloudinary')
+
+//Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_KEY,
+  api_secret: process.env.CLOUD_SECRET
+})
+
+const storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  folder: 'dev-bojack',
+  allowedFormats: ['jpg', 'png'],
+  transformation: [{ width: 500, height: 500, crop: 'limit' }]
+})
+
+const parser = multer({ storage: storage })
 
 router.use('/public', express.static('public'))
 
+//Setup Routes
 router.get('/queue', loggedIn, (req, res) => {
   Horse.find()
     // sort by lastVisit (ascending)
@@ -34,21 +60,42 @@ router.get('/new', loggedIn, (req, res) => {
   res.render('new-horse.ejs')
 })
 
-router.post('/new', loggedIn, (req, res) => {
-  console.log(req.body)
-  new Horse(req.body).save(console.error)
+router.post('/new', loggedIn, parser.single('image'), (req, res) => {
+  if (req.file) {
+    const horse = new Horse(req.body)
+    const image = new Image({
+      ref_id: horse._id,
+      onType: 'horses',
+      url: req.file.url,
+      public_id: req.file.public_id
+    })
+    horse.image = image._id
+    horse.save()
+    image.save()
+  } else {
+    Horse.create(req.body)
+  }
   res.redirect('/horse/all')
 })
 
 router.get('/:id', loggedIn, (req, res) => {
   Horse.findOne({ id: req.params.id })
+    .populate('image')
     .then(horse => res.render('horse.ejs', { horse: horse }))
     .catch(console.error)
 })
 
 router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('new-medical-analysis.ejs', { horse }))
+  Promise.all([
+    Horse.findOne({ id: req.params.id }),
+    Medical.find({ horse_id: req.params.id }).sort({ date: -1 })
+  ]) //sorts medicals by most recent date first
+    .then(values => {
+      const [horse, medicals] = values
+      const updateable = medicals.length !== 0
+      const medical = medicals[0] //grab the first medical report
+      res.render('new-medical-analysis.ejs', { horse, medical, updateable })
+    })
     .catch(console.error)
 })
 

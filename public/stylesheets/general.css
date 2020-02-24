@@ -68,7 +68,7 @@ body {
 }
 .btn:hover {
   background-color: var(--button-hover-color);
-  border: 2px solid var(--button-border-color);
+  border: 2px solid var(--button-border-hover-color);
   color: var(--button-text-hover-color);
 }
 
