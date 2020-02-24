@@ -83,14 +83,16 @@ router.post('/new', loggedIn, parser.single('image'), (req, res) => {
 router.get('/:id', loggedIn, (req, res) => {
   Promise.all([
     Horse.findOne({ id: req.params.id }).populate('image'),
-    Medical.find({ horse_id: req.params.id }).sort({ date: -1 })
+    Medical.find({ horse_id: req.params.id }).sort({ date: -1 }),
+    Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
     //sorts medicals by most recent date first
     .then(values => {
-      const [horse, medicals] = values
+      const [horse, medicals, shoeings] = values
       const updateable = medicals.length !== 0
       const medical = medicals[0] //grab the first medical report
-      res.render('horse.ejs', { horse, medical, updateable })
+      const shoeing = shoeings[0]
+      res.render('horse.ejs', { horse, medical, shoeing, updateable })
     })
     .catch(console.error)
 })

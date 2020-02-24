@@ -110,16 +110,13 @@
         </div>
       </div>
       <div id="shoeing" class="collapse">
+        <% if(shoeing !== undefined) { %>
         <div class="row">
           <div class="col-sm-4">
             <h2>Most Recent Shoeing</h2>
           </div>
           <div class="col-sm-4">
-            <h2 id="shoeingDate">
-              <%= `${shoeingReportDate.getUTCMonth() + 1}/
-                         ${shoeingReportDate.getUTCDate()}/${shoeingReportDate.getUTCFullYear()}`
-                         .replace(/\n( )*/gm, '') %>
-            </h2>
+              <h1>Date: <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %></h1>
           </div>
           <div class="col-sm-4">
             <h2>Farrier: Steve</h2>
@@ -150,6 +147,9 @@
             <%- include('partials/shoeing', horse.data) %>
           </div>
         </div>
+        <% } else { %>
+          <div align="center"><H2> No Shoeing reports have been created</H2></div>
+        <% } %>
       </div>
     </div>
   </div>
