@@ -65,23 +65,18 @@ router.get('/search', loggedIn, (req, res) => {
 })
 
 router.post('/search', (req, res) => {
-  var query = req.body.query
-  Horse.findOne({ name: query })
-    .then(found => {
-      res.redirect(
-        url.format({
-          pathname: `/horse/${found.id}`
-        })
-      )
-    })
-    .catch(err => {
+  Horse.findOne({ name: req.body.query })
+    .then(found => res.redirect(`/horse/${found.id}`))
+    .catch(_ =>
       res.redirect(
         url.format({
           pathname: '/search',
-          query: req.body.query
+          query: {
+            query: req.body.query
+          }
         })
       )
-    })
+    )
   console.log(req.body.query, 'Horse Not found')
 })
 
