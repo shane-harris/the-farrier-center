@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose)
-const Images = require('./image')
 const Schema = mongoose.Schema
 
 const HorseSchema = new Schema({
