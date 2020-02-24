@@ -4,22 +4,22 @@
   <%- include('partials/header-nav') %>
   <div id="page-container" class="container-fluid">
     <div class="container form">
-      <h1>New Shoeing for [Insert horsename here]</h1>
-      <form action="" method="">
+      <h1>New Shoeing for <%= horse.name %></h1>
+        <form action="/horse/<%= horse.id %>/new-shoeing" method="post">
 
         <div class="row">
-          <%- include('partials/shoeing-input-form', {hoof: 'Front Left'}) %>
-          <%- include('partials/shoeing-input-form', {hoof: 'Front Right'}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Front Left', hoofIdent: "frontLeft"}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Front Right', hoofIdent: "frontRight"}) %>
         </div>
         <div class="row">
-          <%- include('partials/shoeing-input-form', {hoof: 'Back Left'}) %>
-          <%- include('partials/shoeing-input-form', {hoof: 'Back Right'}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Back Left', hoofIdent: "backLeft"}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Back Right', hoofIdent: "backRight"}) %>
         </div>
 
         <%- include('partials/shoeing-checkboxes') %>
 
         <div class="">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" value="'shoeing">Submit</button>
         </div>
 
       </form>
