@@ -5,9 +5,9 @@
   <div id="page-container" class="container-fluid">
     <div class="container form">
       <H1>New Horse</H1>
-      <form action="/horse/new" method="post">
+      <form action="/horse/new" method="post" enctype="multipart/form-data">
 
-        <%- include('partials/horse-input-fields') %>
+        <%- include('partials/horse-input-fields', {updateable: false}) %>
 
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
