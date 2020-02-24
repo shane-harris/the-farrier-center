@@ -77,19 +77,22 @@
       </div>
 
       <div class="collapse" id="medical">
-        <div class="row">
-          <div class="col-sm-4">
-            <h1>Medical Analysis</h1>
+        <% if(medical !== undefined) { %>
+          <div class="row">
+            <div class="col-sm-4">
+              <h1>Medical Analysis</h1>
+            </div>
+            <div class="col-sm-4">
+              <h1>Date: <%= `${medical.date.getMonth() + 1}/${medical.date.getDate()}/${medical.date.getFullYear()}` %></h1>
+            </div>
+            <div class="col-sm-4">
+              <h1>Farrier: <%= medical.farrier %></h1>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <%// const date = new Date() %>
-            <h1>Date: <%= `${medical.date.getMonth() + 1}/${medical.date.getDate()}/${medical.date.getFullYear()}` %></h1>
-          </div>
-          <div class="col-sm-4">
-            <h1>Farrier: <%= medical.farrier %></h1>
-          </div>
-        </div>
-        <%- include('partials/medical-input-fields', {editable: false}) %>
+          <%- include('partials/medical-input-fields', {editable: false}) %>
+        <% } else { %>
+          <div align="center"><H2> No medical reports have been created</H2></div>
+        <% } %>
       </div>
     </div>
 
