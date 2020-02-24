@@ -14,8 +14,8 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <%//Back%>
-          <img alt="Horse" class="img-fluid float-left bg-white" src="../public/images/horse_profile.png" />
+          <img alt="Horse" class="img-fluid float-left"
+            src=<%= horse.image === undefined ? "../public/images/horse_profile.png" : horse.image.url %> />
         </div>
         <div class="col-sm-4">
           <table class="table table-borderless">
@@ -103,7 +103,7 @@
           </a>
         </div>
         <div class="pad">
-          <a type="button" class="btn" href="/horse/<%= horse.id %>/new-shoeing">New Shoeing</a>
+          <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New Shoeing</a>
         </div>
       </div>
       <div id="shoeing" class="collapse">

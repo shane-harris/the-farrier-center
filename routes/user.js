@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport({
 router.use('/public', express.static('public'))
 
 router.get('/', loggedIn, (req, res) => {
-  res.render('user.ejs', { username: req.user.username })
+  res.render('user.ejs', { user: req.user })
 })
 
 router.get('/theme', loggedIn, (req, res) => {
@@ -67,6 +67,7 @@ router.post('/forgot-password', (req, res) => {
   })
 })
 
+//change password while not logged in
 router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
     if (err) return res.sendStatus(403)
@@ -97,6 +98,36 @@ router.post('/reset-password/:token', (req, res) => {
       } else {
         res.sendStatus(500)
       }
+    }
+  })
+})
+
+//change password while logged in
+router.post('/update-password', (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.sendStatus(500)
+    } else {
+      user.changePassword(req.body.currentpass, req.body.newpass, (err, user) => {
+        if (err) {
+          res.redirect('/user')
+        }
+      })
+    }
+    res.redirect('/user')
+  })
+})
+
+router.post('/update-info', (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.redirect('/user')
+    } else {
+      user.fname = req.body.fname
+      user.lname = req.body.lname
+      user.phone = req.body.phone
+      user.save()
+      res.redirect('/user')
     }
   })
 })
