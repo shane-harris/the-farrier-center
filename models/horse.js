@@ -2,10 +2,11 @@
 
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose)
-
+const Images = require('./image')
 const Schema = mongoose.Schema
 
 const HorseSchema = new Schema({
+  image: { type: Schema.Types.ObjectId, ref: 'images' },
   name: String,
   gender: String,
   temperament: String,
@@ -17,8 +18,8 @@ const HorseSchema = new Schema({
   history: String,
   data: {
     hoof: String,
-    hoofImage1: String,
-    hoofImage2: String,
+    hoofImage1: { type: Schema.Types.ObjectId, ref: 'images' },
+    hoofImage2: { type: Schema.Types.ObjectId, ref: 'images' },
     shoeType: String,
     shoeSize: Number,
     notes: String
