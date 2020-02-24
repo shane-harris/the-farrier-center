@@ -10,7 +10,6 @@ const Image = require('../models/image')
 
 //import middlewares
 const { loggedIn } = require('../middleware/auth')
-//const parser = require('../middleware/cloud')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
