@@ -112,13 +112,17 @@
       <div id="shoeing" class="collapse">
         <div class="row">
           <div class="col-sm-4">
-            <h1>Recent Shoeing</h1>
+            <h2>Most Recent Shoeing</h2>
           </div>
           <div class="col-sm-4">
-            <h1>Date: 11/13/19</h1>
+            <h2 id="shoeingDate">
+              <%= `${shoeingReportDate.getUTCMonth() + 1}/
+                         ${shoeingReportDate.getUTCDate()}/${shoeingReportDate.getUTCFullYear()}`
+                         .replace(/\n( )*/gm, '') %>
+            </h2>
           </div>
           <div class="col-sm-4">
-            <h1>Farrier: Steve</h1>
+            <h2>Farrier: Steve</h2>
           </div>
         </div>
 

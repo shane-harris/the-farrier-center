@@ -6,6 +6,8 @@ const router = express.Router()
 //Import mongoose models
 const Medical = require('../models/medical')
 const Horse = require('../models/horse')
+const Horseshoe = require('../models/horseshoe')
+const Shoeing = require('../models/shoeing')
 const Image = require('../models/image')
 
 //import middlewares
@@ -120,6 +122,46 @@ router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
 
 router.get('/:id/new-shoeing', loggedIn, (req, res) => {
   res.render('new-shoeing.ejs')
+})
+
+router.post('/:id/new-shoeing', loggedIn, (req, res) => {
+  console.log(req.body)
+  new Shoeing({
+    horse_id: req.params.id,
+    date: new Date(), //returns todays date
+    farrier: 'Default Steve',
+    frontLeft: new Horseshoe({
+      jobType: req.body.frontLeftShoe, //full, half, trim
+      shoeSize: req.body.frontLeftSize,
+      notes: req.body.frontLeftNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+    frontRight: new Horseshoe({
+      jobType: req.body.frontRightShoe,
+      shoeSize: req.body.frontRightSize,
+      notes: req.body.frontRightNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+    backLeft: new Horseshoe({
+      jobType: req.body.backLeftShoe,
+      shoeSize: req.body.backLeftSize,
+      notes: req.body.backLeftNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+    backRight: new Horseshoe({
+      jobType: req.body.backRightShoe,
+      shoeSize: req.body.backRightSize,
+      notes: req.body.backRightNotes,
+      hoofImage1: null,
+      hoofImage2: null
+    }),
+
+    ...req.body
+  }).save(console.error)
+  res.redirect(`/horse/${req.params.id}`)
 })
 
 router.get('/:id/update', loggedIn, (req, res) => {

@@ -16,7 +16,7 @@
     "ecmaVersion": 2018
   },
   "rules": {
-    "no-unused-vars": "warn",
+    "no-unused-vars": ["warn", { "args": "after-used", "argsIgnorePattern": "^_" }],
     "no-constant-condition": ["error", { "checkLoops": false }],
     "strict": ["warn", "safe"],
     "no-empty": ["error", { "allowEmptyCatch": true }]

@@ -7,38 +7,24 @@ const ShoeingSchema = new Schema({
   horse_id: Number,
   date: Date,
   farrier: String,
+
   frontLeft: {
-    hoof: String,
-    hoofImage1: String,
-    hoofImage2: String,
-    shoeType: String,
-    shoeSize: Number,
-    notes: String
+    type: Schema.Types.ObjectID,
+    ref: 'Horseshoe'
   },
   frontRight: {
-    hoof: String,
-    hoofImage1: String,
-    hoofImage2: String,
-    shoeType: String,
-    shoeSize: Number,
-    notes: String
+    type: Schema.Types.ObjectID,
+    ref: 'Horseshoe'
   },
   backLeft: {
-    hoof: String,
-    hoofImage1: String,
-    hoofImage2: String,
-    shoeType: String,
-    shoeSize: Number,
-    notes: String
+    type: Schema.Types.ObjectID,
+    ref: 'Horseshoe'
   },
   backRight: {
-    hoof: String,
-    hoofImage1: String,
-    hoofImage2: String,
-    shoeType: String,
-    shoeSize: Number,
-    notes: String
+    type: Schema.Types.ObjectID,
+    ref: 'Horseshoe'
   },
+
   pads: Boolean,
   straightbarshoe: Boolean,
   eggbar: Boolean,
