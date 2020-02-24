@@ -55,6 +55,17 @@ GMAIL_PASS='farierdevsacstate'
 JWT_KEY='bb8710e8f071a10891b1e256a69c0e4c5fbd7c8724e7202703093f6327b4ff625461e516e6a8dcd35c1d60309a4b3c56b4f2a322a1b049255dca82d331b30d41'
 ```
 
+## Disable database tests
+
+Testing the database takes pretty long, and slows down the testing suite. Since those tests will
+probably never fail anyway, you can skip them by adding
+
+```
+TEST_DB='false'
+```
+
+to your `.env` file.
+
 ## Set up new routes and revisions
 
 Routes have beed extracted to a new folder, routes, and new files index.js, horse.js, user.js index.js and updated to work with this new structure
