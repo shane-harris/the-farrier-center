@@ -108,7 +108,7 @@ router.post('/update-password', (req, res) => {
     if (err) {
       res.sendStatus(500)
     } else {
-      user.changePassword(req.body.currentpass, req.body.newpass, (err, user) => {
+      user.changePassword(req.body.currentpass, req.body.newpass, err => {
         if (err) {
           res.redirect('/user')
         }
