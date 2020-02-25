@@ -39,10 +39,6 @@
   padding: 5px;
 }
 
-nav {
-  background-color: var(--nav-color);
-}
-
 body {
   background-color: var(--bg-color);
   color: var(--primary-text-color);
@@ -59,6 +55,31 @@ body {
   background-color: var(--input-bg-focus-color);
   border-color: var(--border-focus-color);
   box-shadow: none;
+}
+
+.form-control:read-only:not(select) {
+  background-color: var(--readonly-text-field-bg-color);
+}
+
+.form-control::placeholder {
+  color: var(--placeholder-text-color);
+}
+
+.dropdown-menu {
+  background-color: var(--dropdown-bg-color);
+}
+
+.dropdown-item {
+  color: var(--dropdown-item-text-color);
+}
+
+.dropdown-item:hover {
+  background-color: var(--dropdown-item-bg-hover-color);
+  color: var(--dropdown-item-text-hover-color);
+}
+
+.dropdown-divider {
+  border-color: var(--dropdown-divider-color);
 }
 
 .btn {
@@ -78,6 +99,18 @@ a {
 
 a:hover {
   color: var(--link-hover-color);
+}
+
+nav {
+  background-color: var(--nav-color);
+}
+
+#header-nav {
+  border-bottom: 1px solid var(--nav-border-color);
+}
+
+#footer-nav {
+  border-top: 1px solid var(--nav-border-color);
 }
 
 .navbar-dark .navbar-nav .nav-link {
