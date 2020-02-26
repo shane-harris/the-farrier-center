@@ -1,7 +1,7 @@
 'use strict'
 const mongoose = require('mongoose')
-const config = require('../config/config.js')
-const Horse = require('../models/horse')
+const config = require('../../config/config.js')
+const Horse = require('../../models/horse')
 const chai = require('chai')
 chai.use(require('chai-http'))
 chai.should()

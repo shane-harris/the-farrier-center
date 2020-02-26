@@ -4,7 +4,7 @@ const chai = require('chai')
 chai.use(require('chai-http'))
 chai.should()
 
-const { maybe } = require('../scripts/util')
+const { maybe } = require('../../scripts/util')
 
 describe('Utility functions', () => {
   describe('maybe().or()', () => {
