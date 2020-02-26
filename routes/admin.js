@@ -3,13 +3,16 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
-const { isAdmin, sendRegEmail } = require('../middleware/auth')
+const { loggedIn, isAdmin, sendRegEmail } = require('../middleware/auth')
 
 router.use(isAdmin)
 router.use('/public', express.static('public'))
 //Admin Routes
 router.get('/', (req, res) => {
-  res.render('admin.ejs', { username: req.user.username })
+  User.find()
+    .sort({ lname: 1 })
+    .then(users => res.render('admin.ejs', { username: req.user.username, users }))
+    .catch(console.error)
 })
 
 router.post('/register', (req, res) => {
@@ -28,5 +31,13 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/send-email', sendRegEmail)
+
+// router.get('/all-users', loggedIn, (req, res) => {
+//   User.find()
+//     // sort by last name
+//     .sort({ lname: 1 })
+//     .then(users => res.render('admin.ejs', { users }))
+//     .catch(console.error)
+// })
 
 module.exports = router
