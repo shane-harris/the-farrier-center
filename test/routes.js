@@ -6,7 +6,7 @@ chai.should()
 const app = require('../index')
 
 describe('Routes', () => {
-  //Tests below
+  //Test GET routes
   describe('GET /', () => {
     let req
     before(() => {
@@ -52,6 +52,40 @@ describe('Routes', () => {
     })
 
     describe('The user theme page', () => {
+      it('should render HTML', () => {
+        return req.then(res => res.should.be.html)
+      })
+    })
+  })
+
+  describe('GET /login', () => {
+    let req
+    before(() => {
+      return (req = chai.request(app).get('/login'))
+    })
+
+    it('should get the login page', () => {
+      return req.then(res => res.should.have.status(200))
+    })
+
+    describe('The login page', () => {
+      it('should render HTML', () => {
+        return req.then(res => res.should.be.html)
+      })
+    })
+  })
+
+  describe('GET /search', () => {
+    let req
+    before(() => {
+      return (req = chai.request(app).get('/search'))
+    })
+
+    it('should get the search page', () => {
+      return req.then(res => res.should.have.status(200))
+    })
+
+    describe('The search page', () => {
       it('should render HTML', () => {
         return req.then(res => res.should.be.html)
       })
@@ -174,4 +208,6 @@ describe('Routes', () => {
       })
     })
   })
+
+  //Test POST routes
 })
