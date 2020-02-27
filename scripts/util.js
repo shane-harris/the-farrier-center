@@ -1,5 +1,7 @@
 'use strict'
 
+const app = require('./app')
+
 /**
  * Returns `value` if it exists, or `defaultValue` if it is undefined.
  *
@@ -14,4 +16,22 @@ const maybe = value => ({
   or: defaultValue => (value !== undefined ? value : defaultValue)
 })
 
-module.exports = { maybe }
+/**
+ * Resolves immediately if the database is already connected. Otherwise waits for the database to
+ * connect, then resolves.
+ *
+ * @example
+ * dbConnected().then(() => {
+ *   // do something that requires a database connection
+ * })
+ *
+ * @return {Promise}
+ */
+const dbConnected = () => {
+  if (app.get('database-connected')) {
+    return Promise.resolve()
+  }
+  return new Promise(resolve => app.on('event:database-connected', resolve))
+}
+
+module.exports = { maybe, dbConnected }

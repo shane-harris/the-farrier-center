@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{js,css,json,md}\"",
     "pretest": "eslint --fix \"**/*.js\"",
-    "test": "cross-env PORT=9090 NODE_ENV='test' mocha --exit --recursive",
+    "test": "node test/mocha.js",
     "start": "node index.js"
   },
   "repository": {
