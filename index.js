@@ -100,7 +100,7 @@ mongoose
 
 // Listen for user requests
 app.listen(config.port, () => {
-  console.log(`Example app listening on port ${config.port}!`)
+  console.log(`Listening at http://localhost:${config.port}`)
 })
 
 module.exports = app
