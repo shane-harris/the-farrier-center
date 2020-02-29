@@ -2,15 +2,16 @@
 
 const chai = require('chai')
 chai.should()
-const { skipIfDisabled } = require('./util')
 const { getDriver, logIn } = require('./driver')
 const driver = getDriver()
 
 describe('Queue', () => {
   before(async function() {
-    skipIfDisabled(this)
+    if (process.env.TEST_FRONT_END === 'false') {
+      this.skip()
+    }
     this.timeout(10000)
-    await logIn('test', 'test')
+    return logIn('test', 'test')
   })
 
   it('Has the correct title', async () => {
@@ -18,5 +19,10 @@ describe('Queue', () => {
     await title.should.equal('Horse Queue | Farrier Center')
   }).timeout(10000)
 
-  after(async () => driver.get('http://localhost:9090/logout'))
+  after(async () => {
+    if (process.env.TEST_FRONT_END === 'false') {
+      return
+    }
+    return driver.get('http://localhost:9090/logout')
+  })
 })

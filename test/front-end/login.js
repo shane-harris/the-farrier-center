@@ -3,13 +3,14 @@
 const chai = require('chai')
 chai.should()
 const { By } = require('selenium-webdriver')
-const { skipIfDisabled } = require('./util')
 const { getDriver } = require('./driver')
 const driver = getDriver()
 
 describe('Login', () => {
   before(async function() {
-    skipIfDisabled(this)
+    if (process.env.TEST_FRONT_END === 'false') {
+      this.skip()
+    }
     this.timeout(10000)
 
     await driver.get('http://localhost:9090/logout')
@@ -36,5 +37,10 @@ describe('Login', () => {
     await title.should.equal('Login | Farrier Center')
   })
 
-  afterEach(async () => await driver.get('http://localhost:9090/logout'))
+  afterEach(async () => {
+    if (process.env.TEST_FRONT_END === 'false') {
+      return
+    }
+    return driver.get('http://localhost:9090/logout')
+  })
 })

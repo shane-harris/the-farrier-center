@@ -5,7 +5,6 @@ const fs = require('fs')
 const util = require('util')
 const path = require('path')
 const readdir = util.promisify(fs.readdir)
-const { ifEnabled: ifFrontEndEnabled, ifDisabled: ifFrontEndDisabled } = require('./front-end/util')
 const { startDriver, getDriver } = require('./front-end/driver')
 const { dbConnected } = require('../scripts/util')
 process.env.PORT = 9090
@@ -24,21 +23,21 @@ const runTests = async () => {
         .forEach(file => mocha.addFile(path.join(dir, file)))
     })
   )
-  mocha.run(async failures => {
-    await ifFrontEndEnabled(() => {
+  mocha.run(failures => {
+    if (process.env.TEST_FRONT_END !== 'false') {
       console.log('Shutting down selenium web-driver')
       getDriver().quit()
-    })
+    }
     process.exit(failures)
   })
 }
 
-console.log('Waiting for database to connect...')
-dbConnected().then(() => {
-  ifFrontEndEnabled(() => {
+if (process.env.TEST_FRONT_END !== 'false') {
+  dbConnected().then(() => {
     console.log('Starting selenium web-driver')
     startDriver()
     runTests()
   })
-  ifFrontEndDisabled(runTests)
-})
+} else {
+  runTests()
+}
