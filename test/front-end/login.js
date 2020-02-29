@@ -31,5 +31,10 @@ describe('Login', () => {
     await url.should.equal('http://localhost:9090/horse/queue')
   })
 
-  after(async () => await driver.get('http://localhost:9090/logout'))
+  it('Should have the correct title', async () => {
+    const title = await driver.getTitle()
+    await title.should.equal('Login | Farrier Center')
+  })
+
+  afterEach(async () => await driver.get('http://localhost:9090/logout'))
 })
