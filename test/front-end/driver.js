@@ -31,6 +31,8 @@ const logIn = (username, password) =>
       }
     })
 
+const logOut = () => driver.get('http://localhost:9090/logout')
+
 const getDriver = () => driver
 
-module.exports = { startDriver, getDriver, logIn }
+module.exports = { startDriver, getDriver, logIn, logOut }

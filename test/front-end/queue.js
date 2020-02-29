@@ -3,7 +3,7 @@
 const chai = require('chai')
 chai.should()
 const { skipIfDisabled } = require('./util')
-const { getDriver, logIn } = require('./driver')
+const { getDriver, logIn, logOut } = require('./driver')
 const driver = getDriver()
 
 describe('Queue', () => {
@@ -22,4 +22,6 @@ describe('Queue', () => {
       .then(() => done())
       .catch(done)
   }).timeout(10000)
+
+  after(logOut)
 })

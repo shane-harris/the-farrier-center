@@ -4,7 +4,7 @@ const chai = require('chai')
 chai.should()
 const { By } = require('selenium-webdriver')
 const { skipIfDisabled } = require('./util')
-const { getDriver } = require('./driver')
+const { getDriver, logOut } = require('./driver')
 const driver = getDriver()
 
 describe('Login', () => {
@@ -42,4 +42,6 @@ describe('Login', () => {
       .then(() => done())
       .catch(done)
   })
+
+  after(logOut)
 })
