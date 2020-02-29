@@ -16,16 +16,16 @@ describe('Login', () => {
   })
 
   it('Should fail to login with bad credentials', async () => {
-    await driver.findElement(By.id('username')).sendKeys('michael')
-    await driver.findElement(By.id('password')).sendKeys('b')
+    await driver.findElement(By.id('username')).sendKeys('test')
+    await driver.findElement(By.id('password')).sendKeys('wrongpassword')
     await driver.findElement(By.id('login')).click()
     const url = await driver.getCurrentUrl()
     await url.should.equal('http://localhost:9090/login')
   })
 
   it('Should successfully login with valid credentials', async () => {
-    await driver.findElement(By.id('username')).sendKeys('michael')
-    await driver.findElement(By.id('password')).sendKeys('a')
+    await driver.findElement(By.id('username')).sendKeys('test')
+    await driver.findElement(By.id('password')).sendKeys('test')
     await driver.findElement(By.id('login')).click()
     const url = await driver.getCurrentUrl()
     await url.should.equal('http://localhost:9090/horse/queue')
