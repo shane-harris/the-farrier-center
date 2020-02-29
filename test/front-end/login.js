@@ -25,8 +25,20 @@ describe('Login', () => {
       .sendKeys('michael')
       .then(() => driver.findElement(By.id('password')).sendKeys('b'))
       .then(() => driver.findElement(By.id('login')).click())
-      .then(() => driver.getTitle())
-      .then(title => title.should.equal('Login | Farrier Center'))
+      .then(() => driver.getCurrentUrl())
+      .then(url => url.should.equal('http://localhost:9090/login'))
+      .then(() => done())
+      .catch(done)
+  })
+
+  it('Should successfully login with valid credentials', done => {
+    driver
+      .findElement(By.id('username'))
+      .sendKeys('michael')
+      .then(() => driver.findElement(By.id('password')).sendKeys('a'))
+      .then(() => driver.findElement(By.id('login')).click())
+      .then(() => driver.getCurrentUrl())
+      .then(url => url.should.equal('http://localhost:9090/horse/queue'))
       .then(() => done())
       .catch(done)
   })

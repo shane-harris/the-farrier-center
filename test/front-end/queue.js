@@ -4,19 +4,14 @@ const chai = require('chai')
 chai.should()
 const { By } = require('selenium-webdriver')
 const { skipIfDisabled } = require('./util')
-const { getDriver } = require('./driver')
+const { getDriver, logIn } = require('./driver')
 const driver = getDriver()
 
 describe('Queue', () => {
   before(function(done) {
     skipIfDisabled(this)
     this.timeout(10000)
-
-    driver
-      .get('http://localhost:9090/')
-      .then(() => driver.findElement(By.id('username')).sendKeys('michael'))
-      .then(() => driver.findElement(By.id('password')).sendKeys('a'))
-      .then(() => driver.findElement(By.id('login')).click())
+    logIn()
       .then(() => done())
       .catch(done)
   })
