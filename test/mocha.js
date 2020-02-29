@@ -14,26 +14,23 @@ require('../index')
 
 const mocha = new Mocha()
 
-const runTests = () => {
+const runTests = async () => {
   const tests = ['test/back-end', 'test/front-end']
-  return Promise.all(
-    tests.map(dir =>
-      readdir(dir).then(files =>
-        files
-          .filter(file => file.substr(-3) === '.js')
-          .forEach(file => mocha.addFile(path.join(dir, file)))
-      )
-    )
+  await Promise.all(
+    tests.map(async dir => {
+      const files = await readdir(dir)
+      files
+        .filter(file => file.substr(-3) === '.js')
+        .forEach(file => mocha.addFile(path.join(dir, file)))
+    })
   )
-    .then(() =>
-      mocha.run(failures => {
-        ifFrontEndEnabled(() => {
-          console.log('Shutting down selenium web-driver')
-          getDriver().quit()
-        }).then(() => process.exit(failures))
-      })
-    )
-    .catch(console.error)
+  mocha.run(async failures => {
+    await ifFrontEndEnabled(() => {
+      console.log('Shutting down selenium web-driver')
+      getDriver().quit()
+    })
+    process.exit(failures)
+  })
 }
 
 console.log('Waiting for database to connect...')
