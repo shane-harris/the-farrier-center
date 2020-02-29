@@ -17,22 +17,16 @@ const startDriver = () => {
  *
  * @returns {Promise} A promise which resolves once selenium has logged in
  */
-const logIn = (username, password) =>
-  driver
-    .get('http://localhost:9090/')
-    .then(() => driver.getCurrentUrl())
-    .then(url => {
-      if (url === 'http://localhost:9090/login') {
-        return driver
-          .findElement(By.id('username'))
-          .sendKeys(username)
-          .then(() => driver.findElement(By.id('password')).sendKeys(password))
-          .then(() => driver.findElement(By.id('login')).click())
-      }
-    })
-
-const logOut = () => driver.get('http://localhost:9090/logout')
+const logIn = async (username, password) => {
+  await driver.get('http://localhost:9090/')
+  const url = await driver.getCurrentUrl()
+  if (url === 'http://localhost:9090/login') {
+    await driver.findElement(By.id('username')).sendKeys(username)
+    await driver.findElement(By.id('password')).sendKeys(password)
+    await driver.findElement(By.id('login')).click()
+  }
+}
 
 const getDriver = () => driver
 
-module.exports = { startDriver, getDriver, logIn, logOut }
+module.exports = { startDriver, getDriver, logIn }
