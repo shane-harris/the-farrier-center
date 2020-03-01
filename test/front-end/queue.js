@@ -28,7 +28,7 @@ describe('Queue page', () => {
   it('Should have correct title', async () => {
     const title = await driver.getTitle()
     title.should.equal('Horse Queue | Farrier Center')
-  }).timeout(10000)
+  })
 
   it('Should have horses', async () => {
     const elements = await driver.findElements(By.linkText('Secretariat'))
