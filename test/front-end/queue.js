@@ -8,7 +8,7 @@ const driver = getDriver()
 
 const route = route => `http://localhost:9090${route}`
 
-describe('Queue', () => {
+describe('Queue page', () => {
   before(async function() {
     if (process.env.TEST_FRONT_END === 'false') {
       this.skip()
@@ -25,7 +25,7 @@ describe('Queue', () => {
 
   beforeEach(async () => await driver.get(route('/horse/queue')))
 
-  it('Has the correct title', async () => {
+  it('Should have correct title', async () => {
     const title = await driver.getTitle()
     title.should.equal('Horse Queue | Farrier Center')
   }).timeout(10000)
@@ -35,11 +35,13 @@ describe('Queue', () => {
     elements.length.should.equal(1)
   })
 
-  it('Horses have the correct link', async () => {
-    const url1 = await driver.findElement(By.linkText('Secretariat')).getAttribute('href')
-    url1.should.equal(route('/horse/0'))
-    const url2 = await driver.findElement(By.linkText('Buttercup')).getAttribute('href')
-    url2.should.equal(route('/horse/1'))
+  describe('Horses', () => {
+    it('Should have the correct link', async () => {
+      const url1 = await driver.findElement(By.linkText('Secretariat')).getAttribute('href')
+      url1.should.equal(route('/horse/0'))
+      const url2 = await driver.findElement(By.linkText('Buttercup')).getAttribute('href')
+      url2.should.equal(route('/horse/1'))
+    })
   })
 
   describe('The navbar', () => {

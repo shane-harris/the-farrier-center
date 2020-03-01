@@ -6,7 +6,7 @@ const { By } = require('selenium-webdriver')
 const { getDriver } = require('./driver')
 const driver = getDriver()
 
-describe('Login', () => {
+describe('Login page', () => {
   before(async function() {
     if (process.env.TEST_FRONT_END === 'false') {
       this.skip()
