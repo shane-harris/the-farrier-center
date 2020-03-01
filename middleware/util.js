@@ -1,8 +1,8 @@
 'use strict'
 
-const { valueOr } = require('../scripts/util')
+const { maybe } = require('../scripts/util')
 
 module.exports = (_, res, next) => {
-  res.locals.valueOr = valueOr
+  res.locals.maybe = maybe
   next()
 }
