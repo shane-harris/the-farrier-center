@@ -17,12 +17,23 @@ describe('Queue', () => {
     return logIn('test', 'test')
   })
 
+  after(async () => {
+    if (process.env.TEST_FRONT_END !== 'false') {
+      return driver.get(route('/logout'))
+    }
+  })
+
   beforeEach(async () => await driver.get(route('/horse/queue')))
 
   it('Has the correct title', async () => {
     const title = await driver.getTitle()
     title.should.equal('Horse Queue | Farrier Center')
   }).timeout(10000)
+
+  it('Has Secretariat', async () => {
+    const url = await driver.findElement(By.linkText('Secretariat')).getAttribute('href')
+    url.should.equal(route('/horse/0'))
+  })
 
   describe('The navbar', () => {
     it('Should exist', async () => {
@@ -45,11 +56,5 @@ describe('Queue', () => {
     shouldHaveLink('Horses', route('/horse/all'))
     shouldHaveLink('New Horse', route('/horse/new'))
     shouldHaveLink('Admin', route('/admin'))
-  })
-
-  after(async () => {
-    if (process.env.TEST_FRONT_END !== 'false') {
-      return driver.get(route('/logout'))
-    }
   })
 })
