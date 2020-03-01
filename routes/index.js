@@ -15,6 +15,9 @@ router.get('/', loggedIn, (req, res) => {
   res.redirect('/horse/queue')
 })
 
+// Send 204 No Content to avoid a 404 error
+router.get('/favicon.ico', (_, res) => res.status(204))
+
 router.post('/register', redirectIfLoggedIn, (req, res, next) => {
   console.log('registering user')
   User.register(new User({ username: req.body.username }), req.body.password, err => {

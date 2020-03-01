@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{js,css,json,md}\"",
     "pretest": "eslint --fix \"**/*.js\"",
-    "test": "cross-env PORT=9090 NODE_ENV='test' mocha --exit",
+    "test": "node test/mocha.js",
     "start": "node index.js"
   },
   "repository": {
@@ -40,12 +40,14 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "chromedriver": "^80.0.1",
     "eslint": "^6.6.0",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
-    "prettier": "1.18.2"
+    "prettier": "1.18.2",
+    "selenium-webdriver": "^4.0.0-alpha.5"
   },
   "husky": {
     "hooks": {
