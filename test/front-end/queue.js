@@ -30,9 +30,16 @@ describe('Queue', () => {
     title.should.equal('Horse Queue | Farrier Center')
   }).timeout(10000)
 
-  it('Has Secretariat', async () => {
-    const url = await driver.findElement(By.linkText('Secretariat')).getAttribute('href')
-    url.should.equal(route('/horse/0'))
+  it('Should have horses', async () => {
+    const elements = await driver.findElements(By.linkText('Secretariat'))
+    elements.length.should.equal(1)
+  })
+
+  it('Horses have the correct link', async () => {
+    const url1 = await driver.findElement(By.linkText('Secretariat')).getAttribute('href')
+    url1.should.equal(route('/horse/0'))
+    const url2 = await driver.findElement(By.linkText('Buttercup')).getAttribute('href')
+    url2.should.equal(route('/horse/1'))
   })
 
   describe('The navbar', () => {
