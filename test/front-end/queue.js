@@ -5,6 +5,7 @@ chai.should()
 const { By } = require('selenium-webdriver')
 const { getDriver, logIn } = require('./driver')
 const driver = getDriver()
+const testHeaderNav = require('./header-nav')
 
 const route = route => `http://localhost:9090${route}`
 
@@ -44,26 +45,5 @@ describe('Queue page', () => {
     })
   })
 
-  describe('The navbar', () => {
-    it('Should exist', async () => {
-      const found = await driver.findElements(By.id('header-nav'))
-      found.length.should.equal(1)
-    })
-
-    const shouldHaveLink = (text, route) => {
-      it(`Should have ${text} link`, async () => {
-        const url = await driver
-          .findElement(By.id('header-nav'))
-          .findElement(By.linkText(text))
-          .getAttribute('href')
-        url.should.equal(route)
-      })
-    }
-
-    shouldHaveLink('The Farrier Center', route('/'))
-    shouldHaveLink('Queue', route('/horse/queue'))
-    shouldHaveLink('Horses', route('/horse/all'))
-    shouldHaveLink('New Horse', route('/horse/new'))
-    shouldHaveLink('Admin', route('/admin'))
-  })
+  testHeaderNav()
 })
