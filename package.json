@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write \"**/*.{js,css,json,md}\"",
     "pretest": "eslint --fix \"**/*.js\"",
-    "test": "node test/mocha.js",
+    "test": "node test/test.js",
     "start": "node index.js"
   },
   "repository": {
