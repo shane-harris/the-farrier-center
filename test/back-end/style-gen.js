@@ -4,7 +4,7 @@ const rewire = require('rewire')
 const chai = require('chai')
 chai.should()
 
-const color = rewire('../scripts/style-gen.js')
+const color = rewire('../../scripts/style-gen.js')
 
 const isUpperCase = color.__get__('isUpperCase')
 const toKebabCase = color.__get__('toKebabCase')
@@ -71,7 +71,7 @@ describe('Color module', () => {
     // Mock the themes variable in 'color.js'
     before(() => color.__set__('themes', mockThemes))
     // Unmock the themes variable in 'color.js'
-    after(() => color.__set__('themes', require('../scripts/themes')))
+    after(() => color.__set__('themes', require('../../scripts/themes')))
 
     it('Should generate the correct CSS style string', () => {
       generateStyle('ThemeA').should.equal(

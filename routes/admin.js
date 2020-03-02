@@ -9,7 +9,10 @@ router.use(isAdmin)
 router.use('/public', express.static('public'))
 //Admin Routes
 router.get('/', (req, res) => {
-  res.render('admin.ejs', { username: req.user.username })
+  User.find()
+    .sort({ lname: 1, username: 1 })
+    .then(users => res.render('admin.ejs', { username: req.user.username, users }))
+    .catch(console.error)
 })
 
 router.post('/register', (req, res) => {
