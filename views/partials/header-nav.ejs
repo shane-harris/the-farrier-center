@@ -1,3 +1,13 @@
+<%#
+    This create the nav bar at the top of the page on all pages.
+
+    Implicitely passed in from route.
+    @input {boolean} loggedOut is handled by the system to determine what you can see.
+    @input {User} currentUser Is the user currently on the page. username and role are used to determine functionality
+
+    Example: include('partials/header-nav')
+%>
+
 <nav id="header-nav" class="navbar navbar-expand-lg navbar-dark" role="navigation">
   <a class="navbar-brand" href="/">The Farrier Center</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse"
