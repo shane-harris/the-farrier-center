@@ -3,7 +3,7 @@ const chai = require('chai')
 chai.use(require('chai-http'))
 chai.should()
 
-const app = require('../index')
+const app = require('../../scripts/app')
 
 describe('Routes', () => {
   //Test GET routes

@@ -14,8 +14,7 @@ const indexRoutes = require('./routes/index')
 const userRoutes = require('./routes/user')
 const adminRoutes = require('./routes/admin')
 const horseRoutes = require('./routes/horse')
-
-const app = express()
+const app = require('./scripts/app')
 
 app.set('views', path.join(__dirname, 'views'))
 app.use(express.static(__dirname + '/public'))
@@ -86,13 +85,20 @@ app.use((err, req, res) => {
 })
 
 // Connect to the database
+app.set('database-connected', false)
+
 mongoose
   .connect(config.mongo_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
   })
-  .then(() => console.log('Connected to Database!'))
+  .then(() => {
+    console.log('Connected to Database!')
+    // Send out an event that can be listened to elsewhere
+    app.emit('event:database-connected')
+    app.set('database-connected', true)
+  })
   .catch(err => {
     console.error(err)
     process.exit(1)
@@ -102,5 +108,3 @@ mongoose
 app.listen(config.port, () => {
   console.log(`Listening at http://localhost:${config.port}`)
 })
-
-module.exports = app
