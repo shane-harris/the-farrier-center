@@ -6,7 +6,7 @@
     @input {Boolean} selected Determines whether or not a
     @input {String} name Determines text displayed in dropdown.
 
-    Example: include('dropdown-option', {option: "pads", selected: "True"})
+    Example: include('dropdown-option', {option: "pads", selected: true})
 %>
 
 <option <%= selected ? 'selected' : '' %>><%= name %></option>
