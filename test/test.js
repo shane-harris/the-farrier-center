@@ -1,5 +1,9 @@
 'use strict'
 
+/**----------------------------------------------------------------------------------------------**
+ ** This file is the entry point for all tests
+ **----------------------------------------------------------------------------------------------**/
+
 const Mocha = require('mocha')
 const fs = require('fs')
 const util = require('util')
