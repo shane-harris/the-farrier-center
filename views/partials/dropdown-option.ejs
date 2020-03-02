@@ -4,9 +4,9 @@
 
     Explicitly passed in on webpage.
     @input {Boolean} selected Determines whether or not a
-    @input {String} option Determines text displayed in dropdown.
+    @input {String} name Determines text displayed in dropdown.
 
     Example: include('dropdown-option', {option: "pads", selected: "True"})
 %>
 
-<option <%= selected ? 'selected' : '' %>><%= option %></option>
+<option <%= selected ? 'selected' : '' %>><%= name %></option>
