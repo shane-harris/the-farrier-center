@@ -3,7 +3,7 @@
 for admin access-->
 
 <body>
-  <%- include('partials/header-nav', { loggedOut: true }) %>
+  <%- include('partials/header-nav', { loggedOut: true },{email}) %>
   <div style="min-height: 50px;"></div>
   <div id="page-container" class="container-fluid password-form col-xl">
     <div class="container form">
@@ -12,6 +12,10 @@ for admin access-->
       </div>
 
       <form action="/register" method="post">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" class="form-control" name="email" readonly=true value=<%- email %> />
+        </div>
         <div class="form-group">
           <label>Username</label>
           <input type="text" class="form-control" name="username" />
