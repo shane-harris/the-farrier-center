@@ -20,25 +20,29 @@ router.get('/favicon.ico', (_, res) => res.status(204))
 
 router.post('/register', redirectIfLoggedIn, (req, res, next) => {
   console.log('registering user')
-  User.register(new User({ username: req.body.username }), req.body.password, err => {
-    if (err) {
-      console.log('error while user register!', err)
-      return next(err)
+  User.register(
+    new User({ username: req.body.username }, { email: req.body.email }),
+    req.body.password,
+    err => {
+      if (err) {
+        console.log('error while user register!', err)
+        return next(err)
+      }
+
+      console.log('user registered!')
+
+      res.redirect('/login')
     }
-
-    console.log('user registered!')
-
-    res.redirect('/login')
-  })
+  )
 })
 
 router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
-  jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
+  jwt.verify(req.params.token, process.env.JWT_KEY, (err, body) => {
     if (err) return res.sendStatus(403)
-    req.email = email
+    req.email = body.email
   })
 
-  res.render('register.ejs', {})
+  res.render('register.ejs', { email: req.email })
 })
 
 router.get('/login', redirectIfLoggedIn, (req, res) => {
