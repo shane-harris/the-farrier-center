@@ -17,7 +17,8 @@ const User = new Schema({
     default: 'user',
     enum: ['user', 'admin']
   },
-  theme: String
+  theme: String,
+  bio: String
 })
 
 User.plugin(require('passport-local-mongoose'))
