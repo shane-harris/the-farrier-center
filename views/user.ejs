@@ -24,25 +24,25 @@
               <div class="form-group">
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name="fname" placeholder='First Name'
-                    id="first_name" value=<%- user.fname %>>
+                    id="first_name" value=<%= user.fname %>>
                 </div>
               </div>
               <div class="form-group">
 
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name="lname" placeholder='Last Name'
-                    id="last_name" value=<%- user.lname %>>
+                    id="last_name" value=<%= user.lname %>>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name='phone' placeholder='Phone #'
-                    value=<%- user.phone %>>
+                    value=<%= user.phone %>>
                 </div>
               </div>
               <div class="col-xs-6">
                 <input type="text" class="form-control" name="email" placeholder='E-mail'
-                  readonly="true" id="email" value=<%- user.email %>>
+                  readonly="true" id="email" value=<%= user.email %>>
               </div>
               <div class="form-group">
                 <div class="col-xs-12">
@@ -109,7 +109,7 @@
               <form action="/user/bio" method="post">
                 <div class="form-group">
                   <textarea class='form-control' name='bioForm'
-                    placeholder='Write something here. You will have the option to include it in your reports'><%- user.bio %></textarea>
+                    placeholder='Write something here. You will have the option to include it in your reports'><%= user.bio %></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
               </form>
