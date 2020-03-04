@@ -132,4 +132,16 @@ router.post('/update-info', (req, res) => {
   })
 })
 
+router.post('/bio', (req, res) => {
+  User.findOne({ username: req.user.username }, (err, user) => {
+    if (err) {
+      res.redirect('/user')
+    } else {
+      user.bio = req.body.bioForm
+      user.save()
+      res.redirect('/user')
+    }
+  })
+})
+
 module.exports = router
