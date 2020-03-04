@@ -1,3 +1,11 @@
+<%#
+    This partial takes a single user and displays their info.
+
+    Explicitly passed in on webpage.
+    @input {User} user needs a User object to display their info.
+
+    Example: include('partials/single-user', {user})
+%>
 <a class="col-md-3 link-unstyled" href="/user/<%= user.lname %>">
     <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
         <div class="single-user" data-toggle="tooltip">

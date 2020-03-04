@@ -1,1 +1,12 @@
-<option <%=selected ? 'selected' : '' %>><%= option %></option>
+<%#
+    This creates a single option in a dropdown and determines wheather or
+    not it will be the default (selected) option.
+
+    Explicitly passed in on webpage.
+    @input {Boolean} selected Determines whether or not a
+    @input {String} name Determines text displayed in dropdown.
+
+    Example: include('dropdown-option', {name: "pads", selected: true})
+%>
+
+<option <%= selected ? 'selected' : '' %>><%= name %></option>

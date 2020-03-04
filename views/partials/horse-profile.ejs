@@ -1,3 +1,12 @@
+<%#
+    This partial takes in a horse, creates a link to the horse's profile, displays its name and
+    shows a default image determined from the horse-profile class in the public/stylesheets/horses.css.
+
+    Explicitly passed in on webpage.
+    @input {Horse} horse to get the horse's ID for going to its profile and name.
+
+    Example: include('partials/horse-profile', horse)
+%>
 <a class="col-md-3 link-unstyled" href="/horse/<%= horse.id %>">
   <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
     <div class="horse-profile" data-toggle="tooltip">

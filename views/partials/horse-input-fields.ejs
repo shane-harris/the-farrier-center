@@ -1,3 +1,15 @@
+<%#
+    This partial generates all the text and dropdown fields in the update horse and new horse pages.
+
+    Explicitly passed in on webpage.
+    @input {Boolean} updateable Determines whether or not a field should be filled from horse or not.
+
+    Implicitly passed from horse route
+    @input {Horse} horse If updateable equals true then the fields will get filled with requested horse info.
+
+    Example: include('partials/horse-input-fields', {updateable: false})
+%>
+
 <div class="form-group">
   <label for="image">Picture</label>
   <input type="file" class="form-control" id="image" name="image">
@@ -33,7 +45,7 @@
   <select class="form-control" id="temperament" name="temperament">
     <option hidden>Select Temperament</option>
     <% for ( temperament of ['Old', 'Hurting', 'Spoiled', 'Quiet', 'Nervous', 'Extremely Nervous', 'Stubborn', 'Treacherous']) { %>
-    <%- include('dropdown-option.ejs', { selected: updateable ? (horse.temperament === temperament) : false, option: temperament }) %>
+    <%- include('dropdown-option.ejs', { selected: updateable ? (horse.temperament === temperament) : false, name: temperament }) %>
     <% } %>
   </select>
 </div>
@@ -43,7 +55,7 @@
   <select class="form-control" id="discipline" name="discipline">
     <option hidden>Select Discipline</option>
     <% for ( discipline of ['Jumping', 'Trail', 'Pleasure', 'Backyard', 'Western', 'Dressage', 'Endurance', 'Eveneting', 'Racing', 'Horseball', 'Polo']) { %>
-    <%- include('dropdown-option.ejs', { selected: updateable ? (horse.discipline === discipline) : false, option: discipline }) %>
+    <%- include('dropdown-option.ejs', { selected: updateable ? (horse.discipline === discipline) : false, name: discipline }) %>
     <% } %>
   </select>
 </div>
