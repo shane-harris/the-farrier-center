@@ -1,17 +1,37 @@
 const User = require('../models/user')
 
-const defaultUser = {
-  fname: 'admin',
-  lname: 'admin',
-  email: 'farrierdev@gmail.com',
-  role: 'admin'
-}
-const makeDefaultAdmin = defaultUser => {
-  User.findOne({ email: 'farrierdev@gmail.com' }, (user, err) => {
+const makeDefaultAdmin = () => {
+  const defaultUser = {
+    fname: 'admin',
+    lname: 'admin',
+    username: 'farrierAdmin',
+    email: 'farrierdev@gmail.com',
+    role: 'admin',
+    password: 'farrierdev'
+  }
+
+  User.findOne({ email: 'farrierdev@gmail.com' }, (err, user) => {
     if (user) {
       console.log('Found default admin, skipping creation...')
     } else {
       console.log('Default admin not found, creating user...')
+      User.register(
+        new User({
+          username: defaultUser.username,
+          email: defaultUser.email,
+          role: defaultUser.role,
+          lname: defaultUser.lname,
+          fname: defaultUser.fname
+        }),
+        defaultUser.password,
+        err => {
+          if (err) {
+            console.log('error while user register!', err)
+          }
+
+          console.log('default admin successfuly created')
+        }
+      )
     }
   })
 }
