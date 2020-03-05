@@ -1,7 +1,20 @@
-<%
-  const { lastVisitDate, computeBorderStyle } = scripts
-  const date = lastVisitDate(horse)
+<%#
+    This creates one row for each horse in the queue and then populates it.
+    uses javascript from scripts/queue-item.js
+
+    Implicitely passed in from horse route, or having a batch of horses be ran through a for loop.
+    @input {Horse} horse is gotten from the backend to update the fields.
+
+    Example: include('partials/queue-item', { horse, scripts })
 %>
+
+<%
+const { lastVisitDate, computeBorderStyle } = scripts
+const date = lastVisitDate(horse)
+%>
+<%# computBorderStyle determines the status color of the horse in queue %>
+<%# lastVisitDate makes sure the date isn't undetermined %>
+
 
 <tr style=<%- computeBorderStyle(horse) %>>
   <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>

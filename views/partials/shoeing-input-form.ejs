@@ -1,3 +1,14 @@
+<%#
+    This partial generates the form for each individual hoof.
+
+    Explicitly passed in on webpage.
+    @input {String} hoof This is the regular version of hoof that is passed in (Front Right).
+    @input {String} hoofIdent This is the variable version of hoof (meaning no spaces, frontRight).
+
+    Example: include('partials/shoeing-input-form', {hoof: 'Back Right', hoofIdent: "backRight"})
+%>
+
+
 <div class="col-sm-6 shoeing">
   <h1><%= hoof %></h1>
 
