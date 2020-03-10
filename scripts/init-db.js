@@ -15,23 +15,13 @@ const makeDefaultAdmin = () => {
       console.log('Found default admin, skipping creation...')
     } else {
       console.log('Default admin not found, creating user...')
-      User.register(
-        new User({
-          username: defaultUser.username,
-          email: defaultUser.email,
-          role: defaultUser.role,
-          lname: defaultUser.lname,
-          fname: defaultUser.fname
-        }),
-        defaultUser.password,
-        err => {
-          if (err) {
-            console.log('error while user register!', err)
-          }
-
+      User.register(new User(defaultUser), defaultUser.password, err => {
+        if (err) {
+          console.log('error while user register!', err)
+        } else {
           console.log('default admin successfuly created')
         }
-      )
+      })
     }
   })
 }
