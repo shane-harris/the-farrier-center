@@ -24,4 +24,15 @@ const date = lastVisitDate(horse)
   <td>
     <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
   </td>
+  <td align="right">
+    <div class="dropdown open">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button>
+      <div class="dropdown-menu" aria-labelledby="triggerId">
+        <button class="dropdown-item" href="#">Assign Farrier</button>
+        <button class="dropdown-item" href="#">Dismiss</button>
+      </div>
+    </div>
+  </td>
 </tr>
