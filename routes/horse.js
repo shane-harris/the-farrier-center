@@ -92,7 +92,7 @@ router.get('/:id', loggedIn, (req, res) => {
       const updateable = medicals.length !== 0
       const medical = medicals[0] //grab the first medical report
       const shoeing = shoeings[0]
-      res.render('horse.ejs', { horse, medical, shoeing, updateable })
+      res.render('horse.ejs', { horse, medical, shoeing, updateable, shoeings })
     })
     .catch(console.error)
 })
