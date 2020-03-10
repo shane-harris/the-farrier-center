@@ -12,7 +12,7 @@ const ImageSchema = new Schema({
   onType: {
     type: String,
     required: true,
-    enum: ['horses', 'medical', 'shoeing', 'User']
+    enum: ['horses', 'medical', 'shoeing']
   },
   public_id: String,
   url: String
