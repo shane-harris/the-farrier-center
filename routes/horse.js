@@ -172,19 +172,42 @@ router.get('/:id/update', loggedIn, (req, res) => {
     .catch(console.error)
 })
 
-router.post('/:id/update', loggedIn, (req, res) => {
-  console.log(req.body)
-  Horse.findOne({ id: req.params.id }).then(horse => {
-    horse.name = req.body.name
-    horse.gender = req.body.gender
-    horse.temperament = req.body.temperament
-    horse.discipline = req.body.discipline
-    horse.location = req.body.location
-    horse.owner = req.body.owner
-    horse.vet = req.body.vet
-    horse.history = req.body.history
-    horse.save()
-  })
+router.post('/:id/update', parser.single('image'), loggedIn, (req, res) => {
+  console.log(req.file)
+  if (req.file) {
+    Horse.findOne({ id: req.params.id })
+      .then(horse => {
+        horse.name = req.body.name
+        horse.gender = req.body.gender
+        horse.temperament = req.body.temperament
+        horse.discipline = req.body.discipline
+        horse.location = req.body.location
+        horse.owner = req.body.owner
+        horse.vet = req.body.vet
+        horse.history = req.body.history
+        horse.save()
+        return horse.image
+      })
+      .then(image_id => {
+        Image.findOne({ _id: image_id }).then(image => {
+          image.url = req.file.url
+          image.public_id = req.file.public_id
+          image.save()
+        })
+      })
+  } else {
+    Horse.findOne({ id: req.params.id }).then(horse => {
+      horse.name = req.body.name
+      horse.gender = req.body.gender
+      horse.temperament = req.body.temperament
+      horse.discipline = req.body.discipline
+      horse.location = req.body.location
+      horse.owner = req.body.owner
+      horse.vet = req.body.vet
+      horse.history = req.body.history
+      horse.save()
+    })
+  }
   res.redirect(`/horse/${req.params.id}`)
 })
 module.exports = router

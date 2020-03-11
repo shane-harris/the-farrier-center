@@ -1,17 +1,17 @@
 <%- include('partials/head', { title: `Update ${horse.name}` }) %>
 
 <body>
-<%- include('partials/header-nav') %>
-<div id="page-container" class="container-fluid">
-    <div class="container form">
-        <H1>Update <%= horse.name %></H1>
-        <form action="/horse/<%= horse.id%>/update" method="post">
+    <%- include('partials/header-nav') %>
+    <div id="page-container" class="container-fluid">
+        <div class="container form">
+            <H1>Update <%= horse.name %></H1>
+            <form action="/horse/<%= horse.id%>/update" method="post" enctype="multipart/form-data">
 
-            <%- include('partials/horse-input-fields', {updateable: true}) %>
+                <%- include('partials/horse-input-fields', {updateable: true}) %>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
-</div>
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
 </body>
