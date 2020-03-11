@@ -21,7 +21,7 @@ router.get('/favicon.ico', (_, res) => res.status(204))
 router.post('/register', redirectIfLoggedIn, (req, res, next) => {
   console.log('registering user')
   User.register(
-    new User({ username: req.body.username }, { email: req.body.email }),
+    new User({ username: req.body.username, email: req.body.email }),
     req.body.password,
     err => {
       if (err) {

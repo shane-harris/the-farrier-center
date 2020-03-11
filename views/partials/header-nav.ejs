@@ -35,7 +35,13 @@
       <% } %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false"><%= currentUser.username %></a>
+          aria-haspopup="true" aria-expanded="false">
+          <% if(currentUser.fname) { %>
+          <%= currentUser.fname + ' ' + currentUser.lname  %>
+          <% } else{ %>
+          Account
+          <% } %>
+        </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/user">Account</a>
           <div class="dropdown-divider"></div>
