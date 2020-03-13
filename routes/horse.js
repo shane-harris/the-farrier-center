@@ -63,8 +63,11 @@ router.get('/new', loggedIn, (req, res) => {
 })
 
 router.post('/new', loggedIn, parser.single('image'), (req, res) => {
+  const createdDate = { lastVisit: new Date() }
+  const newHorse = Object.assign(createdDate, req.body)
+
   if (req.file) {
-    const horse = new Horse(req.body)
+    const horse = new Horse(newHorse)
     const image = new Image({
       ref_id: horse._id,
       onType: 'horses',
@@ -75,7 +78,7 @@ router.post('/new', loggedIn, parser.single('image'), (req, res) => {
     horse.save()
     image.save()
   } else {
-    Horse.create(req.body)
+    Horse.create(newHorse)
   }
   res.redirect('/horse/all')
 })
@@ -113,12 +116,28 @@ router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
 
 router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
   console.log(req.body)
-  new Medical({
+  const medical = new Medical({
     horse_id: req.params.id,
     date: new Date(),
     farrier: 'Default Steve',
     ...req.body
-  }).save(console.error)
+  })
+  medical.save(console.error)
+
+  //When you make a new medical, update horses last visit date.
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect(`/horse/${req.params.id}`)
+    }
+    horse.lastVisit = medical.date
+    horse.save(err => {
+      if (err) {
+        console.log(err)
+      }
+    })
+  })
+
   res.redirect(`/horse/${req.params.id}`)
 })
 
@@ -128,7 +147,7 @@ router.get('/:id/new-shoeing', loggedIn, (req, res) => {
 
 router.post('/:id/new-shoeing', loggedIn, (req, res) => {
   console.log(req.body)
-  new Shoeing({
+  const shoeing = new Shoeing({
     horse_id: req.params.id,
     date: new Date(), //returns todays date
     farrier: 'Default Steve',
@@ -162,7 +181,23 @@ router.post('/:id/new-shoeing', loggedIn, (req, res) => {
     }),
 
     ...req.body
-  }).save(console.error)
+  })
+  shoeing.save(console.error)
+
+  //When you make a new shoeing, update horses last visit date.
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect(`/horse/${req.params.id}`)
+    }
+    horse.lastVisit = shoeing.date
+    horse.save(err => {
+      if (err) {
+        console.log(err)
+      }
+    })
+  })
+
   res.redirect(`/horse/${req.params.id}`)
 })
 
