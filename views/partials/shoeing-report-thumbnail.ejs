@@ -1,24 +1,17 @@
+<%- include('head', {title: 'report Thumbnail', css: 'report-thumbnails' }) %>
+
 <%#
     This creates one row for each shoeing report a horse has and then populates it.
 
     Example: include('partials/shoeing-report-thumbnail', {single_shoeing})
-
-<div class="shoeing-report-thumbnail">
-    <div id = "farrier">
-        <%= single_shoeing.farrier %>
-    </div>
-    <div id = "date">
-        <%= single_shoeing.date%>
-    </div>
-</div>
 %>
-
-<div class="panel-group">
+<div class="shoeing-report-thumbnail>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
         <a data-toggle="collapse" href="#collapse1">
-        <%= single_shoeing.farrier %>   <%= single_shoeing.date%>
+        <%= single_shoeing.farrier %>
+        <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %>
         </a>
       </h4>
     </div>
