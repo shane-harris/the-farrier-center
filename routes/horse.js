@@ -252,7 +252,15 @@ router.post('/assign/:id', loggedIn, (req, res) => {
       console.log(err)
       res.redirect('/horse/queue')
     } else {
-      console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
+      req.user.assignedHorses.push(horse.id)
+      req.user.save(err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
+        }
+      })
+
       res.redirect(`/horse/queue`)
     }
   })
