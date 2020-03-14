@@ -45,7 +45,7 @@ router.get('/queue', loggedIn, (req, res) => {
   ])
     .then(([allHorses, assignedHorses]) =>
       res.render('queue.ejs', {
-        username: req.user.username,
+        user: req.user,
         horses: allHorses,
         assignedHorses: assignedHorses,
         scripts: require('../scripts/queue-item')

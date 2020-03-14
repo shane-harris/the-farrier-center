@@ -1,7 +1,7 @@
 <%- include('partials/head', { title: 'Horse Queue', css: 'queue' }) %>
 
 <body>
-  <%- include('partials/header-nav', {name: username}) %>
+  <%- include('partials/header-nav', {name: user.username}) %>
   <div id="page-container">
     <div class="row">
       <div class="col">
@@ -46,7 +46,7 @@
               </thead>
               <tbody>
                 <% for (horse of assignedHorses) { %>
-                <%-  include('partials/queue-item', { horse, scripts}) %>
+                <%-  include('partials/queue-item', { horse, scripts, user}) %>
                 <% } %>
               </tbody>
             </table>
