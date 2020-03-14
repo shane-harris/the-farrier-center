@@ -37,13 +37,17 @@ router.use('/public', express.static('public'))
 
 //Setup Routes
 router.get('/queue', loggedIn, (req, res) => {
-  Horse.find()
-    // sort by lastVisit (ascending)
-    .sort({ lastVisit: 1 })
-    .then(horses =>
+  Promise.all([
+    Horse.find().sort(),
+    Horse.find({ id: req.user.assignedHorses })
+      // sort by lastVisit (ascending)
+      .sort({ lastVisit: 1 })
+  ])
+    .then(([allHorses, assignedHorses]) =>
       res.render('queue.ejs', {
         username: req.user.username,
-        horses: horses,
+        horses: allHorses,
+        assignedHorses: assignedHorses,
         scripts: require('../scripts/queue-item')
       })
     )

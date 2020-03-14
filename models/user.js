@@ -20,7 +20,7 @@ const User = new Schema({
   },
   theme: String,
   bio: String,
-  assignedHorses: [String]
+  assignedHorses: []
 })
 
 User.plugin(require('passport-local-mongoose'))
