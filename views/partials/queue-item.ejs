@@ -30,7 +30,9 @@ const date = lastVisitDate(horse)
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       </button>
       <div class="dropdown-menu" aria-labelledby="triggerId">
-        <button class="dropdown-item" href="#">Assign Farrier</button>
+        <form action='/horse/assign/<%=horse.id%>' method='POST'>
+          <button class="dropdown-item">Assign Farrier</button>
+        </form>
         <button class="dropdown-item" href="#">Dismiss</button>
       </div>
     </div>
