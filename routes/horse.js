@@ -247,9 +247,15 @@ router.post('/:id/update', parser.single('image'), loggedIn, (req, res) => {
 })
 
 router.post('/assign/:id', loggedIn, (req, res) => {
-  const horse = Horse.findOne({ id: req.params.id })
-  console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
-  res.redirect(`/horse/queue`)
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect('/horse/queue')
+    } else {
+      console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
+      res.redirect(`/horse/queue`)
+    }
+  })
 })
 
 module.exports = router
