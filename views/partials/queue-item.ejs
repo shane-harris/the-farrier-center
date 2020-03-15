@@ -30,15 +30,20 @@ const date = lastVisitDate(horse)
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       </button>
       <div class="dropdown-menu" aria-labelledby="triggerId">
-        <form action='/horse/assign/<%=horse.id%>' method='POST'>
+        <% if (user.assignedHorses.includes(horse.id)) { %>
+        <form action='/horse/unassign/<%=horse.id%>' method='POST'>
           <button class="dropdown-item">
-            <% if (user.assignedHorses.includes(horse.id)) { %>
             Unassign
-            <%} else { %>
-            Assign to me
-            <% } %>
           </button>
         </form>
+        <%} else { %>
+        <form action='/horse/assign/<%=horse.id%>' method='POST'>
+          <button class="dropdown-item">
+            Assign to me
+          </button>
+        </form>
+        <% } %>
+
         <button class="dropdown-item" href="#">Dismiss</button>
       </div>
     </div>

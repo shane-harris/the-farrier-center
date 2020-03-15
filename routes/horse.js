@@ -258,12 +258,38 @@ router.post('/assign/:id', loggedIn, (req, res) => {
       console.log(err)
       res.redirect('/horse/queue')
     } else {
-      req.user.assignedHorses.push(horse.id)
+      if (!req.user.assignedHorses.includes(req.params.id)) {
+        req.user.assignedHorses.push(horse.id)
+        req.user.save(err => {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
+          }
+        })
+      } else {
+        console.log('error, horse already assigned to this farrier')
+      }
+      res.redirect(`/horse/queue`)
+    }
+  })
+})
+
+router.post('/unassign/:id', loggedIn, (req, res) => {
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect('/horse/queue')
+    } else {
+      const i = req.user.assignedHorses.indexOf(req.params.id)
+      if (i > -1) {
+        req.user.assignedHorses.splice(i, 1)
+      }
       req.user.save(err => {
         if (err) {
           console.log(err)
         } else {
-          console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
+          console.log('unassigned ' + req.user.username + ' from horse: ' + horse.name)
         }
       })
 
