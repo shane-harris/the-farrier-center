@@ -91,7 +91,7 @@ router.get('/:id', loggedIn, (req, res) => {
       const [horse, medicals, shoeings] = values
       const updateable = medicals.length !== 0
       const medical = medicals[0] //grab the first medical report
-      const shoeing = shoeings[0]
+      const shoeing = shoeings[0] //we can refactor this to grab the first index in the ejs not here ~DP
       res.render('horse.ejs', { horse, medical, shoeing, updateable, shoeings })
     })
     .catch(console.error)
@@ -123,7 +123,17 @@ router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
 })
 
 router.get('/:id/new-shoeing', loggedIn, (req, res) => {
-  res.render('new-shoeing.ejs')
+  Promise.all([
+    Horse.findOne({ id: req.params.id }),
+    Medical.find({ horse_id: req.params.id }).sort({ date: -1 })
+  ]) //sorts shoeings by most recent date first
+    .then(values => {
+      const [horse, shoeings] = values
+      const updateable = shoeings.length !== 0
+      const shoeing = shoeings[0] //grab the first medical report
+      res.render('new-shoeing.ejs', { horse, shoeing, updateable })
+    })
+    .catch(console.error)
 })
 
 router.post('/:id/new-shoeing', loggedIn, (req, res) => {
