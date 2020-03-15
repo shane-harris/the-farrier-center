@@ -146,7 +146,9 @@ router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
 })
 
 router.get('/:id/new-shoeing', loggedIn, (req, res) => {
-  res.render('new-shoeing.ejs')
+  Horse.findOne({ id: req.params.id })
+    .then(horse => res.render('new-shoeing.ejs', { horse: horse }))
+    .catch(console.error)
 })
 
 router.post('/:id/new-shoeing', loggedIn, (req, res) => {
