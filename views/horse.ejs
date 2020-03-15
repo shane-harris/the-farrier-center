@@ -102,7 +102,7 @@
         <div class="pad">
           <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
             aria-expanded="false" aria-controls="medical">
-            Show Shoeing Reports
+            Show Shoeing Report
           </a>
         </div>
         <div class="pad">
@@ -150,19 +150,7 @@
         <% } else { %>
           <div align="center"><H2> No Shoeing reports have been created</H2></div>
         <% } %>
-
-        <div class="accordion" id="shoeings_accordian">
-
-            <!--Will be populated with all the shoeings done on a horse-->
-            <% for (single_shoeing of shoeings) { %>
-              <%-  include('partials/shoeing-report-thumbnail', {single_shoeing}) %>
-            <% } %>
-
-        </div>
-
-
       </div>
-
     </div>
   </div>
   <%- include('partials/footer') %>
