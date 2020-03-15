@@ -38,7 +38,9 @@ router.use('/public', express.static('public'))
 //Setup Routes
 router.get('/queue', loggedIn, (req, res) => {
   Promise.all([
-    Horse.find().sort(),
+    //returns all horses to populate View All queue
+    Horse.find().sort({ lastVisit: 1 }),
+    //returns only horses assigned to you for View Assigned Horse queue
     Horse.find({ id: req.user.assignedHorses })
       // sort by lastVisit (ascending)
       .sort({ lastVisit: 1 })
