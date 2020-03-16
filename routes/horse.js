@@ -280,7 +280,7 @@ router.post('/assign/:id', loggedIn, (req, res) => {
       } else {
         console.log('error, horse already assigned to this farrier')
       }
-      res.redirect(`/horse/queue`)
+      res.redirect(`/horse/queue/` + req.body.tab)
     }
   })
 })
@@ -303,7 +303,7 @@ router.post('/unassign/:id', loggedIn, (req, res) => {
         }
       })
 
-      res.redirect(`/horse/queue`)
+      res.redirect(`/horse/queue/` + req.body.tab)
     }
   })
 })

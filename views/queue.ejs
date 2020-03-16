@@ -12,10 +12,10 @@
       <div class="col- mx-auto w-75">
 
         <ul class="nav nav-tabs">
-          <li class="nav-item active"> <a href="" class=" active nav-link" data-toggle="pill"
-              data-target="#view-all"> View All Horses</i></a> </li>
-          <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill"
-              data-target="#view-assigned"> View Assigned Horses</i></a> </li>
+          <li class="nav-item active"> <a href="#view-all" class=" active nav-link"
+              data-toggle="pill" data-toggle="tab"> View All Horses</i></a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#view-assigned" data-toggle="pill"
+              data-toggle="tab"> View Assigned Horses</i></a> </li>
         </ul>
         <div class="tab-content">
 
@@ -57,3 +57,16 @@
   </div>
   <%- include('partials/footer') %>
 </body>
+<script>
+  $(function () {
+    var hash = window.location.hash;
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show')
+
+    $('.nav-tabs a').click(function (e) {
+      $(this).tab('show')
+      var scrollmem = $('body').scrollTop()
+      window.location.hash = this.hash
+      $('html,body').scrollTop(scrollmem)
+    })
+  })
+</script>
