@@ -37,13 +37,19 @@ router.use('/public', express.static('public'))
 
 //Setup Routes
 router.get('/queue', loggedIn, (req, res) => {
-  Horse.find()
-    // sort by lastVisit (ascending)
-    .sort({ lastVisit: 1 })
-    .then(horses =>
+  Promise.all([
+    //returns all horses to populate View All queue
+    Horse.find().sort({ lastVisit: 1 }),
+    //returns only horses assigned to you for View Assigned Horse queue
+    Horse.find({ id: req.user.assignedHorses })
+      // sort by lastVisit (ascending)
+      .sort({ lastVisit: 1 })
+  ])
+    .then(([allHorses, assignedHorses]) =>
       res.render('queue.ejs', {
-        username: req.user.username,
-        horses: horses,
+        user: req.user,
+        horses: allHorses,
+        assignedHorses: assignedHorses,
         scripts: require('../scripts/queue-item')
       })
     )
@@ -63,8 +69,11 @@ router.get('/new', loggedIn, (req, res) => {
 })
 
 router.post('/new', loggedIn, parser.single('image'), (req, res) => {
+  const createdDate = { lastVisit: new Date() }
+  const newHorse = Object.assign(createdDate, req.body)
+
   if (req.file) {
-    const horse = new Horse(req.body)
+    const horse = new Horse(newHorse)
     const image = new Image({
       ref_id: horse._id,
       onType: 'horses',
@@ -75,7 +84,7 @@ router.post('/new', loggedIn, parser.single('image'), (req, res) => {
     horse.save()
     image.save()
   } else {
-    Horse.create(req.body)
+    Horse.create(newHorse)
   }
   res.redirect('/horse/all')
 })
@@ -111,12 +120,28 @@ router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
 
 router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
   console.log(req.body)
-  new Medical({
+  const medical = new Medical({
     horse_id: req.params.id,
     date: new Date(),
     farrier: 'Default Steve',
     ...req.body
-  }).save(console.error)
+  })
+  medical.save(console.error)
+
+  //When you make a new medical, update horses last visit date.
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect(`/horse/${req.params.id}`)
+    }
+    horse.lastVisit = medical.date
+    horse.save(err => {
+      if (err) {
+        console.log(err)
+      }
+    })
+  })
+
   res.redirect(`/horse/${req.params.id}`)
 })
 
@@ -126,7 +151,7 @@ router.get('/:id/new-shoeing', loggedIn, (req, res) => {
 
 router.post('/:id/new-shoeing', loggedIn, (req, res) => {
   console.log(req.body)
-  new Shoeing({
+  const shoeing = new Shoeing({
     horse_id: req.params.id,
     date: new Date(), //returns todays date
     farrier: 'Default Steve',
@@ -160,7 +185,23 @@ router.post('/:id/new-shoeing', loggedIn, (req, res) => {
     }),
 
     ...req.body
-  }).save(console.error)
+  })
+  shoeing.save(console.error)
+
+  //When you make a new shoeing, update horses last visit date.
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect(`/horse/${req.params.id}`)
+    }
+    horse.lastVisit = shoeing.date
+    horse.save(err => {
+      if (err) {
+        console.log(err)
+      }
+    })
+  })
+
   res.redirect(`/horse/${req.params.id}`)
 })
 
@@ -208,4 +249,51 @@ router.post('/:id/update', parser.single('image'), loggedIn, (req, res) => {
   }
   res.redirect(`/horse/${req.params.id}`)
 })
+
+router.post('/assign/:id', loggedIn, (req, res) => {
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect('/horse/queue')
+    } else {
+      if (!req.user.assignedHorses.includes(req.params.id)) {
+        req.user.assignedHorses.push(horse.id)
+        req.user.save(err => {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
+          }
+        })
+      } else {
+        console.log('error, horse already assigned to this farrier')
+      }
+      res.redirect(`/horse/queue/` + req.body.tab)
+    }
+  })
+})
+
+router.post('/unassign/:id', loggedIn, (req, res) => {
+  Horse.findOne({ id: req.params.id }, (err, horse) => {
+    if (err) {
+      console.log(err)
+      res.redirect('/horse/queue')
+    } else {
+      const i = req.user.assignedHorses.indexOf(req.params.id)
+      if (i > -1) {
+        req.user.assignedHorses.splice(i, 1)
+      }
+      req.user.save(err => {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('unassigned ' + req.user.username + ' from horse: ' + horse.name)
+        }
+      })
+
+      res.redirect(`/horse/queue/` + req.body.tab)
+    }
+  })
+})
+
 module.exports = router

@@ -24,4 +24,42 @@ const date = lastVisitDate(horse)
   <td>
     <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
   </td>
+  <td align="right">
+    <div class="dropdown open">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button>
+      <div class="dropdown-menu" aria-labelledby="triggerId">
+        <% if (user.assignedHorses.includes(horse.id)) { %>
+        <form action='/horse/unassign/<%=horse.id%>' method='POST'>
+          <input name="tab" type="hidden" value="" />
+          <button class="dropdown-item">
+            Unassign
+          </button>
+        </form>
+        <%} else { %>
+        <form action='/horse/assign/<%=horse.id%>' method='POST'>
+          <input name="tab" type="hidden" value="" />
+          <button class="dropdown-item">
+            Assign to me
+          </button>
+        </form>
+        <% } %>
+
+        <button class="dropdown-item" href="#">Dismiss</button>
+      </div>
+    </div>
+  </td>
 </tr>
+<script>
+  $(document).click(function () {
+    var $tab = $('input[name="tab"]')
+    $tab.val(window.location.hash)
+  })
+</script>
+<script>
+  $(function () {
+    var $tab = $('input[name="tab"]')
+    $tab.val(window.location.hash)
+  })
+</script>
