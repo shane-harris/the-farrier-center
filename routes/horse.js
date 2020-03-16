@@ -87,8 +87,7 @@ router.get('/:id', loggedIn, (req, res) => {
     Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
     //sorts medicals by most recent date first
-    .then(values => {
-      const [horse, medicals, shoeings] = values
+    .then(([horse, medicals, shoeings]) => {
       const updateable = medicals.length !== 0
       const medical = medicals[0] //grab the first medical report
       const shoeing = shoeings[0]
@@ -102,8 +101,7 @@ router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
     Horse.findOne({ id: req.params.id }),
     Medical.find({ horse_id: req.params.id }).sort({ date: -1 })
   ]) //sorts medicals by most recent date first
-    .then(values => {
-      const [horse, medicals] = values
+    .then(([horse, medicals]) => {
       const updateable = medicals.length !== 0
       const medical = medicals[0] //grab the first medical report
       res.render('new-medical-analysis.ejs', { horse, medical, updateable })
