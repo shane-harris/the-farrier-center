@@ -6,14 +6,3 @@
   padding: 20px;
   margin-top: 2px;
 }
-
-.table-hover {
-  padding: 3px;
-  border-radius: 1px;
-  border: gray;
-}
-
-#shoeings_accordian {
-  overflow: scroll;
-  max-height: 300px;
-}
