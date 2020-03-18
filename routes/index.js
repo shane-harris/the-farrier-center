@@ -69,42 +69,6 @@ router.get('/search', loggedIn, (req, res) => {
 })
 
 router.post('/search', (req, res) => {
-  search();
-})
-
-router.get('/autocomplete', loggedIn, (req, res) => {
-  var regex = new RegExp(req.query["term"], 'i');
-
-  var horseFilter = Horse.find({ name: regex }, { 'name': 1 })
-    .sort({ "updated_at": -1 })
-    .sort({ "created_at": -1 })
-    .limit(20);
-  horseFilter.exec(function (err, data) {
-    console.log("First grab of data", data);
-    var result = [];
-    if (!err) {
-      console.log("inside !err", data);
-      if (data && data.length && data.length > 0) {
-        console.log("inside second if");
-        data.forEach(horse => {
-          let obj = {
-            id: horse._id,
-            label: horse.name
-          };
-          console.log("Each obj", obj);
-          result.push(obj);
-        });
-      }
-      console.log("Showing results ", result);
-      res.jsonp(result);
-    }
-  });
-  //.then(horses => res.send('', { username: req.user.username, horses: horses }))
-  //.catch(console.error)
-  //console.log(req.body, 'Im in AutoComplete')
-})
-
-/*router.post('/search', (req, res) => {
   Horse.findOne({ name: req.body.query })
     .then(found => res.redirect(`/horse/${found.id}`))
     .catch(_ =>
@@ -118,7 +82,33 @@ router.get('/autocomplete', loggedIn, (req, res) => {
       )
     )
   console.log(req.body.query, 'Horse Not found')
-})*/
+})
 
-//router.get('/autocomplete', loggedIn, (req, res) => {})
+router.get('/autocomplete', loggedIn, (req, res) => {
+  var regex = new RegExp(req.query["term"], 'i');
+
+  var horseFilter = Horse.find({ name: regex }, { 'name': 1 })
+    .sort({ "updated_at": -1 })
+    .sort({ "created_at": -1 })
+    .limit(20);
+
+  horseFilter.exec(function (err, data) {
+    //data is all horse names that match query
+    var result = [];
+    if (!err) {
+      if (data && data.length && data.length > 0) {
+        data.forEach(horse => {
+          let obj = { //turn each horse name and id pair into an opject
+            id: horse._id, //dont know why horse.id returns undefined but _id works
+            label: horse.name
+          };
+          result.push(obj);
+        });
+      }
+      //return all the results to autocomplete.js
+      res.jsonp(result);
+    }
+  });
+})
+
 module.exports = router

@@ -2,8 +2,6 @@
 
 $('#search-bar').autocomplete({
     appendTo: "#matches",
-    //source: ['Secretariat', 'Shane', 'Buttercup', 'Allen',
-    //  'Confirmation', 'show', 'shelly', 'shadowbox', 'shinnagins', 'something'],
     source: function (req, res) {
         $.ajax({
             url: "/autocomplete/",
@@ -11,7 +9,7 @@ $('#search-bar').autocomplete({
             type: "GET",
             data: req,
             success: function (data) {
-                console.log("inside autocomplete.js", data)
+                //passing data to source for display in autocomplete window
                 res(data)
             },
             error: function (err) {
@@ -21,9 +19,9 @@ $('#search-bar').autocomplete({
     },
 
     minLength: 1,
-    select: function (event, ui) {
-        if (ui.item) {
-            $('#search-bar').text(ui.item.label);
+    select: function (event, userInput) {
+        if (userInput.item) {
+            $('#search-bar').text(userInput.item.label);
         }
     }
 })
