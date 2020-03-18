@@ -14,6 +14,7 @@ const indexRoutes = require('./routes/index')
 const userRoutes = require('./routes/user')
 const adminRoutes = require('./routes/admin')
 const horseRoutes = require('./routes/horse')
+const initDb = require('./scripts/init-db')
 const app = require('./scripts/app')
 
 app.set('views', path.join(__dirname, 'views'))
@@ -98,6 +99,7 @@ mongoose
     // Send out an event that can be listened to elsewhere
     app.emit('event:database-connected')
     app.set('database-connected', true)
+    initDb.makeDefaultAdmin()
   })
   .catch(err => {
     console.error(err)

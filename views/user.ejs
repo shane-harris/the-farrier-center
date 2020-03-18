@@ -9,9 +9,12 @@
           <li class="nav-item"> <a href="" class="active nav-link" data-toggle="pill"
               data-target="#tabone"><i class="fa fa-user"> User</i></a> </li>
           <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill"
+              data-target="#tabfour"><i class="fa fa-book"> Bio</i></a> </li>
+          <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill"
               data-target="#tabtwo"><i class="fa fa-cog"> Change Password</i></a> </li>
           <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill"
               data-target="#tabthree"><i class="fa fa-paint-brush"> Theme</i></a> </li>
+
         </ul>
         <div class="tab-content mt-2">
 
@@ -21,25 +24,25 @@
               <div class="form-group">
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name="fname" placeholder='First Name'
-                    id="first_name" value=<%- user.fname %>>
+                    id="first_name" value=<%= user.fname %>>
                 </div>
               </div>
               <div class="form-group">
 
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name="lname" placeholder='Last Name'
-                    id="last_name" value=<%- user.lname %>>
+                    id="last_name" value=<%= user.lname %>>
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-xs-6">
                   <input type="text" class="form-control" name='phone' placeholder='Phone #'
-                    value=<%- user.phone %>>
+                    value=<%= user.phone %>>
                 </div>
               </div>
               <div class="col-xs-6">
                 <input type="text" class="form-control" name="email" placeholder='E-mail'
-                  readonly="true" id="email" value=<%- user.email %>>
+                  readonly="true" id="email" value=<%= user.email %>>
               </div>
               <div class="form-group">
                 <div class="col-xs-12">
@@ -90,9 +93,23 @@
                   <label>Theme:</label>
                   <select class="form-control" name="theme">
                     <% for (theme of themes) { %>
-                    <%- include('partials/theme-option', theme) %>
+                    <%- include('partials/dropdown-option', theme) %>
                     <% } %>
                   </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Tab Four-->
+          <div class="tab-pane fade" id="tabfour" role="tabpanel">
+            <div class="container form">
+              <h1>Bio</h1>
+              <form action="/user/bio" method="post">
+                <div class="form-group">
+                  <textarea class='form-control' name='bioForm'
+                    placeholder='Write something here. You will have the option to include it in your reports'><%= user.bio %></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
               </form>

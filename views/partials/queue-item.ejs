@@ -1,7 +1,20 @@
-<%
-  const { lastVisitDate, computeBorderStyle } = scripts
-  const date = lastVisitDate(horse)
+<%#
+    This creates one row for each horse in the queue and then populates it.
+    uses javascript from scripts/queue-item.js
+
+    Implicitely passed in from horse route, or having a batch of horses be ran through a for loop.
+    @input {Horse} horse is gotten from the backend to update the fields.
+
+    Example: include('partials/queue-item', { horse, scripts })
 %>
+
+<%
+const { lastVisitDate, computeBorderStyle } = scripts
+const date = lastVisitDate(horse)
+%>
+<%# computBorderStyle determines the status color of the horse in queue %>
+<%# lastVisitDate makes sure the date isn't undetermined %>
+
 
 <tr style=<%- computeBorderStyle(horse) %>>
   <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>
@@ -11,4 +24,42 @@
   <td>
     <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
   </td>
+  <td align="right">
+    <div class="dropdown open">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button>
+      <div class="dropdown-menu" aria-labelledby="triggerId">
+        <% if (user.assignedHorses.includes(horse.id)) { %>
+        <form action='/horse/unassign/<%=horse.id%>' method='POST'>
+          <input name="tab" type="hidden" value="" />
+          <button class="dropdown-item">
+            Unassign
+          </button>
+        </form>
+        <%} else { %>
+        <form action='/horse/assign/<%=horse.id%>' method='POST'>
+          <input name="tab" type="hidden" value="" />
+          <button class="dropdown-item">
+            Assign to me
+          </button>
+        </form>
+        <% } %>
+
+        <button class="dropdown-item" href="#">Dismiss</button>
+      </div>
+    </div>
+  </td>
 </tr>
+<script>
+  $(document).click(function () {
+    var $tab = $('input[name="tab"]')
+    $tab.val(window.location.hash)
+  })
+</script>
+<script>
+  $(function () {
+    var $tab = $('input[name="tab"]')
+    $tab.val(window.location.hash)
+  })
+</script>

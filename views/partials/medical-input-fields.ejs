@@ -1,4 +1,14 @@
-<%// Has an editable and updateable flag %>
+<%#
+    This creates 4 textareas for medical analysis.
+
+    Explicitly passed in on webpage.
+    @input {Boolean} editable Determines whether the text displayed can be changed.
+
+    Implicitely passed in from horse route.
+    @input {Medical} medical is gotten from the backend to update the fields.
+
+    Example: include('partials/medical-input-fields', {editable: true})
+%>
 <div class="form-group">
     <label for="gait">Gait Analysis</label>
     <textarea class="form-control" id="gait" name="gait" rows="4" <%= editable ? '' : 'readonly' %>

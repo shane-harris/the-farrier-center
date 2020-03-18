@@ -1,3 +1,13 @@
+<%#
+    This create the nav bar at the top of the page on all pages.
+
+    Implicitely passed in from route.
+    @input {boolean} loggedOut is handled by the system to determine what you can see.
+    @input {User} currentUser Is the user currently on the page. username and role are used to determine functionality
+
+    Example: include('partials/header-nav')
+%>
+
 <nav id="header-nav" class="navbar navbar-expand-lg navbar-dark" role="navigation">
   <a class="navbar-brand" href="/">The Farrier Center</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -25,7 +35,13 @@
       <% } %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false"><%= currentUser.username %></a>
+          aria-haspopup="true" aria-expanded="false">
+          <% if(currentUser.fname) { %>
+          <%= currentUser.fname + ' ' + currentUser.lname  %>
+          <% } else{ %>
+          Account
+          <% } %>
+        </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="/user">Account</a>
           <div class="dropdown-divider"></div>
