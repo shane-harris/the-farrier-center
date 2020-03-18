@@ -1,42 +1,29 @@
 'use strict'
 
-$(function () {
+$('#search-bar').autocomplete({
+    appendTo: "#matches",
+    //source: ['Secretariat', 'Shane', 'Buttercup', 'Allen',
+    //  'Confirmation', 'show', 'shelly', 'shadowbox', 'shinnagins', 'something'],
+    source: function (req, res) {
+        $.ajax({
+            url: "/autocomplete/",
+            dataType: "jsonp",
+            type: "GET",
+            data: req,
+            success: function (data) {
+                console.log("inside autocomplete.js", data)
+                res(data)
+            },
+            error: function (err) {
+                console.log(err.status, "Error in autocomplete.js");
+            }
+        });
+    },
 
-    $("#search-bar").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "/autocomplete",
-                type: "GET",
-                data: request,  // request is the value of search input
-                success: function (allHorses) {
-                    // Map response values to fiedl label and value
-                    response($.map(allHorses, function (horses) {
-                        return {
-                            name: horses.name,
-                            owner: horses.owner
-                        };
-                    }));
-                }
-            });
-        },
-
-        // The minimum number of characters a user must type before a search is performed.
-        minLength: 1,
-
-        // set an onFocus event to show the result on input field when result is focused
-        focus: function (event, input) {
-            this.value = input.item.name;
-            // Prevent other event from not being execute
-            event.preventDefault();
-        },
-        select: function (event, input) {
-            // Prevent value from being put in the input:
-            this.value = input.item.name;
-            // Set the id to the next input hidden field
-            $(this).next("input").val(input.item.name);
-            // Prevent other event from not being execute            
-            event.preventDefault();
+    minLength: 1,
+    select: function (event, ui) {
+        if (ui.item) {
+            $('#search-bar').text(ui.item.label);
         }
-    });
-
-});
+    }
+})

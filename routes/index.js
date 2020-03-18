@@ -72,23 +72,36 @@ router.post('/search', (req, res) => {
   search();
 })
 
-router.get('/autocomplete', (req, res) => {
-  var regex = new RegExp(req.body.query["term"], 'i');
-  var query = Horse.find({ fullname: regex }, { 'name': 1 }).limit(20);
+router.get('/autocomplete', loggedIn, (req, res) => {
+  var regex = new RegExp(req.query["term"], 'i');
 
-  query.exec(function (err, users) {
+  var horseFilter = Horse.find({ name: regex }, { 'name': 1 })
+    .sort({ "updated_at": -1 })
+    .sort({ "created_at": -1 })
+    .limit(20);
+  horseFilter.exec(function (err, data) {
+    console.log("First grab of data", data);
+    var result = [];
     if (!err) {
-      // Method to construct the json result set
-      //var result = buildResultSet(users);
-      res.send(users, {
-        'Content-Type': 'application/json'
-      }, 200);
-    } else {
-      res.send(JSON.stringify(err), {
-        'Content-Type': 'application/json'
-      }, 404);
+      console.log("inside !err", data);
+      if (data && data.length && data.length > 0) {
+        console.log("inside second if");
+        data.forEach(horse => {
+          let obj = {
+            id: horse._id,
+            label: horse.name
+          };
+          console.log("Each obj", obj);
+          result.push(obj);
+        });
+      }
+      console.log("Showing results ", result);
+      res.jsonp(result);
     }
   });
+  //.then(horses => res.send('', { username: req.user.username, horses: horses }))
+  //.catch(console.error)
+  //console.log(req.body, 'Im in AutoComplete')
 })
 
 /*router.post('/search', (req, res) => {
@@ -107,5 +120,5 @@ router.get('/autocomplete', (req, res) => {
   console.log(req.body.query, 'Horse Not found')
 })*/
 
-router.get('/autocomplete', loggedIn, (req, res) => { })
+//router.get('/autocomplete', loggedIn, (req, res) => {})
 module.exports = router
