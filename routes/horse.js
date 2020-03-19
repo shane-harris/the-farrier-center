@@ -86,7 +86,13 @@ router.post('/new', loggedIn, parser.single('image'), (req, res) => {
   } else {
     Horse.create(newHorse)
   }
-  res.redirect('/horse/all')
+
+  if (req.body.submit === 'shoeing') {
+    // eslint-disable-next-line no-undef
+    res.redirect(`/horse/${horse.id}/new-shoeing`)
+  } else {
+    res.redirect('/horse/all')
+  }
 })
 
 router.get('/:id', loggedIn, (req, res) => {
