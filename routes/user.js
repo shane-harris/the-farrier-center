@@ -5,7 +5,7 @@ const router = express.Router()
 const nodemailer = require('nodemailer')
 const User = require('../models/user')
 var jwt = require('jsonwebtoken')
-const { loggedIn, redirectIfLoggedIn } = require('../middleware/auth')
+const { loggedIn, loggedOut } = require('../middleware/auth')
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -68,7 +68,7 @@ router.post('/forgot-password', (req, res) => {
 })
 
 //change password while not logged in
-router.get('/reset-password/:token', redirectIfLoggedIn, (req, res) => {
+router.get('/reset-password/:token', loggedOut, (req, res) => {
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, email) => {
     if (err) return res.sendStatus(403)
     req.email = email

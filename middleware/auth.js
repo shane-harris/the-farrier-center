@@ -11,7 +11,7 @@ const loggedIn = (req, res, next) => {
   res.redirect('/login')
 }
 
-const redirectIfLoggedIn = (req, res, next) => {
+const loggedOut = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return next()
   }
@@ -60,4 +60,4 @@ const sendRegEmail = async (req, res) => {
   res.redirect('/admin')
 }
 
-module.exports = { loggedIn, redirectIfLoggedIn, isAdmin, sendRegEmail }
+module.exports = { loggedIn, loggedOut, isAdmin, sendRegEmail }

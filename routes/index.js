@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const url = require('url')
 const User = require('../models/user')
 const Horse = require('../models/horse')
-const { loggedIn, redirectIfLoggedIn } = require('../middleware/auth')
+const { loggedIn, loggedOut } = require('../middleware/auth')
 
 router.use('/public', express.static('public'))
 
@@ -18,7 +18,7 @@ router.get('/', loggedIn, (req, res) => {
 // Send 204 No Content to avoid a 404 error
 router.get('/favicon.ico', (_, res) => res.status(204))
 
-router.post('/register', redirectIfLoggedIn, (req, res, next) => {
+router.post('/register', loggedOut, (req, res, next) => {
   console.log('registering user')
   User.register(
     new User({ username: req.body.username, email: req.body.email }),
@@ -36,7 +36,7 @@ router.post('/register', redirectIfLoggedIn, (req, res, next) => {
   )
 })
 
-router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
+router.get('/register/:token', loggedOut, (req, res) => {
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, body) => {
     if (err) return res.sendStatus(403)
     req.email = body.email
@@ -45,7 +45,7 @@ router.get('/register/:token', redirectIfLoggedIn, (req, res) => {
   res.render('register.ejs', { email: req.email })
 })
 
-router.get('/login', redirectIfLoggedIn, (req, res) => {
+router.get('/login', loggedOut, (req, res) => {
   res.render('login.ejs', { user: req.user, message: req.flash('error') })
 })
 
