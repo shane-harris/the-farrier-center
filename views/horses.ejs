@@ -11,8 +11,8 @@
 
     <div class="container mt-3">
       <div class="row">
-        <% for (horse of horses) { %>
-        <%-  include('partials/horse-profile', horse) %>
+        <% for (const horse of horses) { %>
+        <%-  include('partials/horse-profile', { horse }) %>
         <% } %>
       </div>
     </div>
