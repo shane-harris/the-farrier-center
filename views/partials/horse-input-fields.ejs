@@ -54,7 +54,7 @@
   <label for="discipline">Discipline:</label>
   <select class="form-control" id="discipline" name="discipline">
     <option hidden>Select Discipline</option>
-    <% for ( discipline of ['Jumping', 'Trail', 'Pleasure', 'Backyard', 'Western', 'Dressage', 'Endurance', 'Eveneting', 'Racing', 'Horseball', 'Polo']) { %>
+    <% for ( discipline of ['Jumping', 'Trail', 'Pleasure', 'Backyard', 'Western', 'Dressage', 'Endurance', 'Eventing', 'Racing', 'Polo']) { %>
     <%- include('dropdown-option.ejs', { selected: updateable ? (horse.discipline === discipline) : false, name: discipline }) %>
     <% } %>
   </select>
