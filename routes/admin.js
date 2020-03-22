@@ -3,7 +3,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
-const { isAdmin, sendRegEmail } = require('../middleware/auth')
+const { isAdmin, sendRegistrationEmail } = require('../middleware/auth')
 
 router.use(isAdmin)
 router.use('/public', express.static('public'))
@@ -23,6 +23,6 @@ router.post('/register', async (req, res) => {
   res.redirect('/admin')
 })
 
-router.post('/send-email', sendRegEmail)
+router.post('/send-email', sendRegistrationEmail)
 
 module.exports = router
