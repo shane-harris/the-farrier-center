@@ -15,3 +15,7 @@
   background-color: var(--queue-color);
   color: var(--queue-text-color);
 }
+
+.queue-item-dropdown {
+  text-align: right;
+}
