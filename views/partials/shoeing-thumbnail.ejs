@@ -1,0 +1,26 @@
+<%#
+    This creates one row for each shoeing report a horse has and then populates it.
+
+    Example: include('partials/shoeing-report-thumbnail', {single_shoeing})
+%>
+
+<div class="card">
+    <div class="card-header" id="headingOne">
+        <h2 class="mb-0">
+            <!-- In order for the collapse functionality to work each cell needs to have a unique ID,
+                     So I am using a regexed version of the date to create the ID. -->
+            <button type="button" class="btn btn-link" data-toggle="collapse"
+                    data-target="#<%= (single_shoeing.date.toString()).replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
+                <%= single_shoeing.farrier %>
+                <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %>
+            </button>
+        </h2>
+    </div>
+
+    <div id="<%= (single_shoeing.date.toString()).replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>"
+         class="collapse" aria-labelledby="headingOne" data-parent="#shoeings_accordian">
+        <div class="card-body">
+            <p>Notes: <%= single_shoeing.other %></p>
+        </div>
+    </div>
+</div>
