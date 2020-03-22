@@ -11,7 +11,7 @@ const { loggedIn, loggedOut } = require('../middleware/auth')
 
 router.use('/public', express.static('public'))
 
-router.get('/', loggedIn, (req, res) => {
+router.get('/', loggedIn, (_, res) => {
   res.redirect('/horse/queue')
 })
 
@@ -52,7 +52,7 @@ router.get('/login', loggedOut, (req, res) => {
 router.post(
   '/login',
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  (req, res) => {
+  (_, res) => {
     res.redirect('/')
   }
 )
@@ -62,29 +62,28 @@ router.get('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/search', loggedIn, (req, res) => {
-  Horse.find()
+router.get('/search', loggedIn, async (req, res) => {
+  const horses = await Horse.find()
     // sort by id (ascending)
     .sort({ id: 1 })
-    .then(horses => res.render('search.ejs', { username: req.user.username, horses: horses }))
-    .catch(console.error)
-  console.log(req.body, 'Im in GET')
+  res.render('search.ejs', { username: req.user.username, horses: horses })
 })
 
-router.post('/search', (req, res) => {
-  Horse.findOne({ name: req.body.query })
-    .then(found => res.redirect(`/horse/${found.id}`))
-    .catch(_ =>
-      res.redirect(
-        url.format({
-          pathname: '/search',
-          query: {
-            query: req.body.query
-          }
-        })
-      )
+router.post('/search', async (req, res) => {
+  try {
+    const found = await Horse.findOne({ name: req.body.query })
+    res.redirect(`/horse/${found.id}`)
+  } catch (_) {
+    res.redirect(
+      url.format({
+        pathname: '/search',
+        query: {
+          query: req.body.query
+        }
+      })
     )
-  console.log(req.body.query, 'Horse Not found')
+    console.log(req.body.query, `Horse '${req.body.query}' not found.`)
+  }
 })
 
 module.exports = router
