@@ -53,12 +53,10 @@ router.get('/queue', loggedIn, async (req, res) => {
   })
 })
 
-router.get('/all', loggedIn, (req, res) => {
-  Horse.find()
-    // Sort by id (ascending)
-    .sort({ id: 1 })
-    .then(horses => res.render('horses.ejs', { horses: horses }))
-    .catch(console.error)
+router.get('/all', loggedIn, async (_, res) => {
+  // Get all horses and sort them by id (ascending)
+  const horses = await Horse.find().sort({ id: 1 })
+  res.render('horses.ejs', { horses: horses })
 })
 
 router.get('/new', loggedIn, (_, res) => {
