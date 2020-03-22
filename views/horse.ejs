@@ -151,11 +151,11 @@
           <div align="center"><H2> No Shoeing reports have been created</H2></div>
         <% } %>
       </div>
-      <div class="accordion" id="shoeings_accordian">
+      <div class="accordion" id="shoeings-accordian">
 
         <!--Will be populated with all the shoeings done on a horse-->
-        <% for (const single_shoeing of shoeings) { %>
-          <%-  include('partials/shoeing-thumbnail', {single_shoeing}) %>
+        <% for (const singleShoeing of shoeings) { %>
+          <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
         <% } %>
 
       </div>
