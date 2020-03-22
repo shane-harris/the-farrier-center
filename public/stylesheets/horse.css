@@ -11,3 +11,7 @@
   border: 2px solid var(--border-color);
   background-color: var(--shoeing-card-color);
 }
+
+.shoeing-card-body {
+  background-color: var(--shoeing-card-body-color);
+}

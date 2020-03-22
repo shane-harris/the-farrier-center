@@ -18,6 +18,8 @@ const darksteel = '#232528'
 const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
+const greengray = '#1e1f1e'
+const yellowgray = '#454544'
 
 const themes = {
   Dark: {
@@ -46,7 +48,8 @@ const themes = {
     queue: coal,
     queueText: ivory,
     readonlyTextFieldBg: coal,
-    shoeingCard: slate
+    shoeingCard: yellowgray,
+    shoeingCardBody: charcoal
   },
   Light: {
     bg: white,
@@ -75,8 +78,8 @@ const themes = {
     primaryText: black,
     queue: turqoisegray,
     queueText: black,
-    readonlyTextFieldBg: lightbluegray,
-    shoeingCard: slate
+    readonlyTextFieldBg: lightbluegray
+    // shoeingCard: slate
   },
   Black: {
     bg: black,
@@ -134,7 +137,8 @@ const themes = {
     queue: coffee,
     queueText: dimwhite,
     readonlyTextFieldBg: dimwhite,
-    shoeingCard: slate
+    shoeingCard: greengray,
+    shoeingCardBody: slate
   }
 }
 
