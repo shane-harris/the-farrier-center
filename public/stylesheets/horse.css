@@ -6,3 +6,8 @@
   padding: 20px;
   margin-top: 2px;
 }
+
+.shoeing-card {
+  border: 2px solid var(--border-color);
+  background-color: var(--shoeing-card-color);
+}

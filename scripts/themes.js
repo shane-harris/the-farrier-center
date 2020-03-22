@@ -45,7 +45,8 @@ const themes = {
     primaryText: ivory,
     queue: coal,
     queueText: ivory,
-    readonlyTextFieldBg: coal
+    readonlyTextFieldBg: coal,
+    shoeingCard: slate
   },
   Light: {
     bg: white,
@@ -74,7 +75,8 @@ const themes = {
     primaryText: black,
     queue: turqoisegray,
     queueText: black,
-    readonlyTextFieldBg: lightbluegray
+    readonlyTextFieldBg: lightbluegray,
+    shoeingCard: slate
   },
   Black: {
     bg: black,
@@ -101,7 +103,8 @@ const themes = {
     primaryText: white,
     queue: coal,
     queueText: white,
-    readonlyTextFieldBg: black
+    readonlyTextFieldBg: black,
+    shoeingCard: slate
   },
   Forest: {
     bg: darksteel,
@@ -130,7 +133,8 @@ const themes = {
     primaryText: firgreen,
     queue: coffee,
     queueText: dimwhite,
-    readonlyTextFieldBg: dimwhite
+    readonlyTextFieldBg: dimwhite,
+    shoeingCard: slate
   }
 }
 
