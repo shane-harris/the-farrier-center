@@ -151,6 +151,14 @@
           <div align="center"><H2> No Shoeing reports have been created</H2></div>
         <% } %>
       </div>
+      <div class="accordion" id="shoeings_accordian">
+
+        <!--Will be populated with all the shoeings done on a horse-->
+        <% for (const single_shoeing of shoeings) { %>
+          <%-  include('partials/shoeing-report-thumbnail', {single_shoeing}) %>
+        <% } %>
+
+      </div>
     </div>
   </div>
   <%- include('partials/footer') %>
