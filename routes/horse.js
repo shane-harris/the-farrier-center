@@ -68,12 +68,12 @@ router.get('/new', loggedIn, (req, res) => {
   res.render('new-horse.ejs')
 })
 
-router.post('/new', loggedIn, parser.single('image'), (req, res) => {
+router.post('/new', loggedIn, parser.single('image'), async (req, res) => {
   const createdDate = { lastVisit: new Date() }
   const newHorse = Object.assign(createdDate, req.body)
+  const horse = new Horse(newHorse)
 
   if (req.file) {
-    const horse = new Horse(newHorse)
     const image = new Image({
       ref_id: horse._id,
       onType: 'horses',
@@ -81,12 +81,17 @@ router.post('/new', loggedIn, parser.single('image'), (req, res) => {
       public_id: req.file.public_id
     })
     horse.image = image._id
-    horse.save()
+    await horse.save()
     image.save()
   } else {
-    Horse.create(newHorse)
+    await horse.save()
   }
-  res.redirect('/horse/all')
+
+  if (req.body.submit === 'shoeing') {
+    res.redirect(`/horse/${horse.id}/new-shoeing`)
+  } else {
+    res.redirect('/horse/all')
+  }
 })
 
 router.get('/:id', loggedIn, (req, res) => {
@@ -146,7 +151,9 @@ router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
 })
 
 router.get('/:id/new-shoeing', loggedIn, (req, res) => {
-  res.render('new-shoeing.ejs')
+  Horse.findOne({ id: req.params.id }).then(horse => {
+    res.render('new-shoeing.ejs', { horse })
+  })
 })
 
 router.post('/:id/new-shoeing', loggedIn, (req, res) => {
