@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken')
 const url = require('url')
 const User = require('../models/user')
 const Horse = require('../models/horse')
-const { search } = require('../models/search')
 const { loggedIn, redirectIfLoggedIn } = require('../middleware/auth')
 
 router.use('/public', express.static('public'))
@@ -89,7 +88,8 @@ router.post('/search', (req, res) => {
 })
 
 router.get('/autocomplete', loggedIn, (req, res) => {
-  var regex = new RegExp(req.query["term"], 'i');
+  const regex = new RegExp(req.query["term"], 'i');
+  //var horseOwner = new RegExp(req.query["term"], 'i');
 
   var horseFilter = Horse.find({ name: regex }, { 'name': 1 })
     .sort({ "updated_at": -1 })
@@ -102,9 +102,10 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
+          console.log("data within horse", horse);
           let obj = { //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
-            label: horse.name
+            label: horse.name,
           };
           result.push(obj);
         });

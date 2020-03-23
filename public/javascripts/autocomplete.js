@@ -10,6 +10,7 @@ $('#search-bar').autocomplete({
             data: req,
             success: function (data) {
                 //passing data to source for display in autocomplete window
+                console.log("Should show owners and horse names ", data)
                 res(data)
             },
             error: function (err) {
