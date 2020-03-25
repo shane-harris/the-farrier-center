@@ -20,6 +20,10 @@
   overflow: hidden;
 }
 
+.queue-item-dropdown {
+  text-align: right;
+}
+
 .queue-item-link {
   display: block;
   margin: -10em;
