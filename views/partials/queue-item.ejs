@@ -16,8 +16,8 @@ const date = lastVisitDate(horse)
 <%# lastVisitDate makes sure the date isn't undetermined %>
 
 
-<tr style=<%- computeBorderStyle(horse) %>>
-  <td class="queue-cell">
+<tr>
+  <td class="queue-cell" style=<%- computeBorderStyle(horse) %></td>
     <a class="link-unstyled queue-item-link" href="/horse/<%= horse.id %>">
       <%= horse.name %>
     </a>
@@ -61,15 +61,3 @@ const date = lastVisitDate(horse)
     </div>
   </td>
 </tr>
-<script>
-  $(document).click(function () {
-    var $tab = $('input[name="tab"]')
-    $tab.val(window.location.hash)
-  })
-</script>
-<script>
-  $(function () {
-    var $tab = $('input[name="tab"]')
-    $tab.val(window.location.hash)
-  })
-</script>
