@@ -42,21 +42,18 @@ const date = lastVisitDate(horse)
       <div class="dropdown-menu" aria-labelledby="triggerId">
         <% if (user.assignedHorses.includes(horse.id)) { %>
         <form action='/horse/unassign/<%=horse.id%>' method='POST'>
-          <input name="tab" type="hidden" value="" />
           <button class="dropdown-item">
             Unassign
           </button>
         </form>
         <%} else { %>
         <form action='/horse/assign/<%=horse.id%>' method='POST'>
-          <input name="tab" type="hidden" value="" />
           <button class="dropdown-item">
             Assign to me
           </button>
         </form>
         <% } %>
         <form action='/horse/dismiss/<%=horse.id%>' method='POST'>
-          <input name="tab" type="hidden" value="" />
           <button class="dropdown-item">
             Quick-shoe
           </button>
