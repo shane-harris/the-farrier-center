@@ -110,13 +110,13 @@
         </div>
       </div>
       <div id="shoeing" class="collapse">
-        <% if(shoeing !== undefined) { %>
+        <% if(shoeings.length > 0) { %>
         <div class="row">
           <div class="col-sm-4">
             <h2>Most Recent Shoeing</h2>
           </div>
           <div class="col-sm-4">
-              <h1>Date: <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %></h1>
+              <h1>Date: <%= `${shoeings[0].date.getMonth() + 1}/${shoeings[0].date.getDate()}/${shoeings[0].date.getFullYear()}` %></h1>
           </div>
           <div class="col-sm-4">
             <h2>Farrier: Steve</h2>
