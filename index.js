@@ -57,7 +57,7 @@ app.use('/admin', adminRoutes)
 app.use('/horse', horseRoutes)
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((_, __, next) => {
   const err = new Error('Not Found')
   err.status = 404
   next(err)
@@ -66,7 +66,7 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use((err, req, res) => {
+  app.use((err, _, res) => {
     res.status(err.status || 500)
     res.render('error.ejs', {
       message: err.message,
@@ -77,7 +77,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res) => {
+app.use((err, _, res) => {
   res.status(err.status || 500)
   res.render('error.ejs', {
     message: err.message,
@@ -95,7 +95,7 @@ mongoose
     useCreateIndex: true
   })
   .then(() => {
-    console.log('Connected to Database!')
+    console.log('Connected to database.')
     // Send out an event that can be listened to elsewhere
     app.emit('event:database-connected')
     app.set('database-connected', true)

@@ -17,14 +17,24 @@ const date = lastVisitDate(horse)
 
 
 <tr style=<%- computeBorderStyle(horse) %>>
-  <td><a class="link-unstyled" href="/horse/<%= horse.id %>"><%= horse.name %></a></td>
-  <td>
-    <address><%= horse.location %></address>
+  <td class="queue-cell">
+    <a class="link-unstyled queue-item-link" href="/horse/<%= horse.id %>">
+      <%= horse.name %>
+    </a>
   </td>
-  <td>
-    <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
+  <td class="queue-cell">
+    <address>
+      <a class="link-unstyled queue-item-link" href="/horse/<%= horse.id %>">
+        <%= horse.location %>
+      </a>
+    </address>
   </td>
-  <td align="right">
+  <td class="queue-cell">
+    <a class="link-unstyled queue-item-link" href="/horse/<%= horse.id %>">
+      <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
+    </a>
+  </td>
+  <td class="queue-item-dropdown">
     <div class="dropdown open">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

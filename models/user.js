@@ -2,7 +2,6 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const Horse = require('../models/horse')
 
 const User = new Schema({
   fname: String,

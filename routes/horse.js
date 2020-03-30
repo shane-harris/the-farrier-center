@@ -31,47 +31,42 @@ const storage = cloudinaryStorage({
   transformation: [{ width: 500, height: 500, crop: 'limit' }]
 })
 
-const parser = multer({ storage: storage })
+const parser = multer({ storage })
 
 router.use('/public', express.static('public'))
 
-//Setup Routes
-router.get('/queue', loggedIn, (req, res) => {
-  Promise.all([
-    //returns all horses to populate View All queue
+// Setup Routes
+router.get('/queue', loggedIn, async (req, res) => {
+  const [horses, assignedHorses] = await Promise.all([
+    // Returns all horses to populate View All queue
     Horse.find().sort({ lastVisit: 1 }),
-    //returns only horses assigned to you for View Assigned Horse queue
+    // Returns only horses assigned to you for View Assigned Horse queue
     Horse.find({ id: req.user.assignedHorses })
-      // sort by lastVisit (ascending)
+      // Sort by lastVisit (ascending)
       .sort({ lastVisit: 1 })
   ])
-    .then(([allHorses, assignedHorses]) =>
-      res.render('queue.ejs', {
-        user: req.user,
-        horses: allHorses,
-        assignedHorses: assignedHorses,
-        scripts: require('../scripts/queue-item')
-      })
-    )
-    .catch(console.error)
+  res.render('queue.ejs', {
+    user: req.user,
+    horses,
+    assignedHorses,
+    scripts: require('../scripts/queue-item')
+  })
 })
 
-router.get('/all', loggedIn, (req, res) => {
-  Horse.find()
-    // sort by id (ascending)
-    .sort({ id: 1 })
-    .then(horses => res.render('horses.ejs', { horses: horses }))
-    .catch(console.error)
+router.get('/all', loggedIn, async (_, res) => {
+  // Get all horses and sort them by id (ascending)
+  const horses = await Horse.find().sort({ id: 1 })
+  res.render('horses.ejs', { horses: horses })
 })
 
-router.get('/new', loggedIn, (req, res) => {
+router.get('/new', loggedIn, (_, res) => {
   res.render('new-horse.ejs')
 })
 
 router.post('/new', loggedIn, parser.single('image'), async (req, res) => {
-  const createdDate = { lastVisit: new Date() }
-  const newHorse = Object.assign(createdDate, req.body)
-  const horse = new Horse(newHorse)
+  // Create a new horse with all fields from the 'horse/new' page (req.body),
+  // and 'lastVisit' set to now.
+  const horse = new Horse({ lastVisit: new Date(), ...req.body })
 
   if (req.file) {
     const image = new Image({
@@ -81,11 +76,9 @@ router.post('/new', loggedIn, parser.single('image'), async (req, res) => {
       public_id: req.file.public_id
     })
     horse.image = image._id
-    await horse.save()
     image.save()
-  } else {
-    await horse.save()
   }
+  await horse.save()
 
   if (req.body.submit === 'shoeing') {
     res.redirect(`/horse/${horse.id}/new-shoeing`)
@@ -94,69 +87,50 @@ router.post('/new', loggedIn, parser.single('image'), async (req, res) => {
   }
 })
 
-router.get('/:id', loggedIn, (req, res) => {
-  Promise.all([
+router.get('/:id', loggedIn, async (req, res) => {
+  const [horse, medicals, shoeings] = await Promise.all([
     Horse.findOne({ id: req.params.id }).populate('image'),
     Medical.find({ horse_id: req.params.id }).sort({ date: -1 }),
     Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-    //sorts medicals by most recent date first
-    .then(([horse, medicals, shoeings]) => {
-      const updateable = medicals.length !== 0
-      const medical = medicals[0] //grab the first medical report
-      const shoeing = shoeings[0]
-      res.render('horse.ejs', { horse, medical, shoeing, updateable, shoeings })
-    })
-    .catch(console.error)
+  res.render('horse.ejs', {
+    horse,
+    medical: medicals[0],
+    shoeing: shoeings[0],
+    updateable: medicals.length !== 0
+  })
 })
 
-router.get('/:id/new-medical-analysis', loggedIn, (req, res) => {
-  Promise.all([
+router.get('/:id/new-medical-analysis', loggedIn, async (req, res) => {
+  const [horse, medical] = await Promise.all([
     Horse.findOne({ id: req.params.id }),
-    Medical.find({ horse_id: req.params.id }).sort({ date: -1 })
-  ]) //sorts medicals by most recent date first
-    .then(([horse, medicals]) => {
-      const updateable = medicals.length !== 0
-      const medical = medicals[0] //grab the first medical report
-      res.render('new-medical-analysis.ejs', { horse, medical, updateable })
-    })
-    .catch(console.error)
+    // Get the most recent medical analysis
+    Medical.findOne({ horse_id: req.params.id }).sort({ date: -1 })
+  ])
+  res.render('new-medical-analysis.ejs', { horse, medical, updateable: !!medical })
 })
 
-router.post('/:id/new-medical-analysis', loggedIn, (req, res) => {
-  console.log(req.body)
+router.post('/:id/new-medical-analysis', loggedIn, async (req, res) => {
   const medical = new Medical({
     horse_id: req.params.id,
     date: new Date(),
     farrier: 'Default Steve',
     ...req.body
   })
-  medical.save(console.error)
-
-  //When you make a new medical, update horses last visit date.
-  Horse.findOne({ id: req.params.id }, (err, horse) => {
-    if (err) {
-      console.log(err)
-      res.redirect(`/horse/${req.params.id}`)
-    }
-    horse.lastVisit = medical.date
-    horse.save(err => {
-      if (err) {
-        console.log(err)
-      }
-    })
-  })
-
+  medical.save()
+  // When you make a new medical, update horse's last visit date.
+  const horse = await Horse.findOne({ id: req.params.id })
+  horse.lastVisit = medical.date
+  horse.save()
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.get('/:id/new-shoeing', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id }).then(horse => {
-    res.render('new-shoeing.ejs', { horse })
-  })
+router.get('/:id/new-shoeing', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  res.render('new-shoeing.ejs', { horse })
 })
 
-router.post('/:id/new-shoeing', loggedIn, (req, res) => {
+router.post('/:id/new-shoeing', loggedIn, async (req, res) => {
   console.log(req.body)
   const shoeing = new Shoeing({
     horse_id: req.params.id,
@@ -193,114 +167,62 @@ router.post('/:id/new-shoeing', loggedIn, (req, res) => {
 
     ...req.body
   })
-  shoeing.save(console.error)
+  shoeing.save()
 
   //When you make a new shoeing, update horses last visit date.
-  Horse.findOne({ id: req.params.id }, (err, horse) => {
-    if (err) {
-      console.log(err)
-      res.redirect(`/horse/${req.params.id}`)
-    }
-    horse.lastVisit = shoeing.date
-    horse.save(err => {
-      if (err) {
-        console.log(err)
-      }
-    })
-  })
-
+  const horse = await Horse.findOne({ id: req.params.id })
+  horse.lastVisit = shoeing.date
+  horse.save()
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.get('/:id/update', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id })
-    .then(horse => res.render('update-horse.ejs', { horse, name: req.user.username }))
-    .catch(console.error)
+router.get('/:id/update', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  res.render('update-horse.ejs', { horse, name: req.user.username })
 })
 
-router.post('/:id/update', parser.single('image'), loggedIn, (req, res) => {
-  console.log(req.file)
+router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  horse.name = req.body.name
+  horse.gender = req.body.gender
+  horse.temperament = req.body.temperament
+  horse.discipline = req.body.discipline
+  horse.location = req.body.location
+  horse.owner = req.body.owner
+  horse.vet = req.body.vet
+  horse.history = req.body.history
+  horse.save()
   if (req.file) {
-    Horse.findOne({ id: req.params.id })
-      .then(horse => {
-        horse.name = req.body.name
-        horse.gender = req.body.gender
-        horse.temperament = req.body.temperament
-        horse.discipline = req.body.discipline
-        horse.location = req.body.location
-        horse.owner = req.body.owner
-        horse.vet = req.body.vet
-        horse.history = req.body.history
-        horse.save()
-        return horse.image
-      })
-      .then(image_id => {
-        Image.findOne({ _id: image_id }).then(image => {
-          image.url = req.file.url
-          image.public_id = req.file.public_id
-          image.save()
-        })
-      })
-  } else {
-    Horse.findOne({ id: req.params.id }).then(horse => {
-      horse.name = req.body.name
-      horse.gender = req.body.gender
-      horse.temperament = req.body.temperament
-      horse.discipline = req.body.discipline
-      horse.location = req.body.location
-      horse.owner = req.body.owner
-      horse.vet = req.body.vet
-      horse.history = req.body.history
-      horse.save()
-    })
+    const image = await Image.findOne({ _id: horse.image })
+    image.url = req.file.url
+    image.public_id = req.file.public_id
+    image.save()
   }
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.post('/assign/:id', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id }, (err, horse) => {
-    if (err) {
-      console.log(err)
-      res.redirect('/horse/queue')
-    } else {
-      if (!req.user.assignedHorses.includes(req.params.id)) {
-        req.user.assignedHorses.push(horse.id)
-        req.user.save(err => {
-          if (err) {
-            console.log(err)
-          } else {
-            console.log('assigned ' + req.user.username + ' to horse: ' + horse.name)
-          }
-        })
-      } else {
-        console.log('error, horse already assigned to this farrier')
-      }
-      res.redirect(`/horse/queue/` + req.body.tab)
-    }
-  })
+router.post('/assign/:id', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  if (!req.user.assignedHorses.includes(req.params.id)) {
+    req.user.assignedHorses.push(horse.id)
+    req.user.save()
+    console.log(`Assigned horse '${horse.name}' to farrier '${req.user.username}'.`)
+  } else {
+    console.log(`Horse '${horse.name}' is already assigned to farrier '${req.user.username}'.`)
+  }
+  res.redirect(`/horse/queue/${req.body.tab}`)
 })
 
-router.post('/unassign/:id', loggedIn, (req, res) => {
-  Horse.findOne({ id: req.params.id }, (err, horse) => {
-    if (err) {
-      console.log(err)
-      res.redirect('/horse/queue')
-    } else {
-      const i = req.user.assignedHorses.indexOf(req.params.id)
-      if (i > -1) {
-        req.user.assignedHorses.splice(i, 1)
-      }
-      req.user.save(err => {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log('unassigned ' + req.user.username + ' from horse: ' + horse.name)
-        }
-      })
+router.post('/unassign/:id', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  const i = req.user.assignedHorses.indexOf(req.params.id)
+  if (i > -1) {
+    req.user.assignedHorses.splice(i, 1)
+  }
+  req.user.save()
+  console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
 
-      res.redirect(`/horse/queue/` + req.body.tab)
-    }
-  })
+  res.redirect(`/horse/queue/${req.body.tab}`)
 })
 
 module.exports = router
