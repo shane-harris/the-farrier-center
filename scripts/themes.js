@@ -78,8 +78,9 @@ const themes = {
     primaryText: black,
     queue: turqoisegray,
     queueText: black,
-    readonlyTextFieldBg: lightbluegray
-    // shoeingCard: slate
+    readonlyTextFieldBg: lightbluegray,
+    shoeingCard: white,
+    shoeingCardBody: white
   },
   Black: {
     bg: black,
