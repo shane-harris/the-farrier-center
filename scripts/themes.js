@@ -18,6 +18,13 @@ const darksteel = '#232528'
 const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
+const darkgreen = '#006400'
+const darkergreen = '#001000'
+const red = '#ff0000'
+const blue = '#0000ff'
+const darkblue = '#00008b'
+const magenta = '#ff00ff'
+const indigo = '#4B0082'
 
 const themes = {
   Dark: {
@@ -131,6 +138,33 @@ const themes = {
     queue: coffee,
     queueText: dimwhite,
     readonlyTextFieldBg: dimwhite
+  },
+  Green: {
+    bg: darkergreen,
+    border: neongreen,
+    borderHover: darkgreen,
+    button: neongreen,
+    buttonBorderHover: neongreen,
+    buttonHover: firgreen,
+    buttonText: darkergreen,
+    buttonTextHover: neongreen,
+    dropdownBg: darkergreen,
+    dropdownDivider: neongreen,
+    dropdownItemBgHover: darkgreen,
+    dropdownItemText: neongreen,
+    dropdownItemTextHover: darkergreen,
+    fg: darkgreen,
+    linkHover: neongreen,
+    loginText: neongreen,
+    nav: darkgreen,
+    navBorder: neongreen,
+    navText: neongreen,
+    navTextHover: neongreen,
+    placeholderText: neongreen,
+    primaryText: neongreen,
+    queue: darkgreen,
+    queueText: neongreen,
+    readonlyTextFieldBg: neongreen
   }
 }
 
