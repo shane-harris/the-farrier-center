@@ -13,9 +13,7 @@
             <button type="button" class="btn btn-link" data-toggle="collapse"
                     data-target="#<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
                 <%= singleShoeing.farrier %>
-                <%= `${singleShoeing.date.getMonth() + 1}/
-                ${singleShoeing.date.getDate()}/
-                ${singleShoeing.date.getFullYear()}` %>
+                <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %>
             </button>
         </h2>
     </div>
@@ -24,7 +22,6 @@
          class="collapse shoeing-card-body" aria-labelledby="headingOne" data-parent="#shoeings-accordian">
         <div class="card-body">
             <p>Notes: <%= singleShoeing.other %></p>
-            <p> Front Left Shoe Size: <%= singleShoeing.frontLeft.shoeSize%></p>
         </div>
     </div>
 </div>
