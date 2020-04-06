@@ -125,7 +125,7 @@ router.post('/search', async (req, res) => {
 router.get('/autocomplete', loggedIn, (req, res) => {
   const regex = new RegExp(req.query["term"], 'i');
   //var horseOwner = new RegExp(req.query["term"], 'i');
-  var result = [];
+  const finalResult = [];
   var horseFilter = Horse.find({ name: regex }, { 'name': 1 })
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
@@ -138,7 +138,7 @@ router.get('/autocomplete', loggedIn, (req, res) => {
 
   horseFilter.exec(function (err, data) {
     //data is all horse names that match query
-    //var result = [];
+    var result = [];
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
@@ -148,16 +148,17 @@ router.get('/autocomplete', loggedIn, (req, res) => {
             label: horse.name,
           };
           result.push(obj);
+          finalResult.push(result)
         });
       }
       //return all the results to autocomplete.js
-      //res.jsonp(result);
+      res.jsonp(result);
     }
   });
 
   horseOwner.exec(function (err, data) {
     //data is all horse names that match query
-    //var result = [];
+    var result = [];
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
@@ -167,13 +168,14 @@ router.get('/autocomplete', loggedIn, (req, res) => {
             label: horse.owner,
           };
           result.push(obj);
+          finalResult.push(result)
         });
       }
       //return all the results to autocomplete.js
-      // res.jsonp(result);
+      //res.jsonp(finalResult);
     }
   });
-  res.jsonp(result);
+  //res.jsonp(result);
 })
 
 module.exports = router
