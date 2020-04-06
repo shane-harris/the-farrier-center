@@ -65,9 +65,9 @@ router.get('/logout', (req, res) => {
 router.get('/search', loggedIn, async (req, res) => {
   console.log("Res from search...............................................", req.url.normalize())
   let pureQuery = req.url.replace("/search?query=", "");
-  pureQuery = pureQuery.replace("%20", " ") //Remove the special character correction later
-  pureQuery = pureQuery.replace("%2C%20", ", ")
-  pureQuery = pureQuery.replace("%20", " ")
+  pureQuery = pureQuery.replace(/%20/g, " ") //Remove the special character correction later
+  pureQuery = pureQuery.replace(/%2C/g, ",")
+  //pureQuery = pureQuery.replace("%20", " ")
   let test = req.param.query
   console.log("Hope this works", test)
   console.log("Pure query...", pureQuery)
@@ -75,10 +75,18 @@ router.get('/search', loggedIn, async (req, res) => {
   let horses = await Horse.find({ name: pureQuery })
     // sort by id (ascending)
     .sort({ id: 1 })
+  console.log("length of horses array Names", horses.length)
 
   if (horses.length === 0) {
     horses = await Horse.find({ owner: pureQuery })
       .sort({ id: 1 })
+    console.log("length of horses array Owners", horses.length)
+
+    if (horses.length === 0) {
+      horses = await Horse.find({ location: pureQuery })
+        .sort({ id: 1 })
+      console.log("length of horses array Location", horses.length)
+    }
   }
   res.render('search.ejs', { username: req.user.username, horses: horses })
 
@@ -126,33 +134,41 @@ router.get('/autocomplete', loggedIn, (req, res) => {
   const regex = new RegExp(req.query["term"], 'i');
   //var horseOwner = new RegExp(req.query["term"], 'i');
   const finalResult = [];
-  var horseFilter = Horse.find({ name: regex }, { 'name': 1 })
+
+  var horseName = Horse.find({ name: regex }, { 'name': 1 })
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
     .limit(100)
 
-  var horseOwner = Horse.find({ name: regex }, { 'owner': 1 })
+  var horseOwner = Horse.find({ owner: regex }, { 'owner': 1 })
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
     .limit(100)
 
-  horseFilter.exec(function (err, data) {
+  var horseLocation = Horse.find({ name: regex }, { 'location': 1 })
+    .sort({ "updated_at": -1 })
+    .sort({ "created_at": -1 })
+    .limit(100)
+
+  horseName.exec(function (err, data) {
     //data is all horse names that match query
     var result = [];
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          console.log("data within horse", horse);
+          console.log("Name Data", horse);
           let obj = { //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
             label: horse.name,
           };
           result.push(obj);
-          finalResult.push(result)
+          finalResult.push(obj)
         });
       }
       //return all the results to autocomplete.js
-      res.jsonp(result);
+      //finalResult = finalResult.concat(result)
+      console.log("Final result in Name", finalResult)
+      //res.jsonp(result);
     }
   });
 
@@ -162,20 +178,45 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          console.log("data within horse", horse);
+          console.log("Owner Data", horse);
           let obj = { //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
             label: horse.owner,
           };
           result.push(obj);
-          finalResult.push(result)
+          finalResult.push(obj)
         });
       }
       //return all the results to autocomplete.js
+      //finalResult = finalResult.concat(result)
+      console.log("Final result in Owner", finalResult)
       //res.jsonp(finalResult);
     }
   });
   //res.jsonp(result);
+
+  horseLocation.exec(function (err, data) {
+    //data is all horse names that match query
+    var result = [];
+    if (!err) {
+      if (data && data.length && data.length > 0) {
+        data.forEach(horse => {
+          console.log("Location Data", horse);
+          let obj = { //turn each horse name and id pair into an opject
+            id: horse._id, //dont know why horse.id returns undefined but _id works
+            label: horse.location,
+          };
+          result.push(obj);
+          finalResult.push(obj)
+        });
+      }
+      //return all the results to autocomplete.js
+      //finalResult = finalResult.concat(result)
+      console.log("FINAL RESULT ARRAY", finalResult)
+      //res.jsonp(finalResult);
+      res.jsonp(finalResult)
+    }
+  });
 })
 
 module.exports = router
