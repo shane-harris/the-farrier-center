@@ -145,13 +145,15 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
     .limit(30)
+//Talk to Mike about horeseName containing my login and password
+  //console.log("Horse name...", horseName)
 
   var horseOwner = Horse.find({ owner: regex }, { 'owner': 1 })
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
     .limit(30)
 
-  var horseLocation = Horse.find({ name: regex }, { 'location': 1 })
+  var horseLocation = Horse.find({ location: regex }, { 'location': 1 })
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
     .limit(30)
@@ -167,7 +169,7 @@ router.get('/autocomplete', loggedIn, (req, res) => {
             id: horse._id, //dont know why horse.id returns undefined but _id works
             label: horse.name,
           };
-          console.log("Name Object", obj)
+          //console.log("Name Object", obj)
           result.push(obj);
           finalResult.push(obj)
         });
@@ -226,7 +228,26 @@ router.get('/autocomplete', loggedIn, (req, res) => {
 
       console.log("FINAL RESULT ARRAY", finalResult)
       //console.log("FILTERED FINAL RESULT", finalRes)
-      res.jsonp(finalResult)
+      var finished = false
+      var duplicate = false
+      var fR = []
+      fR.push(finalResult[0])
+      while(!finished){
+        for(var i =0; i < finalResult.length; i++){
+          for(var j =0; j < fR.length; j++){
+            if(fR[j].label == finalResult[i].label){
+                duplicate = true
+            }
+          }
+          if(!duplicate){
+            fR.push(finalResult[i])
+          }
+          duplicate = false
+        }
+        finished = true
+      }
+      if(finished)
+        res.jsonp(fR)
     }
   });
 })
