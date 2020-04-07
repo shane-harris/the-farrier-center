@@ -63,29 +63,22 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/search', loggedIn, async (req, res) => {
-  console.log("Res from search...............................................", req.url.normalize())
   let pureQuery = req.url.replace("/search?query=", "");
-  pureQuery = pureQuery.replace(/%20/g, " ") //Remove the special character correction later
+  //Removing URL special characters
+  pureQuery = pureQuery.replace(/%20/g, " ")
   pureQuery = pureQuery.replace(/%2C/g, ",")
-  //pureQuery = pureQuery.replace("%20", " ")
-  let test = req.param.query
-  console.log("Hope this works", test)
-  console.log("Pure query...", pureQuery)
 
+//TODO use try catch to either return exact result of query or clostest match
   let horses = await Horse.find({ name: pureQuery })
-    // sort by id (ascending)
     .sort({ id: 1 })
-  console.log("length of horses array Names", horses.length)
 
   if (horses.length === 0) {
     horses = await Horse.find({ owner: pureQuery })
       .sort({ id: 1 })
-    console.log("length of horses array Owners", horses.length)
 
-    if (horses.length === 0) {
-      horses = await Horse.find({ location: pureQuery })
-        .sort({ id: 1 })
-      console.log("length of horses array Location", horses.length)
+  if (horses.length === 0) {
+    horses = await Horse.find({ location: pureQuery })
+      .sort({ id: 1 })
     }
   }
   res.render('search.ejs', { username: req.user.username, horses: horses })
@@ -96,14 +89,11 @@ router.post('/search', async (req, res) => {
   try {
     const howMany = await Horse.find({ name: req.body.query })
     const howManyOwners = await Horse.find({ owner: req.body.query })
-    console.log("How many have same name", howMany.length)
-
-    console.log("How many...", howMany)
-    console.log(howMany[0].id)
+  
     if (howMany.length === 1) {
       res.redirect(`/horse/${howMany[0].id}`)
     }
-    else {
+    else {  //TODO fix this code to use try catch properly
       res.redirect(
         url.format({
           pathname: '/search',
@@ -112,7 +102,7 @@ router.post('/search', async (req, res) => {
           }
         })
       )
-      //console.log(req.body.query, `Horse '${req.body.query}' not found.`)
+    //console.log(req.body.query, `Horse '${req.body.query}' not found.`)
     }
 
     //const found = await Horse.findOne({ name: req.body.query })
@@ -132,20 +122,13 @@ router.post('/search', async (req, res) => {
 
 router.get('/autocomplete', loggedIn, (req, res) => {
   const regex = new RegExp(req.query["term"], 'i');
-  //var horseOwner = new RegExp(req.query["term"], 'i');
-  const finalResult = [];
-
-
-  //var horseName = Horse.distinct({ name: regex })
-  //console.log("Horse Name = ...", horseName)
-  /*var horseOwner = Horse.distinct({ owner: regex })
-  var horseLocation = Horse.distinct({ location: regex })*/
+  const fullResult = [];
 
   var horseName = Horse.find({ name: regex }, { 'name': 1 })
     .sort({ "updated_at": -1 })
     .sort({ "created_at": -1 })
     .limit(30)
-//Talk to Mike about horeseName containing my login and password
+  //Talk to Mike about horeseName containing my login and password
   //console.log("Horse name...", horseName)
 
   var horseOwner = Horse.find({ owner: regex }, { 'owner': 1 })
@@ -160,94 +143,68 @@ router.get('/autocomplete', loggedIn, (req, res) => {
 
   horseName.exec(function (err, data) {
     //data is all horse names that match query
-    var result = [];
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          //console.log("Name Data", horse);
           let obj = { //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
             label: horse.name,
           };
-          //console.log("Name Object", obj)
-          result.push(obj);
-          finalResult.push(obj)
+          fullResult.push(obj)
         });
       }
-      //return all the results to autocomplete.js
-      //finalResult = finalResult.concat(result)
-      // console.log("Final result in Name", finalResult)
-      //res.jsonp(result);
     }
   });
 
   horseOwner.exec(function (err, data) {
     //data is all horse names that match query
-    var result = [];
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          //console.log("Owner Data", horse);
           let obj = { //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
             label: horse.owner,
           };
-          result.push(obj);
-          finalResult.push(obj)
+          fullResult.push(obj)
         });
       }
-      //return all the results to autocomplete.js
-      //finalResult = finalResult.concat(result)
-      //console.log("Final result in Owner", finalResult)
-      //res.jsonp(finalResult);
     }
   });
-  //res.jsonp(result);
 
   horseLocation.exec(function (err, data) {
     //data is all horse names that match query
-    var result = [];
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          //console.log("Location Data", horse);
           let obj = { //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
             label: horse.location,
           };
-          result.push(obj);
-          finalResult.push(obj)
+          fullResult.push(obj)
         });
       }
-      //return all the results to autocomplete.js
-      //finalResult = finalResult.concat(result)
-      //console.log("FINAL RESULT ARRAY", finalResult)
-      //res.jsonp(finalResult);
 
-      console.log("Length of finalResult is...", finalResult.length)
-
-      console.log("FINAL RESULT ARRAY", finalResult)
-      //console.log("FILTERED FINAL RESULT", finalRes)
       var finished = false
       var duplicate = false
-      var fR = []
-      fR.push(finalResult[0])
+      var result = []
+      result.push(fullResult[0])
+      //Removing duplicate results from full result array
       while(!finished){
-        for(var i =0; i < finalResult.length; i++){
-          for(var j =0; j < fR.length; j++){
-            if(fR[j].label == finalResult[i].label){
+        for(var i =0; i < fullResult.length; i++){
+          for(var j =0; j < result.length; j++){
+            if(result[j].label == fullResult[i].label){
                 duplicate = true
             }
           }
           if(!duplicate){
-            fR.push(finalResult[i])
+            result.push(fullResult[i])
           }
           duplicate = false
         }
         finished = true
       }
       if(finished)
-        res.jsonp(fR)
+        res.jsonp(result)
     }
   });
 })
