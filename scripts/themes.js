@@ -19,12 +19,16 @@ const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
 const darkgreen = '#006400'
-const darkergreen = '#001000'
+const darkestgreen = '#001000'
 const red = '#ff0000'
 const blue = '#0000ff'
 const darkblue = '#00008b'
 const magenta = '#ff00ff'
 const indigo = '#4B0082'
+
+const neonred = 'red'
+const darkred = '#640000'
+const darkestred = '#280000'
 
 const themes = {
   Dark: {
@@ -140,19 +144,19 @@ const themes = {
     readonlyTextFieldBg: dimwhite
   },
   Green: {
-    bg: darkergreen,
+    bg: darkestgreen,
     border: neongreen,
     borderHover: darkgreen,
     button: neongreen,
     buttonBorderHover: neongreen,
-    buttonHover: firgreen,
-    buttonText: darkergreen,
+    buttonHover: darkestgreen,
+    buttonText: darkestgreen,
     buttonTextHover: neongreen,
-    dropdownBg: darkergreen,
+    dropdownBg: darkgreen,
     dropdownDivider: neongreen,
     dropdownItemBgHover: darkgreen,
     dropdownItemText: neongreen,
-    dropdownItemTextHover: darkergreen,
+    dropdownItemTextHover: darkestgreen,
     fg: darkgreen,
     linkHover: neongreen,
     loginText: neongreen,
@@ -164,7 +168,34 @@ const themes = {
     primaryText: neongreen,
     queue: darkgreen,
     queueText: neongreen,
-    readonlyTextFieldBg: neongreen
+    readonlyTextFieldBg: darkestgreen
+  },
+  Red: {
+    bg: darkestred,
+    border: neonred,
+    borderHover: darkred,
+    button: neonred,
+    buttonBorderHover: neonred,
+    buttonHover: darkestred,
+    buttonText: darkestred,
+    buttonTextHover: neonred,
+    dropdownBg: darkred,
+    dropdownDivider: neonred,
+    dropdownItemBgHover: darkred,
+    dropdownItemText: neonred,
+    dropdownItemTextHover: darkestred,
+    fg: darkred,
+    linkHover: neonred,
+    loginText: neonred,
+    nav: darkred,
+    navBorder: neonred,
+    navText: neonred,
+    navTextHover: neonred,
+    placeholderText: neonred,
+    primaryText: neonred,
+    queue: darkred,
+    queueText: neonred,
+    readonlyTextFieldBg: darkestred
   }
 }
 
