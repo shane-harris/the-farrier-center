@@ -34,6 +34,10 @@ const neonyellow = '#FFFF00'
 const darkyellow = '#a8a800'
 const darkestyellow = '#646400'
 
+const iceblue = '#F0F8FF'
+const skyblue = '#00BFFF'
+const royalblue = '#4169E1'
+
 const themes = {
   Dark: {
     bg: slate,
@@ -227,6 +231,33 @@ const themes = {
     queue: darkyellow,
     queueText: neonyellow,
     readonlyTextFieldBg: darkestyellow
+  },
+  'Pastel Blue': {
+    bg: royalblue,
+    border: iceblue,
+    borderHover: skyblue,
+    button: iceblue,
+    buttonBorderHover: iceblue,
+    buttonHover: royalblue,
+    buttonText: royalblue,
+    buttonTextHover: iceblue,
+    dropdownBg: skyblue,
+    dropdownDivider: iceblue,
+    dropdownItemBgHover: skyblue,
+    dropdownItemText: iceblue,
+    dropdownItemTextHover: royalblue,
+    fg: skyblue,
+    linkHover: iceblue,
+    loginText: iceblue,
+    nav: skyblue,
+    navBorder: iceblue,
+    navText: iceblue,
+    navTextHover: iceblue,
+    placeholderText: iceblue,
+    primaryText: iceblue,
+    queue: skyblue,
+    queueText: iceblue,
+    readonlyTextFieldBg: royalblue
   }
 }
 
