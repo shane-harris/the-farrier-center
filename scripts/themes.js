@@ -30,6 +30,10 @@ const neonred = 'red'
 const darkred = '#640000'
 const darkestred = '#280000'
 
+const neonyellow = '#FFFF00'
+const darkyellow = '#a8a800'
+const darkestyellow = '#646400'
+
 const themes = {
   Dark: {
     bg: slate,
@@ -196,6 +200,33 @@ const themes = {
     queue: darkred,
     queueText: neonred,
     readonlyTextFieldBg: darkestred
+  },
+  Yellow: {
+    bg: darkestyellow,
+    border: neonyellow,
+    borderHover: darkyellow,
+    button: neonyellow,
+    buttonBorderHover: neonyellow,
+    buttonHover: darkestyellow,
+    buttonText: darkestyellow,
+    buttonTextHover: neonyellow,
+    dropdownBg: darkyellow,
+    dropdownDivider: neonyellow,
+    dropdownItemBgHover: darkyellow,
+    dropdownItemText: neonyellow,
+    dropdownItemTextHover: darkestyellow,
+    fg: darkyellow,
+    linkHover: neonyellow,
+    loginText: neonyellow,
+    nav: darkyellow,
+    navBorder: neonyellow,
+    navText: neonyellow,
+    navTextHover: neonyellow,
+    placeholderText: neonyellow,
+    primaryText: neonyellow,
+    queue: darkyellow,
+    queueText: neonyellow,
+    readonlyTextFieldBg: darkestyellow
   }
 }
 
