@@ -63,37 +63,33 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/search', loggedIn, async (req, res) => {
-  let pureQuery = req.url.replace("/search?query=", "");
+  let pureQuery = req.url.replace('/search?query=', '')
   //Removing URL special characters
-  pureQuery = pureQuery.replace(/%20/g, " ")
-  pureQuery = pureQuery.replace(/%2C/g, ",")
+  pureQuery = pureQuery.replace(/%20/g, ' ')
+  pureQuery = pureQuery.replace(/%2C/g, ',')
 
-//TODO use try catch to either return exact result of query or clostest match
-  let horses = await Horse.find({ name: pureQuery })
-    .sort({ id: 1 })
-
-  if (horses.length === 0) {
-    horses = await Horse.find({ owner: pureQuery })
-      .sort({ id: 1 })
+  //TODO use try catch to either return exact result of query or clostest match
+  let horses = await Horse.find({ name: pureQuery }).sort({ id: 1 })
 
   if (horses.length === 0) {
-    horses = await Horse.find({ location: pureQuery })
-      .sort({ id: 1 })
+    horses = await Horse.find({ owner: pureQuery }).sort({ id: 1 })
+
+    if (horses.length === 0) {
+      horses = await Horse.find({ location: pureQuery }).sort({ id: 1 })
     }
   }
   res.render('search.ejs', { username: req.user.username, horses: horses })
-
 })
 
 router.post('/search', async (req, res) => {
   try {
     const howMany = await Horse.find({ name: req.body.query })
     const howManyOwners = await Horse.find({ owner: req.body.query })
-  
+
     if (howMany.length === 1) {
       res.redirect(`/horse/${howMany[0].id}`)
-    }
-    else {  //TODO fix this code to use try catch properly
+    } else {
+      //TODO fix this code to use try catch properly
       res.redirect(
         url.format({
           pathname: '/search',
@@ -102,7 +98,7 @@ router.post('/search', async (req, res) => {
           }
         })
       )
-    //console.log(req.body.query, `Horse '${req.body.query}' not found.`)
+      //console.log(req.body.query, `Horse '${req.body.query}' not found.`)
     }
 
     //const found = await Horse.findOne({ name: req.body.query })
@@ -121,92 +117,89 @@ router.post('/search', async (req, res) => {
 })
 
 router.get('/autocomplete', loggedIn, (req, res) => {
-  const regex = new RegExp(req.query["term"], 'i');
-  const fullResult = [];
+  const regex = new RegExp(req.query['term'], 'i')
+  const fullResult = []
 
-  var horseName = Horse.find({ name: regex }, { 'name': 1 })
-    .sort({ "updated_at": -1 })
-    .sort({ "created_at": -1 })
+  var horseName = Horse.find({ name: regex }, { name: 1 })
+    .sort({ updated_at: -1 })
+    .sort({ created_at: -1 })
     .limit(30)
   //Talk to Mike about horeseName containing my login and password
   //console.log("Horse name...", horseName)
 
-  var horseOwner = Horse.find({ owner: regex }, { 'owner': 1 })
-    .sort({ "updated_at": -1 })
-    .sort({ "created_at": -1 })
+  var horseOwner = Horse.find({ owner: regex }, { owner: 1 })
+    .sort({ updated_at: -1 })
+    .sort({ created_at: -1 })
     .limit(30)
 
-  var horseLocation = Horse.find({ location: regex }, { 'location': 1 })
-    .sort({ "updated_at": -1 })
-    .sort({ "created_at": -1 })
+  var horseLocation = Horse.find({ location: regex }, { location: 1 })
+    .sort({ updated_at: -1 })
+    .sort({ created_at: -1 })
     .limit(30)
 
-  horseName.exec(function (err, data) {
+  horseName.exec(function(err, data) {
     //data is all horse names that match query
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          let obj = { //turn each horse name and id pair into an opject
+          let obj = {
+            //turn each horse name and id pair into an opject
             id: horse._id, //dont know why horse.id returns undefined but _id works
-            label: horse.name,
-          };
+            label: horse.name
+          }
           fullResult.push(obj)
-        });
+        })
       }
     }
-  });
+  })
 
-  horseOwner.exec(function (err, data) {
-    //data is all horse names that match query
+  horseOwner.exec(function(err, data) {
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          let obj = { //turn each horse name and id pair into an opject
-            id: horse._id, //dont know why horse.id returns undefined but _id works
-            label: horse.owner,
-          };
+          let obj = {
+            id: horse._id,
+            label: horse.owner
+          }
           fullResult.push(obj)
-        });
+        })
       }
     }
-  });
+  })
 
-  horseLocation.exec(function (err, data) {
-    //data is all horse names that match query
+  horseLocation.exec(function(err, data) {
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
-          let obj = { //turn each horse name and id pair into an opject
-            id: horse._id, //dont know why horse.id returns undefined but _id works
-            label: horse.location,
-          };
+          let obj = {
+            id: horse._id,
+            label: horse.location
+          }
           fullResult.push(obj)
-        });
+        })
       }
 
       var finished = false
       var duplicate = false
       var result = []
-      result.push(fullResult[0])
       //Removing duplicate results from full result array
-      while(!finished){
-        for(var i =0; i < fullResult.length; i++){
-          for(var j =0; j < result.length; j++){
-            if(result[j].label == fullResult[i].label){
-                duplicate = true
+      while (!finished) {
+        for (var i = 0; i < fullResult.length; i++) {
+          for (var j = 0; j < result.length; j++) {
+            if (result[j].label == fullResult[i].label) {
+              duplicate = true
             }
           }
-          if(!duplicate){
+          if (!duplicate) {
             result.push(fullResult[i])
           }
           duplicate = false
         }
         finished = true
       }
-      if(finished)
-        res.jsonp(result)
+      if (finished) res.jsonp(result)
     }
-  });
+  })
 })
 
 module.exports = router
