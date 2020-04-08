@@ -38,6 +38,10 @@ const iceblue = '#F0F8FF'
 const skyblue = '#00BFFF'
 const royalblue = '#4169E1'
 
+const lightestpink = '#FFF3F5'
+const pink = '#FF69B4'
+const darkpink = '#9a4d67'
+
 const themes = {
   Dark: {
     bg: slate,
@@ -258,6 +262,33 @@ const themes = {
     queue: skyblue,
     queueText: iceblue,
     readonlyTextFieldBg: royalblue
+  },
+  Pink: {
+    bg: darkpink,
+    border: lightestpink,
+    borderHover: pink,
+    button: lightestpink,
+    buttonBorderHover: lightestpink,
+    buttonHover: darkpink,
+    buttonText: darkpink,
+    buttonTextHover: lightestpink,
+    dropdownBg: pink,
+    dropdownDivider: lightestpink,
+    dropdownItemBgHover: pink,
+    dropdownItemText: lightestpink,
+    dropdownItemTextHover: darkpink,
+    fg: pink,
+    linkHover: lightestpink,
+    loginText: lightestpink,
+    nav: pink,
+    navBorder: lightestpink,
+    navText: lightestpink,
+    navTextHover: lightestpink,
+    placeholderText: lightestpink,
+    primaryText: lightestpink,
+    queue: pink,
+    queueText: lightestpink,
+    readonlyTextFieldBg: darkpink
   }
 }
 
