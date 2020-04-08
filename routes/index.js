@@ -109,63 +109,51 @@ router.get('/autocomplete', loggedIn, (req, res) => {
   const regex = new RegExp(req.query['term'], 'i')
   const fullResult = []
 
-  var horseName = Horse.find({ name: regex }, { name: 1 })
-    .sort({ updated_at: -1 })
-    .sort({ created_at: -1 })
-    .limit(30)
-
-  var horseOwner = Horse.find({ owner: regex }, { owner: 1 })
-    .sort({ updated_at: -1 })
-    .sort({ created_at: -1 })
-    .limit(30)
-
-  var horseLocation = Horse.find({ location: regex }, { location: 1 })
-    .sort({ updated_at: -1 })
-    .sort({ created_at: -1 })
-    .limit(30)
-
-  horseName.exec(function (err, data) {
-    //data is all horse names that match query
-    if (!err) {
-      if (data && data.length && data.length > 0) {
-        data.forEach(horse => {
-          let obj = {
-            //turn each horse name and id pair into an opject
-            id: horse._id, //dont know why horse.id returns undefined but _id works
-            label: horse.name
-          }
-          fullResult.push(obj)
-        })
+  function collectData(data) {
+    let obj;
+    if (data.name != undefined) {
+      obj = {
+        id: data._id,
+        label: data.name,
       }
     }
-  })
-
-  horseOwner.exec(function (err, data) {
-    if (!err) {
-      if (data && data.length && data.length > 0) {
-        data.forEach(horse => {
-          let obj = {
-            id: horse._id,
-            label: horse.owner
-          }
-          fullResult.push(obj)
-        })
+    else if (data.owner != undefined) {
+      obj = {
+        id: data._id,
+        label: data.name,
       }
     }
-  })
-
-  horseLocation.exec(function (err, data) {
-    if (!err) {
-      if (data && data.length && data.length > 0) {
-        data.forEach(horse => {
-          let obj = {
-            id: horse._id,
-            label: horse.location
-          }
-          fullResult.push(obj)
-        })
+    else {
+      obj = {
+        id: data._id,
+        label: data.location,
       }
+    }
+    fullResult.push(obj)
+  }
 
+  Horse.find({ name: regex }, { name: 1 })
+    .limit(30)
+    .then(horses => {
+      horses.forEach(collectData)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
+  Horse.find({ owner: regex }, { owner: 1 })
+    .limit(30)
+    .then(horses => {
+      horses.forEach(collectData)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
+  Horse.find({ location: regex }, { location: 1 })
+    .limit(30)
+    .then(horses => {
+      horses.forEach(collectData)
       var finished = false
       var duplicate = false
       var result = []
@@ -185,8 +173,10 @@ router.get('/autocomplete', loggedIn, (req, res) => {
         finished = true
       }
       if (finished) res.jsonp(result)
-    }
-  })
+    })
+    .catch(err => {
+      console.error(err)
+    })
 })
 
 module.exports = router
