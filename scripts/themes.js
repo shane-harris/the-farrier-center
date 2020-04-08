@@ -46,6 +46,10 @@ const orange = '#ffa500'
 const darkorange = '#a96a00'
 const darkestorange = '#925a00'
 
+const neonpurple = '#FF00FF'
+const darkpurple = '#8b008b'
+const darkestpurple = '#4d004d'
+
 const themes = {
   Dark: {
     bg: slate,
@@ -320,6 +324,33 @@ const themes = {
     queue: darkorange,
     queueText: orange,
     readonlyTextFieldBg: darkestorange
+  },
+  Purple: {
+    bg: darkestpurple,
+    border: neonpurple,
+    borderHover: darkpurple,
+    button: neonpurple,
+    buttonBorderHover: neonpurple,
+    buttonHover: darkestpurple,
+    buttonText: darkestpurple,
+    buttonTextHover: neonpurple,
+    dropdownBg: darkpurple,
+    dropdownDivider: neonpurple,
+    dropdownItemBgHover: darkpurple,
+    dropdownItemText: neonpurple,
+    dropdownItemTextHover: darkestpurple,
+    fg: darkpurple,
+    linkHover: neonpurple,
+    loginText: neonpurple,
+    nav: darkpurple,
+    navBorder: neonpurple,
+    navText: neonpurple,
+    navTextHover: neonpurple,
+    placeholderText: neonpurple,
+    primaryText: neonpurple,
+    queue: darkpurple,
+    queueText: neonpurple,
+    readonlyTextFieldBg: darkestpurple
   }
 }
 
