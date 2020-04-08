@@ -25,6 +25,10 @@ const blue = '#0000ff'
 const darkblue = '#00008b'
 const magenta = '#ff00ff'
 const indigo = '#4B0082'
+const lightbrown = '#be9063'
+const darknavy = '#14172b'
+const flatgrey = '#585c5a'
+const graywood = '#a4978e'
 
 const neonred = 'red'
 const darkred = '#640000'
@@ -162,6 +166,33 @@ const themes = {
     queue: coffee,
     queueText: dimwhite,
     readonlyTextFieldBg: dimwhite
+  },
+  DarkRustic: {
+    bg: darknavy,
+    border: ivory,
+    borderHover: lightbrown,
+    button: graywood,
+    buttonBorderHover: lightbrown,
+    buttonHover: darknavy,
+    buttonText: white,
+    buttonTextHover: ivory,
+    dropdownBg: flatgrey,
+    dropdownDivider: graywood,
+    dropdownItemBgHover: ivory,
+    dropdownItemText: graywood,
+    dropdownItemTextHover: white,
+    fg: darknavy,
+    linkHover: graywood,
+    loginText: graywood,
+    nav: flatgrey,
+    navBorder: ivory,
+    navText: ivory,
+    navTextHover: white,
+    placeholderText: ivory,
+    primaryText: ivory,
+    queue: darknavy,
+    queueText: ivory,
+    readonlyTextFieldBg: darknavy
   },
   Green: {
     bg: darkestgreen,
