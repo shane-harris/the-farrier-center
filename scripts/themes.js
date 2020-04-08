@@ -18,6 +18,10 @@ const darksteel = '#232528'
 const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
+const lightbrown = '#be9063'
+const darknavy = '#132226'
+const flatgrey = '#525b56'
+const graywood = '#a4978e'
 
 const themes = {
   Dark: {
@@ -131,6 +135,33 @@ const themes = {
     queue: coffee,
     queueText: dimwhite,
     readonlyTextFieldBg: dimwhite
+  },
+  DarkRustic: {
+    bg: darknavy,
+    border: ivory,
+    borderHover: lightbrown,
+    button: graywood,
+    buttonBorderHover: lightbrown,
+    buttonHover: darknavy,
+    buttonText: white,
+    buttonTextHover: ivory,
+    dropdownBg: flatgrey,
+    dropdownDivider: graywood,
+    dropdownItemBgHover: ivory,
+    dropdownItemText: graywood,
+    dropdownItemTextHover: lightbrown,
+    fg: darknavy,
+    linkHover: graywood,
+    loginText: graywood,
+    nav: flatgrey,
+    navBorder: ivory,
+    navText: ivory,
+    navTextHover: white,
+    placeholderText: ivory,
+    primaryText: ivory,
+    queue: darknavy,
+    queueText: ivory,
+    readonlyTextFieldBg: flatgrey
   }
 }
 
