@@ -68,7 +68,6 @@ router.get('/search', loggedIn, async (req, res) => {
   pureQuery = pureQuery.replace(/%20/g, ' ')
   pureQuery = pureQuery.replace(/%2C/g, ',')
 
-  //TODO use try catch to either return exact result of query or clostest match
   let horses = await Horse.find({ name: pureQuery }).sort({ id: 1 })
 
   if (horses.length === 0) {
@@ -77,9 +76,9 @@ router.get('/search', loggedIn, async (req, res) => {
     if (horses.length === 0) {
       horses = await Horse.find({ location: pureQuery }).sort({ id: 1 })
 
+      /*No horses found via current query.
+      Search for all matches that begin with query*/
       if (horses.length === 0) {
-        /*No horses found via current query.
-        Search for all matches that begin with query*/
         var pattern = pureQuery.replace(pureQuery, "^" + pureQuery + ".*")
         horses = await Horse.find({ name: { $regex: pattern, $options: "i" } })
       }
@@ -95,7 +94,6 @@ router.post('/search', async (req, res) => {
   if (howMany.length === 1) {
     res.redirect(`/horse/${howMany[0].id}`)
   } else {
-    //TODO fix this code to use try catch properly
     res.redirect(
       url.format({
         pathname: '/search',
@@ -115,8 +113,6 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     .sort({ updated_at: -1 })
     .sort({ created_at: -1 })
     .limit(30)
-  //Talk to Mike about horeseName containing my login and password
-  //console.log("Horse name...", horseName)
 
   var horseOwner = Horse.find({ owner: regex }, { owner: 1 })
     .sort({ updated_at: -1 })
