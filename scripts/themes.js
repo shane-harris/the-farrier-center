@@ -167,7 +167,7 @@ const themes = {
     queueText: dimwhite,
     readonlyTextFieldBg: dimwhite
   },
-  DarkRustic: {
+  'Dark Rustic': {
     bg: darknavy,
     border: ivory,
     borderHover: lightbrown,
