@@ -19,8 +19,8 @@ const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
 const lightbrown = '#be9063'
-const darknavy = '#132226'
-const flatgrey = '#525b56'
+const darknavy = '#14172b'
+const flatgrey = '#585c5a'
 const graywood = '#a4978e'
 
 const themes = {
@@ -149,7 +149,7 @@ const themes = {
     dropdownDivider: graywood,
     dropdownItemBgHover: ivory,
     dropdownItemText: graywood,
-    dropdownItemTextHover: lightbrown,
+    dropdownItemTextHover: white,
     fg: darknavy,
     linkHover: graywood,
     loginText: graywood,
