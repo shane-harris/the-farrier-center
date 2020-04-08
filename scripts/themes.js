@@ -42,6 +42,10 @@ const lightestpink = '#FFF3F5'
 const pink = '#FF69B4'
 const darkpink = '#9a4d67'
 
+const orange = '#ffa500'
+const darkorange = '#a96a00'
+const darkestorange = '#925a00'
+
 const themes = {
   Dark: {
     bg: slate,
@@ -289,6 +293,33 @@ const themes = {
     queue: pink,
     queueText: lightestpink,
     readonlyTextFieldBg: darkpink
+  },
+  Orange: {
+    bg: darkestorange,
+    border: orange,
+    borderHover: darkorange,
+    button: orange,
+    buttonBorderHover: orange,
+    buttonHover: darkestorange,
+    buttonText: darkestorange,
+    buttonTextHover: orange,
+    dropdownBg: darkorange,
+    dropdownDivider: orange,
+    dropdownItemBgHover: darkorange,
+    dropdownItemText: orange,
+    dropdownItemTextHover: darkestorange,
+    fg: darkorange,
+    linkHover: orange,
+    loginText: orange,
+    nav: darkorange,
+    navBorder: orange,
+    navText: orange,
+    navTextHover: orange,
+    placeholderText: orange,
+    primaryText: orange,
+    queue: darkorange,
+    queueText: orange,
+    readonlyTextFieldBg: darkestorange
   }
 }
 
