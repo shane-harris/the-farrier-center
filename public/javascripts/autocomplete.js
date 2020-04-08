@@ -13,7 +13,7 @@ $('#search-bar').autocomplete({
                 res(data)
             },
             error: function (err) {
-                console.log(err.status, "Error in autocomplete.js");
+                console.error(err.status, "Error in autocomplete.js");
             }
         });
     },
