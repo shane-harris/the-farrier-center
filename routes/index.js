@@ -76,34 +76,26 @@ router.get('/search', loggedIn, async (req, res) => {
 
     if (horses.length === 0) {
       horses = await Horse.find({ location: pureQuery }).sort({ id: 1 })
+
+      if (horses.length === 0) {
+        /*No horses found via current query.
+        Search for all matches that begin with query*/
+        var pattern = pureQuery.replace(pureQuery, "^" + pureQuery + ".*")
+        horses = await Horse.find({ name: { $regex: pattern, $options: "i" } })
+      }
     }
   }
   res.render('search.ejs', { username: req.user.username, horses: horses })
 })
 
 router.post('/search', async (req, res) => {
-  try {
-    const howMany = await Horse.find({ name: req.body.query })
-    const howManyOwners = await Horse.find({ owner: req.body.query })
+  const howMany = await Horse.find({ name: req.body.query })
+  const howManyOwners = await Horse.find({ owner: req.body.query })
 
-    if (howMany.length === 1) {
-      res.redirect(`/horse/${howMany[0].id}`)
-    } else {
-      //TODO fix this code to use try catch properly
-      res.redirect(
-        url.format({
-          pathname: '/search',
-          query: {
-            query: req.body.query
-          }
-        })
-      )
-      //console.log(req.body.query, `Horse '${req.body.query}' not found.`)
-    }
-
-    //const found = await Horse.findOne({ name: req.body.query })
-    //res.redirect(`/horse/${found.id}`)
-  } catch (_) {
+  if (howMany.length === 1) {
+    res.redirect(`/horse/${howMany[0].id}`)
+  } else {
+    //TODO fix this code to use try catch properly
     res.redirect(
       url.format({
         pathname: '/search',
@@ -112,7 +104,6 @@ router.post('/search', async (req, res) => {
         }
       })
     )
-    //console.log(req.body.query, `Horse '${req.body.query}' not found.`)
   }
 })
 
@@ -137,7 +128,7 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     .sort({ created_at: -1 })
     .limit(30)
 
-  horseName.exec(function(err, data) {
+  horseName.exec(function (err, data) {
     //data is all horse names that match query
     if (!err) {
       if (data && data.length && data.length > 0) {
@@ -153,7 +144,7 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     }
   })
 
-  horseOwner.exec(function(err, data) {
+  horseOwner.exec(function (err, data) {
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
@@ -167,7 +158,7 @@ router.get('/autocomplete', loggedIn, (req, res) => {
     }
   })
 
-  horseLocation.exec(function(err, data) {
+  horseLocation.exec(function (err, data) {
     if (!err) {
       if (data && data.length && data.length > 0) {
         data.forEach(horse => {
