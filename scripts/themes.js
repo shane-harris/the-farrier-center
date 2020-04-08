@@ -192,7 +192,7 @@ const themes = {
     primaryText: ivory,
     queue: darknavy,
     queueText: ivory,
-    readonlyTextFieldBg: flatgrey
+    readonlyTextFieldBg: darknavy
   },
   Green: {
     bg: darkestgreen,
