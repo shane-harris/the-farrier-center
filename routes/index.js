@@ -66,7 +66,7 @@ router.get('/logout', (req, res) => {
 router.get('/search', loggedIn, async (req, res) => {
   const pureQuery = decodeURI(req.url.replace('/search?query=', ''))
 
-  const horses = await Horse.find({ name: pureQuery }).sort({ id: 1 })
+  let horses = await Horse.find({ name: pureQuery }).sort({ id: 1 })
 
   if (horses.length === 0) {
     horses = await Horse.find({ owner: pureQuery }).sort({ id: 1 })
