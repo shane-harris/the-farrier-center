@@ -55,8 +55,12 @@ const date = lastVisitDate(horse)
           </button>
         </form>
         <% } %>
-
-        <button class="dropdown-item" href="#">Dismiss</button>
+        <form action='/horse/dismiss/<%=horse.id%>' method='POST'>
+          <input name="tab" type="hidden" value="" />
+          <button class="dropdown-item">
+            Quick-shoe
+          </button>
+        </form>
       </div>
     </div>
   </td>
