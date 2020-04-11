@@ -50,11 +50,27 @@
       </li>
 
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="/search" method="POST">
-      <input name="query" class="form-control mr-sm-2" type="text" placeholder="Search"
-        aria-label="Search" />
-      <button input class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <div>
+      <form class="my-2 my-lg-0" action="/search" method="POST">
+        <div class="row">
+          <div class="col">
+            <input name="query" class="form-control mr-sm-2 form-group" type="text" id="search-bar"
+              placeholder="Name, Owner, Location..." aria-label="Search">
+            </input>
+            <div id="matches">
+              <script src="../javascripts/autocomplete.js"></script>
+            </div>
+          </div>
+          <button id="search-button" height=30px input class="btn btn-outline-success my-2 my-sm-0"
+            type="submit">Search</button>
+        </div>
+
+
+
+
+      </form>
+    </div>
   </div>
+
   <% } %>
 </nav>
