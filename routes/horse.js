@@ -103,7 +103,7 @@ router.get('/:id', loggedIn, async (req, res) => {
   console.log(shoeing[0])
   res.render('horse.ejs', {
     horse,
-    shoeing: shoeing[0],
+    shoeings: shoeing[0],
     updateable: false
   })
 })
@@ -118,8 +118,7 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
   res.render('new-report.ejs', {
     horse,
     medical: shoeing.medical,
-    updateable: shoeing.medical === undefined ? false : true,
-    scripts: require('../scripts/shoeing-events')
+    updateable: shoeing.medical === undefined ? false : true
   })
 })
 
@@ -198,19 +197,22 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 
   //If there are any images
   if (req.files) {
+    console.log(req.files)
     for (const field in req.files) {
+      console.log(field)
       //each array in parser object, <= 6 fields
       const fieldname = field.substring(0, field.length - 6) //minus "Image" as named in horseshoe schema
-
+      console.log(fieldname)
       for (const image of field) {
         //each file from the field array, <= 6 files
+        console.log(image)
         const pic = new Image({
           ref_id: report._id,
           onType: 'report',
           url: image.url,
           public_id: image.public_id
         }).save()
-
+        console.log(pic)
         //save image _id to relevant area
         switch (fieldname) {
           case 'frontLeft':
@@ -219,6 +221,8 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
             } else if (report.front.horseshoes[1].hoof === 'Left') {
               report.front.horseshoes[1].images.push(pic._id)
             }
+            console.log(report.front.horseshoes[0])
+            console.log(report.front.horseshoes[1])
             break
 
           case 'frontRight':
@@ -227,6 +231,8 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
             } else if (report.front.horseshoes[0].hoof === 'Right') {
               report.front.horseshoes[0].images.push(pic._id)
             }
+            console.log(report.front.horseshoes[0])
+            console.log(report.front.horseshoes[1])
             break
 
           case 'backLeft':
@@ -235,6 +241,8 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
             } else if (report.back.horseshoes[1].hoof === 'Left') {
               report.back.horseshoes[1].images.push(pic._id)
             }
+            console.log(report.back.horseshoes[0])
+            console.log(report.back.horseshoes[1])
             break
 
           case 'backRight':
@@ -243,6 +251,8 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
             } else if (report.back.horseshoes[0].hoof === 'Right') {
               report.back.horseshoes[0].images.push(pic._id)
             }
+            console.log(report.back.horseshoes[0])
+            console.log(report.back.horseshoes[1])
             break
 
           case 'medical':

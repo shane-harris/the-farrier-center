@@ -77,30 +77,32 @@
           </a>
         </div>
       </div>
-      <% if (shoeing !== undefined) { %>
-      <!--If shoeing is undefined-->
+      <!--If shoeings is undefined shoeing.medicals is a ReferenceError-->
+      <!-- <% if (shoeings !== undefined) { %> -->
       <div class="collapse" id="medical">
-        <% if (shoeing.medical !== undefined) { %>
         <div class="row">
+          <% if (shoeings !== undefined) { %>
+          <% if (shoeings.medical !== undefined) { %>
           <div class="col-sm-4">
             <h1>Medical Analysis</h1>
           </div>
           <div class="col-sm-4">
             <h1>Date:
-              <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %>
+              <%= `${shoeings.date.getMonth() + 1}/${shoeings.date.getDate()}/${shoeings.date.getFullYear()}` %>
             </h1>
           </div>
           <div class="col-sm-4">
-            <h1>Farrier: <%= shoeing.farrier %></h1>
+            <h1>Farrier: <%= shoeings.farrier %></h1>
           </div>
         </div>
-        <%- include('partials/medical-input-fields', {medical: shoeing.medical, editable: false}) %>
+        <%- include('partials/medical-input-fields', {medical: shoeings.medical, editable: false}) %>
+        <% } %>
         <% } else { %>
         <div align="center">
           <H2> No medical reports have been created</H2>
         </div>
         <% } %>
-        <% } %>
+        <!-- <% } %> -->
         <!--If shoeing is undefined-->
       </div>
     </div>
@@ -120,55 +122,56 @@
           </a>
         </div>
       </div>
-      <% if (shoeing !== undefined) { %>
-      <!--If shoeing is undefined-->
+      <!--If shoeing is undefined shoeings.front and shoeings.back are ReferenceError-->
+      <!-- <% if (shoeings !== undefined) { %> -->
       <div id="shoeing" class="collapse">
-        <% if (shoeing.front !== undefined) { %>
+        <% if (shoeings !== undefined || shoeings.front !== undefined) { %>
         <div class="row">
           <div class="col-sm-4">
             <h2>Most Recent Shoeing</h2>
           </div>
           <div class="col-sm-4">
             <h1>Date:
-              <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %>
+              <%= `${shoeings.date.getMonth() + 1}/${shoeings.date.getDate()}/${shoeings.date.getFullYear()}` %>
             </h1>
           </div>
           <div class="col-sm-4">
-            <h2>Farrier: <%= shoeing.farrier %></h2>
+            <h2>Farrier: <%= shoeings.farrier %></h2>
           </div>
         </div>
 
         <%# Shoeing Data %>
         <div class="row">
           <div class="col-sm-6 form">
-            <%- include('partials/shoeing', {area: 'Front Left', hoof: shoeing.front.horseshoes[0]}) %>
+            <%- include('partials/shoeing', {area: 'Front Left', hoof: shoeings.front.horseshoes[0]}) %>
           </div>
 
           <div class="col-sm-6 form">
-            <%- include('partials/shoeing', {area: 'Front Right', hoof: shoeing.front.horseshoes[1]}) %>
+            <%- include('partials/shoeing', {area: 'Front Right', hoof: shoeings.front.horseshoes[1]}) %>
           </div>
         </div>
         <% } %>
 
-        <% if (shoeing.back !== undefined) { %>
+        <% if (shoeings.back !== undefined) { %>
         <div class="row">
           <div class="col-sm-6 form">
-            <%- include('partials/shoeing', {area: 'Back Left', hoof: shoeing.back.horseshoes[0]}) %>
+            <%- include('partials/shoeing', {area: 'Back Left', hoof: shoeings.back.horseshoes[0]}) %>
           </div>
 
           <div class="col-sm-6 form">
-            <%- include('partials/shoeing', {area: 'Back Right', hoof: shoeing.back.horseshoes[1]}) %>
+            <%- include('partials/shoeing', {area: 'Back Right', hoof: shoeings.back.horseshoes[1]}) %>
           </div>
         </div>
 
-        <% } else if (shoeing.front === undefined && shoeing.back === undefined) { %>
+        <% } %>
+        <% if (shoeings !== undefined || shoeings.front === undefined && shoeings.back === undefined) { %>
         <div align="center">
           <H2> No Shoeing reports have been created</H2>
         </div>
         <% } %>
       </div>
-      <% } %>
-      <!--If shoeing is undefined-->
+      <!--If shoeings is undefined-->
+      <!-- <% } %> -->
     </div>
   </div>
   <%- include('partials/footer') %>
