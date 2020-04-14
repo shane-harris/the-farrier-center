@@ -39,23 +39,25 @@
   $(document).ready(function () {
 
     var table = $('#queue').DataTable({
-      "bPaginate": false,
-      "dom": '<"checkbox-area">rftilp'
-    })
-    $("div.checkbox-area").html('<input id="checkbox" class ="form-check-input"  type="checkbox" View Assigned Horses>  <label class="form-check-label" for="checkbox">View Assigned Horses</label');
-
-    if ($('#checkbox').is(':checked')) {
-      $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-          return data[3].trim() === "Yes"
+      bPaginate: false,
+      stateSave: true,
+      "dom": '<"checkbox-area">rftilp',
+      "initComplete": function (settings, json) {
+        if (localStorage.input === 'true') {
+          $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+              return data[3].trim() === "Yes"
+            }
+          )
         }
-      )
-    } else {
-      $.fn.dataTable.ext.search.pop()
-    }
+      }
+    })
+    $("div.checkbox-area").html('<input id="view-assigned" class ="form-check-input"  type="checkbox" View Assigned Horses>  <label class="form-check-label" for="checkbox">View Assigned Horses</label');
+
+
     table.draw()
 
-    $('#checkbox').on('change', function () {
+    $('#view-assigned').on('change', function () {
       if ($(this).is(':checked')) {
         $.fn.dataTable.ext.search.push(
           function (settings, data, dataIndex) {
@@ -67,5 +69,16 @@
       }
       table.draw()
     })
+    $(function () {
+      var test = localStorage.input === 'true' ? true : false;
+      $('#view-assigned').prop('checked', test || false);
+    });
+
+    $('#view-assigned').on('change', function () {
+      localStorage.input = $(this).is(':checked');
+    });
+
   })
+
+
 </script>
