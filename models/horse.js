@@ -14,15 +14,7 @@ const HorseSchema = new Schema({
   owner: String,
   vet: String,
   lastVisit: Date,
-  history: String,
-  data: {
-    hoof: String,
-    hoofImage1: { type: Schema.Types.ObjectId, ref: 'images' },
-    hoofImage2: { type: Schema.Types.ObjectId, ref: 'images' },
-    shoeType: String,
-    shoeSize: Number,
-    notes: String
-  }
+  history: String
 })
 HorseSchema.plugin(AutoIncrement, { inc_field: 'id' })
 
