@@ -47,19 +47,12 @@ table.dataTable thead .sorting_desc:before {
   left: 4px !important;
   right: auto !important;
 }
-.checkbox-area,.dataTables_info {
+.dataTables_info {
   float: right;
 }
-.dataTables_length{
-  margin-left: 10px;
-  float: left;
-}
 
-.dataTables_filter {
-  padding-left: 2%;
-  float: left;
-}
-
-.dataTables_paginate {
+.dataTables_filter,
+.checkbox-area {
+  padding-left: 25px;
   float: left;
 }
