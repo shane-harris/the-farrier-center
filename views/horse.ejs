@@ -102,7 +102,7 @@
         <div class="pad">
           <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
             aria-expanded="false" aria-controls="medical">
-            Show Shoeing Report
+            Show Most Recent Shoeing Report
           </a>
         </div>
         <div class="pad">
@@ -110,13 +110,14 @@
         </div>
       </div>
       <div id="shoeing" class="collapse">
-        <% if(shoeing !== undefined) { %>
+        <% if(shoeings.length > 0) { %>
+          <% let mostRecentShoeing = shoeings[0]%>
         <div class="row">
           <div class="col-sm-4">
             <h2>Most Recent Shoeing</h2>
           </div>
           <div class="col-sm-4">
-              <h1>Date: <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %></h1>
+              <h1>Date: <%= `${mostRecentShoeing.date.getMonth() + 1}/${mostRecentShoeing.date.getDate()}/${mostRecentShoeing.date.getFullYear()}` %></h1>
           </div>
           <div class="col-sm-4">
             <h2>Farrier: Steve</h2>
@@ -150,6 +151,14 @@
         <% } else { %>
           <div align="center"><H2> No Shoeing reports have been created</H2></div>
         <% } %>
+      </div>
+      <div class="accordion" id="shoeings-accordian">
+
+        <!--Will be populated with all the shoeings done on a horse-->
+        <% for (const singleShoeing of shoeings) { %>
+          <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
+        <% } %>
+
       </div>
     </div>
   </div>

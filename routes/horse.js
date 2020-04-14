@@ -96,7 +96,7 @@ router.get('/:id', loggedIn, async (req, res) => {
   res.render('horse.ejs', {
     horse,
     medical: medicals[0],
-    shoeing: shoeings[0],
+    shoeings: shoeings,
     updateable: medicals.length !== 0
   })
 })
