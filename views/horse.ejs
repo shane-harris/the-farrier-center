@@ -77,7 +77,8 @@
           </a>
         </div>
       </div>
-
+      <% if (shoeing !== undefined) { %>
+      <!--If shoeing is undefined-->
       <div class="collapse" id="medical">
         <% if (shoeing.medical !== undefined) { %>
         <div class="row">
@@ -99,6 +100,8 @@
           <H2> No medical reports have been created</H2>
         </div>
         <% } %>
+        <% } %>
+        <!--If shoeing is undefined-->
       </div>
     </div>
 
@@ -117,6 +120,8 @@
           </a>
         </div>
       </div>
+      <% if (shoeing !== undefined) { %>
+      <!--If shoeing is undefined-->
       <div id="shoeing" class="collapse">
         <% if (shoeing.front !== undefined) { %>
         <div class="row">
@@ -162,6 +167,8 @@
         </div>
         <% } %>
       </div>
+      <% } %>
+      <!--If shoeing is undefined-->
     </div>
   </div>
   <%- include('partials/footer') %>
