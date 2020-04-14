@@ -1,0 +1,57 @@
+<%- include('partials/head', { title: 'New Shoeing' }) %>
+
+<% const { jobChanged } = scripts %>
+
+<body>
+  <%- include('partials/header-nav') %>
+  <div id="page-container" class="container-fluid">
+    <div class="container form">
+      <form action="/horse/<%= horse.id %>/new-report" method="post" enctype="multipart/form-data">
+        <H1>New Medical Analysis for <%= horse.name %></H1>
+        <%- include('partials/medical-input-fields', {editable: true}) %>
+        <h1>New Shoeing for <%= horse.name %></h1>
+        <div class="form-group">
+          <label for="shoe">Shoeing Type:</label>
+          <select class="form-control" id="shoe" name="job" onchange="jobChanged()">
+            <option selected disabled>Select Shoeing</option>
+            <option>Full</option>
+            <option>Half</option>
+            <option>Trim</option>
+          </select>
+        </div>
+        <div class="row" id="front" style="display:none;">
+          <%- include('partials/shoeing-input-form', {hoof: 'Front Left', hoofIdent: "frontLeft"}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Front Right', hoofIdent: "frontRight"}) %>
+        </div>
+        <div class="row" id="back" style="display:none;">
+          <%- include('partials/shoeing-input-form', {hoof: 'Back Left', hoofIdent: "backLeft"}) %>
+          <%- include('partials/shoeing-input-form', {hoof: 'Back Right', hoofIdent: "backRight"}) %>
+        </div>
+
+        <%- include('partials/shoeing-checkboxes') %>
+
+        <div class="">
+          <button type="submit" class="btn btn-primary" value="'shoeing">Submit</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+  <script>
+    function jobChanged() {
+      const job = document.getElementById('shoe').value, back = document.getElementById('back'), front = document.getElementById('front')
+      switch (job) {
+        case 'Full':
+        case 'Trim':
+          if (back.style.display === 'none') back.style.display = 'flex'
+          if (front.style.display === 'none') front.style.display = 'flex'
+          break
+        case 'Half':
+          if (front.style.display === 'none') front.style.display = 'flex'
+          if (back.style.display === 'flex') back.style.display = 'none'
+          break
+      }
+    }
+  </script>
+</body>

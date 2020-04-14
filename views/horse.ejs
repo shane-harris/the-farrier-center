@@ -6,7 +6,8 @@
     <%# Horse Summary %>
     <div class="container form">
       <div class="dropdown" align="right">
-        <button class="btn dropdown-toggle fa fa-edit" type="button" data-toggle="dropdown"></button>
+        <button class="btn dropdown-toggle fa fa-edit" type="button"
+          data-toggle="dropdown"></button>
         <ul class="dropdown-menu">
           <li><a href="/horse/<%= horse.id %>/update">Update</a></li>
           <li><a href="#">Delete (does not work yet)</a></li>
@@ -71,27 +72,32 @@
           </a>
         </div>
         <div class="pad">
-          <a type="button" class="btn"
-            href="/horse/<%= horse.id %>/new-medical-analysis">New Medical Analysis</a>
+          <a type="button" class="btn" href="/horse/<%= horse.id %>/new-report">
+            New Medical Analysis
+          </a>
         </div>
       </div>
 
       <div class="collapse" id="medical">
-        <% if(medical !== undefined) { %>
-          <div class="row">
-            <div class="col-sm-4">
-              <h1>Medical Analysis</h1>
-            </div>
-            <div class="col-sm-4">
-              <h1>Date: <%= `${medical.date.getMonth() + 1}/${medical.date.getDate()}/${medical.date.getFullYear()}` %></h1>
-            </div>
-            <div class="col-sm-4">
-              <h1>Farrier: <%= medical.farrier %></h1>
-            </div>
+        <% if (shoeing.medical !== undefined) { %>
+        <div class="row">
+          <div class="col-sm-4">
+            <h1>Medical Analysis</h1>
           </div>
-          <%- include('partials/medical-input-fields', {editable: false}) %>
+          <div class="col-sm-4">
+            <h1>Date:
+              <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %>
+            </h1>
+          </div>
+          <div class="col-sm-4">
+            <h1>Farrier: <%= shoeing.farrier %></h1>
+          </div>
+        </div>
+        <%- include('partials/medical-input-fields', {medical: shoeing.medical, editable: false}) %>
         <% } else { %>
-          <div align="center"><H2> No medical reports have been created</H2></div>
+        <div align="center">
+          <H2> No medical reports have been created</H2>
+        </div>
         <% } %>
       </div>
     </div>
@@ -106,49 +112,54 @@
           </a>
         </div>
         <div class="pad">
-          <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New Shoeing</a>
+          <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-report">
+            New Shoeing
+          </a>
         </div>
       </div>
       <div id="shoeing" class="collapse">
-        <% if(shoeing !== undefined) { %>
+        <% if (shoeing.front !== undefined) { %>
         <div class="row">
           <div class="col-sm-4">
             <h2>Most Recent Shoeing</h2>
           </div>
           <div class="col-sm-4">
-              <h1>Date: <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %></h1>
+            <h1>Date:
+              <%= `${shoeing.date.getMonth() + 1}/${shoeing.date.getDate()}/${shoeing.date.getFullYear()}` %>
+            </h1>
           </div>
           <div class="col-sm-4">
-            <h2>Farrier: Steve</h2>
+            <h2>Farrier: <%= shoeing.farrier %></h2>
           </div>
         </div>
 
         <%# Shoeing Data %>
         <div class="row">
           <div class="col-sm-6 form">
-            <% horse.data.hoof = "Front Left" %>
-            <%- include('partials/shoeing', horse.data) %>
+            <%- include('partials/shoeing', {area: 'Front Left', hoof: shoeing.front.horseshoes[0]}) %>
           </div>
 
           <div class="col-sm-6 form">
-            <% horse.data.hoof = "Front Right" %>
-            <%- include('partials/shoeing', horse.data) %>
+            <%- include('partials/shoeing', {area: 'Front Right', hoof: shoeing.front.horseshoes[1]}) %>
           </div>
         </div>
+        <% } %>
 
+        <% if (shoeing.back !== undefined) { %>
         <div class="row">
           <div class="col-sm-6 form">
-            <% horse.data.hoof = "Back Left" %>
-            <%- include('partials/shoeing', horse.data) %>
+            <%- include('partials/shoeing', {area: 'Back Left', hoof: shoeing.back.horseshoes[0]}) %>
           </div>
 
           <div class="col-sm-6 form">
-            <% horse.data.hoof = "Back Right" %>
-            <%- include('partials/shoeing', horse.data) %>
+            <%- include('partials/shoeing', {area: 'Back Right', hoof: shoeing.back.horseshoes[1]}) %>
           </div>
         </div>
-        <% } else { %>
-          <div align="center"><H2> No Shoeing reports have been created</H2></div>
+
+        <% } else if (shoeing.front === undefined && shoeing.back === undefined) { %>
+        <div align="center">
+          <H2> No Shoeing reports have been created</H2>
+        </div>
         <% } %>
       </div>
     </div>

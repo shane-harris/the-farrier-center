@@ -11,45 +11,55 @@
         <label for="shoes">
             <H3>Shoes</H3>
         </label>
-        <%- include('checkbox', {name: "pads", displayName: "Pads"}) %>
-        <%- include('checkbox', {name: "straightbarshoe", displayName: "Straight Bar Shoe"}) %>
-        <%- include('checkbox', {name: "eggbar", displayName: "Egg Bar"}) %>
-        <%- include('checkbox', {name: "specialbarshoe", displayName: "Specialty Barshoe"}) %>
-        <%- include('checkbox', {name: "rolledtoe", displayName: "Rolled Toe"}) %>
-        <%- include('checkbox', {name: "onionheel", displayName: "Onion Heel"}) %>
-        <%- include('checkbox', {name: "wideweb", displayName: "Wide Web"}) %>
-        <%- include('checkbox', {name: "narrowweb", displayName: "Narrow Web"}) %>
+        <div name="shoes">
+            <%- include('checkbox', {name: "shoes", value: "pads", displayName: "Pads"}) %>
+            <%- include('checkbox', {name: "shoes", value: "straightbarshoe", displayName: "Straight Bar Shoe"}) %>
+            <%- include('checkbox', {name: "shoes", value: "eggbar", displayName: "Egg Bar"}) %>
+            <%- include('checkbox', {name: "shoes", value: "specialbarshoe", displayName: "Specialty Barshoe"}) %>
+            <%- include('checkbox', {name: "shoes", value: "rolledtoe", displayName: "Rolled Toe"}) %>
+            <%- include('checkbox', {name: "shoes", value: "onionheel", displayName: "Onion Heel"}) %>
+            <%- include('checkbox', {name: "shoes", value: "wideweb", displayName: "Wide Web"}) %>
+            <%- include('checkbox', {name: "shoes", value: "narrowweb", displayName: "Narrow Web"}) %>
+        </div>
     </div>
     <div class="column form" id="materials">
         <label for="materials">
             <H3>Materials</H3>
         </label>
-        <%- include('checkbox', {name: "limbbrace", displayName: "Limb Brace"}) %>
-        <%- include('checkbox', {name: "aluminium", displayName: "Aluminium"}) %>
-        <%- include('checkbox', {name: "titanium", displayName: "Titanium"}) %>
-        <%- include('checkbox', {name: "poly", displayName: "Poly"}) %>
-        <%- include('checkbox', {name: "impressionmaterials", displayName: "Impression Materials"}) %>
-        <%- include('checkbox', {name: "glueonshoes", displayName: "Glue-on Shoe"}) %>
-        <%- include('checkbox', {name: "equilibrium", displayName: "Equilibrium"}) %>
-        <%- include('checkbox', {name: "pourin", displayName: "Pour In"}) %>
-        <%- include('checkbox', {name: "glue", displayName: "Glue"}) %>
+        <div name="materials">
+            <%- include('checkbox', {name: "materials", value: "limbbrace", displayName: "Limb Brace"}) %>
+            <%- include('checkbox', {name: "materials", value: "aluminium", displayName: "Aluminium"}) %>
+            <%- include('checkbox', {name: "materials", value: "titanium", displayName: "Titanium"}) %>
+            <%- include('checkbox', {name: "materials", value: "poly", displayName: "Poly"}) %>
+            <%- include('checkbox', {name: "materials", value: "impressionmaterials", displayName: "Impression Materials"}) %>
+            <%- include('checkbox', {name: "materials", value: "glueonshoes", displayName: "Glue-on Shoe"}) %>
+            <%- include('checkbox', {name: "materials", value: "equilibrium", displayName: "Equilibrium"}) %>
+            <%- include('checkbox', {name: "materials", value: "pourin", displayName: "Pour In"}) %>
+            <%- include('checkbox', {name: "materials", value: "glue", displayName: "Glue"}) %>
+        </div>
     </div>
     <div class="column form" id="services">
         <label for="services">
             <H3>Services</H3>
         </label>
-        <%- include('checkbox', {name: "drilltap", displayName: "Drill & Tap"}) %>
-        <%- include('checkbox', {name: "gluerepair", displayName: "Glue Repair"}) %>
-        <%- include('checkbox', {name: "quartercrackrepair", displayName: "Quarter Crack Repair"}) %>
-        <%- include('checkbox', {name: "resection", displayName: "Resection"}) %>
-        <%- include('checkbox', {name: "rehabilitation", displayName: "Rehabilitation Service"}) %>
-        <%- include('checkbox', {name: "surgeonconsult", displayName: "Surgeon Consult"}) %>
+        <div name="services">
+            <%- include('checkbox', {name: "services", value: "drilltap", displayName: "Drill & Tap"}) %>
+            <%- include('checkbox', {name: "services", value: "gluerepair", displayName: "Glue Repair"}) %>
+            <%- include('checkbox', {name: "services", value: "quartercrackrepair", displayName: "Quarter Crack Repair"}) %>
+            <%- include('checkbox', {name: "services", value: "resection", displayName: "Resection"}) %>
+            <%- include('checkbox', {name: "services", value: "rehabilitation", displayName: "Rehabilitation Service"}) %>
+            <%- include('checkbox', {name: "services", value: "surgeonconsult", displayName: "Surgeon Consult"}) %>
+        </div>
     </div>
 
     <div class="column form">
         <label class="control-label" for="other">
-            <H3>Other:</H3>
+            <H3>Notes:</H3>
         </label>
-        <input type="text" class="form-control " id="other" name="other">
+        <input type="text" class="form-control " id="other" name="notes">
+        <label class="control-label" id="image">
+            <h3>Other Images</h3>
+        </label>
+        <input type="file" class="form-control" id="image" name="notesImages" multiple>
     </div>
 </div>
