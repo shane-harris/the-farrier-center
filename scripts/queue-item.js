@@ -113,7 +113,6 @@ function computeBorderColor(horse) {
 function computeBorderStyle(horse) {
   return `"
   border-left: 10px solid ${computeBorderColor(horse)};
-  border-right: 10px solid ${computeBorderColor(horse)};
   "`
 }
 

@@ -29,7 +29,7 @@ const lightbrown = '#be9063'
 const darknavy = '#14172b'
 const flatgrey = '#585c5a'
 const graywood = '#a4978e'
-
+const yellowgray = '#454544'
 const neonred = 'red'
 const darkred = '#640000'
 const darkestred = '#280000'
