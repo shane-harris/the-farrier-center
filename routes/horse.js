@@ -131,8 +131,8 @@ router.get('/:id/new-shoeing', loggedIn, async (req, res) => {
 })
 
 router.get('/:id/view-report', loggedIn, async (req, res) => {
-  const shoeing = await Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
-  res.render('report.ejs', { shoeing })
+  const shoeings = await Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
+  res.render('report.ejs', { shoeings })
 })
 
 router.post('/:id/new-shoeing', loggedIn, async (req, res) => {
