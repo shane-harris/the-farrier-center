@@ -16,9 +16,8 @@
                 <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %>
             </button>
 
-            <button type="button" class="btn btn-link" data-toggle="collapse">
-                View Report
-            </button>
+            <a type="button" class="btn"
+               href="/horse/<%= horse.id %>/view-report">View Report</a>
         </h2>
     </div>
 
