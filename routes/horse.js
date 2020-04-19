@@ -131,8 +131,11 @@ router.get('/:id/new-shoeing', loggedIn, async (req, res) => {
 })
 
 router.get('/:id/view-report', loggedIn, async (req, res) => {
-  const shoeings = await Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
-  res.render('report.ejs', { shoeings })
+  const [horse, shoeings] = await Promise.all([
+    Horse.findOne({ id: req.params.id }),
+    Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
+  ])
+  res.render('report.ejs', { horse, shoeings })
 })
 
 router.post('/:id/new-shoeing', loggedIn, async (req, res) => {
