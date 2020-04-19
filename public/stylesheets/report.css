@@ -1,0 +1,123 @@
+body {
+  max-width: 8.5in;
+  margin: 0.5in;
+}
+
+#report-title {
+  padding-top: 85px;
+}
+
+#logo {
+  height: 100px;
+  width: 150px;
+  position: relative;
+  bottom: -30px;
+}
+
+#horse-img {
+  height: 200px;
+  width: auto;
+  border: 1px solid #0a0a0a;
+}
+
+#report-header {
+  padding-bottom: 40px;
+}
+
+#horse-overview {
+  display: flex;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.w-100 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#horse-info {
+  padding-left: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#issue {
+  text-align: center;
+}
+
+#before {
+  padding-right: 10px;
+  float: left;
+}
+
+#after {
+  padding-left: 10px;
+  float: right;
+}
+
+#before-and-after {
+  align-self: center;
+  margin: 0.5in;
+  display: inline-flex;
+}
+
+.comparison-image {
+  height: auto;
+  width: auto;
+  max-width: 3.5in;
+  border: 1px solid #0a0a0a;
+}
+
+.shoeing-img {
+  height: auto;
+  width: auto;
+  max-width: 2in;
+  max-height: 2in;
+  border: 1px solid #0a0a0a;
+}
+
+.single-shoe {
+  display: inline-flex;
+  border: 1px solid #2a6496;
+}
+
+.title {
+  text-align: center;
+}
+
+.shoeing-text {
+  background: #f6f8fa;
+  padding-left: 25px;
+}
+
+#services {
+  max-width: 3in;
+}
+
+.list-group-item {
+  background: #f6f8fa;
+}
+
+#services {
+  min-width: 2in;
+  display: inline;
+}
+
+#notes {
+  float: right;
+  border: 1px solid #2a6496;
+}
+
+.shoeing {
+  page-break-before: always;
+}
+
+.farrier {
+  color: #008fdb;
+  text-align: center;
+}
+
+#date-and-farrier {
+  display: flex;
+  align-self: center;
+}
