@@ -12,7 +12,8 @@
             </div>
             <div class="col align-self-end">
 
-                <h5 style="float: right"><%- new Date().toJSON().slice(0,10).replace(/-/g,'/') %></h5>
+                <% let today = new Date() %>
+                <h5 style="float: right"><%- `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}` %></h5>
             </div>
         </div>
     </div>
