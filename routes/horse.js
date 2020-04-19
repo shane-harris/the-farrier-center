@@ -96,7 +96,7 @@ router.get('/:id', loggedIn, async (req, res) => {
   res.render('horse.ejs', {
     horse,
     medical: medicals[0],
-    shoeing: shoeings[0],
+    shoeings: shoeings,
     updateable: medicals.length !== 0
   })
 })
@@ -222,6 +222,23 @@ router.post('/unassign/:id', loggedIn, async (req, res) => {
   req.user.save()
   console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
 
+  res.redirect(`/horse/queue/${req.body.tab}`)
+})
+
+router.post('/dismiss/:id', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  //If this horse is assigned to this farrier, remove it from the farrier's queue
+  if (req.user.assignedHorses.includes(req.params.id)) {
+    const i = req.user.assignedHorses.indexOf(req.params.id)
+    if (i > -1) {
+      req.user.assignedHorses.splice(i, 1)
+    }
+    req.user.save()
+    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
+  }
+  //Update the lastVisitDate for the horse only. No reports are submitted.
+  horse.lastVisit = new Date()
+  horse.save()
   res.redirect(`/horse/queue/${req.body.tab}`)
 })
 
