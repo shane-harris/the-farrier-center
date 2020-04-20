@@ -20,13 +20,13 @@
         <div class="row" id="front" style="display:none;">
           <%- include('partials/shoeing-input-form', {hoof: 'Front Left', hoofIdent: "frontLeft"}) %>
           <%- include('partials/shoeing-input-form', {hoof: 'Front Right', hoofIdent: "frontRight"}) %>
+          <%- include('partials/shoeing-checkboxes') %>
         </div>
         <div class="row" id="back" style="display:none;">
           <%- include('partials/shoeing-input-form', {hoof: 'Back Left', hoofIdent: "backLeft"}) %>
           <%- include('partials/shoeing-input-form', {hoof: 'Back Right', hoofIdent: "backRight"}) %>
+          <%- include('partials/shoeing-checkboxes') %>
         </div>
-
-        <%- include('partials/shoeing-checkboxes') %>
 
         <div class="">
           <button type="submit" class="btn btn-primary" value="'shoeing">Submit</button>
