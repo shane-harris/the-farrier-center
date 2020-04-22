@@ -19,10 +19,10 @@ const loggedOut = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  if (req.user.role === 'admin') {
+  if (req.user !== undefined && req.user.role === 'admin') {
     return next()
   } else {
-    res.redirect('/queue')
+    res.redirect('horse/queue')
   }
 }
 
