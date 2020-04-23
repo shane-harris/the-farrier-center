@@ -1,3 +1,8 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 #page-container {
   position: relative;
   /*sets footer to bottom even if the page isn't full
@@ -6,7 +11,8 @@
 }
 
 #site-footer {
-  position: page;
+  position: absolute;
+  width: 100%;
   bottom: 0;
 }
 
@@ -127,20 +133,18 @@ nav {
   background-color: var(--dropdown-bg-color);
   min-width: 100px;
   align-items: left;
-
 }
-#matches{
+#matches {
   position: absolute;
   display: block;
   text-align: left;
   z-index: 1;
   background-color: var(--dropdown-bg-color);
-
 }
-#search-bar{
+#search-bar {
   position: relative;
   height: 40px;
 }
-#search-button{
+#search-button {
   height: 40px;
 }
