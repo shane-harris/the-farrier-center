@@ -4,3 +4,8 @@
   width: 50%;
   margin: auto;
 }
+
+.tab-menu-formatting {
+  max-width: 600px;
+  align-content: center;
+}
