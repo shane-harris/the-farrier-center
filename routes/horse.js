@@ -227,7 +227,11 @@ router.post('/unassign/:id', loggedIn, async (req, res) => {
 
 router.post('/dismiss/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  //If this horse is assigned to this farrier, remove it from the farrier's queue
+  // If this horse is assigned to this farrier, remove it from the farrier's queue
+  // This feature is disabled by the request of the client. They want the horse to
+  // stay in the farrier's queue after quick-shoeing.
+  // Keeping for easy reimplementation. Can be removed if requested.
+  /*
   if (req.user.assignedHorses.includes(req.params.id)) {
     const i = req.user.assignedHorses.indexOf(req.params.id)
     if (i > -1) {
@@ -236,6 +240,7 @@ router.post('/dismiss/:id', loggedIn, async (req, res) => {
     req.user.save()
     console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
   }
+  */
   //Update the lastVisitDate for the horse only. No reports are submitted.
   horse.lastVisit = new Date()
   horse.save()
