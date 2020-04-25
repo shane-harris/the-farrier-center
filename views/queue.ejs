@@ -35,7 +35,6 @@
 
 
 <script>
-  //Filters Table Assigned Horses
   $(document).ready(function () {
 
     var table = $('#queue').DataTable({
@@ -45,27 +44,30 @@
       },
       "order": [[2, "asc"]],
       "bPaginate": false,
+      stateSave: true,
       columnDefs: [
         { responsivePriority: 1, targets: 0 },
         { responsivePriority: 2, targets: -1 },
         { responsivePriority: 3, targets: 2 }
       ],
-      "dom": '<"row"<"col"<"checkbox-area">><"col"fr>>tilpr'
-    })
-    $("div.checkbox-area").html('<input id="checkbox" class ="form-check-input"  type="checkbox" View Assigned Horses>  <label class="form-check-label" for="checkbox">Assigned Horses</label');
 
-    if ($('#checkbox').is(':checked')) {
-      $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-          return data[3].trim() === "Yes"
+      "dom": '<"row"<"col"<"checkbox-area">><"col"fr>>tilpr',
+      "initComplete": function (settings, json) {
+        if (localStorage.input === 'true') {
+          $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+              return data[3].trim() === "Yes"
+            }
+          )
         }
-      )
-    } else {
-      $.fn.dataTable.ext.search.pop()
-    }
+      }
+    })
+    $("div.checkbox-area").html('<input id="view-assigned" class ="form-check-input"  type="checkbox" View Assigned Horses>  <label class="form-check-label" for="checkbox">View Assigned Horses</label');
+
+
     table.draw()
 
-    $('#checkbox').on('change', function () {
+    $('#view-assigned').on('change', function () {
       if ($(this).is(':checked')) {
         $.fn.dataTable.ext.search.push(
           function (settings, data, dataIndex) {
@@ -77,5 +79,16 @@
       }
       table.draw()
     })
+    $(function () {
+      var test = localStorage.input === 'true' ? true : false;
+      $('#view-assigned').prop('checked', test || false);
+    });
+
+    $('#view-assigned').on('change', function () {
+      localStorage.input = $(this).is(':checked');
+    });
+
   })
+
+
 </script>

@@ -203,12 +203,16 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
 
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  if (!req.user.assignedHorses.includes(req.params.id)) {
+  if (!req.user.assignedHorses.includes(req.params.id) && horse.assigned === false) {
     req.user.assignedHorses.push(horse.id)
+    horse.assigned = true
+    horse.save
     req.user.save()
     console.log(`Assigned horse '${horse.name}' to farrier '${req.user.username}'.`)
-  } else {
+  } else if (req.user.assignedHorses.includes(req.params.id)) {
     console.log(`Horse '${horse.name}' is already assigned to farrier '${req.user.username}'.`)
+  } else if (horse.assigned) {
+    console.log(horse.name + ' is already assigned to a farrier')
   }
   res.redirect(`/horse/queue/${req.body.tab}`)
 })
