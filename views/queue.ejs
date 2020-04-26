@@ -21,7 +21,7 @@
               <th scope="col" id="button" data-orderable="false"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="queue-body">
             <% for (horse of horses) { %>
             <%-  include('partials/queue-item', { horse, scripts }) %>
             <% } %>
@@ -38,13 +38,13 @@
   $(document).ready(function () {
 
     var table = $('#queue').DataTable({
-      'responsive': true,
       responsive: {
         details: true
       },
-      "order": [[2, "asc"]],
-      "bPaginate": false,
+      order: [[2, "asc"]],
+      bPaginate: false,
       stateSave: true,
+      //rowReorder: true,
       columnDefs: [
         { responsivePriority: 1, targets: 0 },
         { responsivePriority: 2, targets: -1 },
@@ -88,7 +88,22 @@
       localStorage.input = $(this).is(':checked');
     });
 
+    function dismiss(event) {
+      const url = 'http://localhost:8000/horse/dismiss/' + event.target.id
+      console.log(event.target.id)
+      $.post(url, function () {
+        location.reload()
+      })
+
+    }
+
+    var element = document.getElementById("queue-body")
+    var hammertime = new Hammer(element)
+    hammertime.on('swiperight', dismiss)
   })
+
+
+
 
 
 </script>
