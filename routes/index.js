@@ -22,7 +22,7 @@ router.get('/favicon.ico', (_, res) => res.status(204))
 router.post('/register', loggedOut, (req, res, next) => {
   console.log('registering user')
   User.register(
-    new User({ username: req.body.username, email: req.body.email }),
+    new User({ username: req.body.email, role: req.body.role }),
     req.body.password,
     err => {
       if (err) {
@@ -38,12 +38,15 @@ router.post('/register', loggedOut, (req, res, next) => {
 })
 
 router.get('/register/:token', loggedOut, (req, res) => {
+  let email
+  let role
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, body) => {
     if (err) return res.sendStatus(403)
-    req.email = body.email
+    email = body.email
+    role = body.role
   })
 
-  res.render('register.ejs', { email: req.email })
+  res.render('register.ejs', { email, role })
 })
 
 router.get('/login', loggedOut, (req, res) => {
@@ -77,8 +80,8 @@ router.get('/search', loggedIn, async (req, res) => {
       /*No horses found via current query.
       Search for all matches that begin with query*/
       if (horses.length === 0) {
-        const pattern = pureQuery.replace(pureQuery, "^" + pureQuery + ".*")
-        horses = await Horse.find({ name: { $regex: pattern, $options: "i" } })
+        const pattern = pureQuery.replace(pureQuery, '^' + pureQuery + '.*')
+        horses = await Horse.find({ name: { $regex: pattern, $options: 'i' } })
       }
     }
   }
@@ -106,14 +109,11 @@ router.get('/autocomplete', loggedIn, async (req, res) => {
   const regex = new RegExp(req.query['term'], 'i')
 
   const [horseName, horseOwner, horseLocation] = await Promise.all([
-    Horse.find({ name: regex }, { name: 1 })
-      .limit(30),
+    Horse.find({ name: regex }, { name: 1 }).limit(30),
 
-    Horse.find({ owner: regex }, { owner: 1 })
-      .limit(30),
+    Horse.find({ owner: regex }, { owner: 1 }).limit(30),
 
-    Horse.find({ location: regex }, { location: 1 })
-      .limit(30)
+    Horse.find({ location: regex }, { location: 1 }).limit(30)
   ])
 
   const horses = horseOwner.concat(horseLocation).concat(horseName)
@@ -126,7 +126,8 @@ router.get('/autocomplete', loggedIn, async (req, res) => {
   //Removing duplicate results from full result array
   const result = fullResult.filter(
     (item, index) =>
-      fullResult.indexOf(fullResult.find(found => found.label === item.label)) === index)
+      fullResult.indexOf(fullResult.find(found => found.label === item.label)) === index
+  )
   res.jsonp(result)
 })
 
