@@ -22,7 +22,7 @@ router.get('/favicon.ico', (_, res) => res.status(204))
 router.post('/register', loggedOut, (req, res, next) => {
   console.log('registering user')
   User.register(
-    new User({ username: req.body.username, email: req.body.email }),
+    new User({ username: req.body.email, role: req.body.role }),
     req.body.password,
     err => {
       if (err) {
@@ -38,12 +38,15 @@ router.post('/register', loggedOut, (req, res, next) => {
 })
 
 router.get('/register/:token', loggedOut, (req, res) => {
+  let email
+  let role
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, body) => {
     if (err) return res.sendStatus(403)
-    req.email = body.email
+    email = body.email
+    role = body.role
   })
 
-  res.render('register.ejs', { email: req.email })
+  res.render('register.ejs', { email, role })
 })
 
 router.get('/login', loggedOut, (req, res) => {

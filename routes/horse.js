@@ -39,9 +39,9 @@ router.use('/public', express.static('public'))
 router.get('/queue', loggedIn, async (req, res) => {
   const [horses, assignedHorses] = await Promise.all([
     // Returns all horses to populate View All queue
-    Horse.find().sort({ lastVisit: 1 }),
+    Horse.find({ deleted: false }).sort({ lastVisit: 1 }),
     // Returns only horses assigned to you for View Assigned Horse queue
-    Horse.find({ id: req.user.assignedHorses })
+    Horse.find({ id: req.user.assignedHorses, deleted: false })
       // Sort by lastVisit (ascending)
       .sort({ lastVisit: 1 })
   ])
@@ -55,7 +55,7 @@ router.get('/queue', loggedIn, async (req, res) => {
 
 router.get('/all', loggedIn, async (_, res) => {
   // Get all horses and sort them by id (ascending)
-  const horses = await Horse.find().sort({ id: 1 })
+  const horses = await Horse.find({ deleted: false }).sort({ id: 1 })
   res.render('horses.ejs', { horses: horses })
 })
 
@@ -93,12 +93,16 @@ router.get('/:id', loggedIn, async (req, res) => {
     Medical.find({ horse_id: req.params.id }).sort({ date: -1 }),
     Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  res.render('horse.ejs', {
-    horse,
-    medical: medicals[0],
-    shoeing: shoeings[0],
-    updateable: medicals.length !== 0
-  })
+  if (horse.deleted) {
+    res.redirect('/horse/all')
+  } else {
+    res.render('horse.ejs', {
+      horse,
+      medical: medicals[0],
+      shoeings: shoeings,
+      updateable: medicals.length !== 0
+    })
+  }
 })
 
 router.get('/:id/new-medical-analysis', loggedIn, async (req, res) => {
@@ -203,14 +207,18 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
 
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  if (!req.user.assignedHorses.includes(req.params.id)) {
+  if (!req.user.assignedHorses.includes(req.params.id) && horse.assigned === false) {
     req.user.assignedHorses.push(horse.id)
+    horse.assigned = true
+    horse.save
     req.user.save()
     console.log(`Assigned horse '${horse.name}' to farrier '${req.user.username}'.`)
-  } else {
+  } else if (req.user.assignedHorses.includes(req.params.id)) {
     console.log(`Horse '${horse.name}' is already assigned to farrier '${req.user.username}'.`)
+  } else if (horse.assigned) {
+    console.log(horse.name + ' is already assigned to a farrier')
   }
-  res.redirect(`/horse/queue/${req.body.tab}`)
+  res.redirect(`/horse/queue/`)
 })
 
 router.post('/unassign/:id', loggedIn, async (req, res) => {
@@ -222,7 +230,7 @@ router.post('/unassign/:id', loggedIn, async (req, res) => {
   req.user.save()
   console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
 
-  res.redirect(`/horse/queue/${req.body.tab}`)
+  res.redirect(`/horse/queue/`)
 })
 
 router.post('/dismiss/:id', loggedIn, async (req, res) => {
@@ -239,7 +247,16 @@ router.post('/dismiss/:id', loggedIn, async (req, res) => {
   //Update the lastVisitDate for the horse only. No reports are submitted.
   horse.lastVisit = new Date()
   horse.save()
-  res.redirect(`/horse/queue/${req.body.tab}`)
+  res.redirect(`/horse/queue/`)
+})
+
+router.post('/delete/:id', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.id })
+  horse.deleted = true
+  horse.save()
+  console.log(`Deleting horse: '${horse.name}`)
+
+  res.redirect(`/horse/all/`)
 })
 
 module.exports = router

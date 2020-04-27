@@ -29,7 +29,7 @@ const lightbrown = '#be9063'
 const darknavy = '#14172b'
 const flatgrey = '#585c5a'
 const graywood = '#a4978e'
-
+const yellowgray = '#454544'
 const neonred = 'red'
 const darkred = '#640000'
 const darkestred = '#280000'
@@ -80,7 +80,9 @@ const themes = {
     primaryText: ivory,
     queue: coal,
     queueText: ivory,
-    readonlyTextFieldBg: coal
+    readonlyTextFieldBg: coal,
+    shoeingCard: yellowgray,
+    shoeingCardBody: charcoal
   },
   Light: {
     bg: white,
@@ -109,7 +111,9 @@ const themes = {
     primaryText: black,
     queue: turqoisegray,
     queueText: black,
-    readonlyTextFieldBg: lightbluegray
+    readonlyTextFieldBg: lightbluegray,
+    shoeingCard: white,
+    shoeingCardBody: white
   },
   Black: {
     bg: black,
@@ -136,7 +140,8 @@ const themes = {
     primaryText: white,
     queue: coal,
     queueText: white,
-    readonlyTextFieldBg: black
+    readonlyTextFieldBg: black,
+    shoeingCard: slate
   },
   Forest: {
     bg: darksteel,
