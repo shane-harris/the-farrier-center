@@ -30,8 +30,8 @@ const date = lastVisitDate(horse)
     </address>
   </td>
   <td class="queue-cell">
-    <a class="link-unstyled queue-item-link" id='<%=horse.id%>' href="/horse/<%= horse.id %>">
-      <%= `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getUTCFullYear()}` %>
+    <a class="link-unstyled queue-item-link" href="/horse/<%= horse.id %>">
+      <%= `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` %>
     </a>
   </td>
   <td class="queue-cell">
