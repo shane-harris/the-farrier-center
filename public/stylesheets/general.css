@@ -120,3 +120,25 @@ nav {
 .navbar-dark .navbar-nav .nav-link:hover {
   color: var(--nav-text-hover-color);
 }
+.ui-menu-item {
+  position: relative;
+  display: table-row-group;
+  top: 0;
+  background-color: var(--dropdown-bg-color);
+  min-width: 100px;
+  align-items: left;
+}
+#matches {
+  position: absolute;
+  display: block;
+  text-align: left;
+  z-index: 1;
+  background-color: var(--dropdown-bg-color);
+}
+#search-bar {
+  position: relative;
+  height: 40px;
+}
+#search-button {
+  height: 40px;
+}
