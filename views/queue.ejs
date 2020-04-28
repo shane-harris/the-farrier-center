@@ -17,13 +17,16 @@
               <th scope="col" id="left-col">Horse</th>
               <th scope="col">Location</th>
               <th scope="col" id="right-col">Last Visit</th>
-              <th scope="col" id="assigned">Assigned To Me</th>
+              <th scope="col" id="assigned">Assigned To</th>
               <th scope="col" id="button" data-orderable="false"></th>
             </tr>
           </thead>
           <tbody id="queue-body">
             <% for (horse of horses) { %>
-            <%-  include('partials/queue-item', { horse, scripts }) %>
+
+            <% let assignedFarrier = users.find(user => user._id == horse.assignedFarrier) %>
+            <% console.log(assignedFarrier) %>
+            <%-  include('partials/queue-item', { horse,assignedFarrier, scripts }) %>
             <% } %>
           </tbody>
         </table>
