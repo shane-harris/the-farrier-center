@@ -25,7 +25,6 @@
             <% for (horse of horses) { %>
 
             <% let assignedFarrier = users.find(user => user._id == horse.assignedFarrier) %>
-            <% console.log(assignedFarrier) %>
             <%-  include('partials/queue-item', { horse,assignedFarrier, scripts }) %>
             <% } %>
           </tbody>
@@ -35,11 +34,17 @@
     <%- include('partials/footer') %>
 
 </body>
+<script>
+  const userfname = document.createElement('div');
+  userfname.innerText = `<%=user.fname %>`
+  const userlname = document.createElement('div');
+  userlname.innerText = `<%=user.lname %>`
+</script>
 
 
 <script>
-  $(document).ready(function () {
 
+  $(document).ready(function () {
     var table = $('#queue').DataTable({
       responsive: {
         details: true
@@ -59,7 +64,7 @@
         if (localStorage.input === 'true') {
           $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
-              return data[3].trim() === "Yes"
+              return data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
             }
           )
         }
@@ -74,7 +79,7 @@
       if ($(this).is(':checked')) {
         $.fn.dataTable.ext.search.push(
           function (settings, data, dataIndex) {
-            return data[3].trim() === "Yes"
+            return data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
           }
         )
       } else {

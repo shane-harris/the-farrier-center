@@ -48,7 +48,7 @@ const date = lastVisitDate(horse)
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       </button>
       <div class="dropdown-menu" aria-labelledby="triggerId">
-        <% if (user.assignedHorses.includes(horse.id)) { %>
+        <% if (horse.assignedFarrier == user._id) { %>
         <form action='/horse/unassign/<%=horse.id%>' method='POST'>
           <button class="dropdown-item">
             Unassign
