@@ -4,27 +4,28 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const MedicalSchema = new Schema({
+  images: [String],
   gait: String,
   lameness: String,
   blemishes: String,
   laminitus: String,
-  notes: String,
-  images: [{ type: Schema.Types.ObjectId, ref: 'images' }]
+  notes: [String]
 })
 
 const HorseshoeSchema = new Schema({
+  images: [String],
   hoof: {
     type: String,
     required: true,
     enum: ['Left', 'Right']
   },
   shoeSize: Number,
-  notes: String,
-  images: [{ type: Schema.Types.ObjectId, ref: 'images' }]
+  notes: [String]
 })
 
 const ShoeingSchema = new Schema({
   horseshoes: [HorseshoeSchema],
+  notes: [String],
   shoes: [
     {
       type: String,
@@ -72,6 +73,7 @@ const ShoeingSchema = new Schema({
 })
 
 const ReportSchema = new Schema({
+  images: [String],
   horse_id: Number,
   date: Date,
   farrier: String,
@@ -82,8 +84,7 @@ const ReportSchema = new Schema({
   medical: MedicalSchema,
   front: ShoeingSchema,
   back: ShoeingSchema,
-  notes: String,
-  images: [{ type: Schema.Types.ObjectId, ref: 'images' }]
+  notes: [String]
 })
 const Report = mongoose.model('report', ReportSchema)
 
