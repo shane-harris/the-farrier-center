@@ -97,7 +97,7 @@ router.post('/new', loggedIn, parser.single('image'), async (req, res) => {
 })
 
 router.get('/:id', loggedIn, async (req, res) => {
-  const [horse, shoeing] = await Promise.all([
+  const [horse, shoeings] = await Promise.all([
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
