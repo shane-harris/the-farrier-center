@@ -1,3 +1,8 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 #page-container {
   position: relative;
   /*sets footer to bottom even if the page isn't full
@@ -6,7 +11,8 @@
 }
 
 #site-footer {
-  position: page;
+  position: absolute;
+  width: 100%;
   bottom: 0;
 }
 
@@ -116,7 +122,11 @@ nav {
 .navbar-dark .navbar-nav .nav-link {
   color: var(--nav-text-color);
 }
-
+.modal-content,
+.modal-body,
+.modal-header {
+  background-color: var(--bg-color);
+}
 .navbar-dark .navbar-nav .nav-link:hover {
   color: var(--nav-text-hover-color);
 }
