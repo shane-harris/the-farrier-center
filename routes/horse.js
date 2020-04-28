@@ -10,6 +10,7 @@ const Image = require('../models/image')
 
 //import middlewares
 const { loggedIn } = require('../middleware/auth')
+const { maybe } = require('../scripts/util.js')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
@@ -37,7 +38,7 @@ const imageFields = [
   { name: 'backRightImages', maxCount: 6 },
   { name: 'frontLeftImages', maxCount: 6 },
   { name: 'frontRightImages', maxCount: 6 },
-  { name: 'notesImages', maxCount: 6 },
+  { name: 'reportImages', maxCount: 6 },
   { name: 'medicalImages', maxCont: 6 }
 ]
 
@@ -55,8 +56,8 @@ router.get('/queue', loggedIn, async (req, res) => {
   ])
   res.render('queue.ejs', {
     user: req.user,
-    horses,
-    assignedHorses,
+    horses: horses,
+    assignedHorses: assignedHorses,
     scripts: require('../scripts/queue-item')
   })
 })
@@ -100,11 +101,11 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  console.log(shoeing[0])
+
   res.render('horse.ejs', {
-    horse,
+    horse: horse,
     shoeings: shoeing[0],
-    updateable: false
+    updateable: true
   })
 })
 
@@ -114,56 +115,56 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
     // Get the most recent medical analysis
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  console.log(shoeing)
+  //check if first element in shoeing array has a medical field to avoid ReferenceError
+  const medical = maybe(shoeing[0].medical).or({})
+
+  const uselatest = medical === undefined ? false : true
+
   res.render('new-report.ejs', {
-    horse,
-    medical: shoeing.medical,
-    updateable: shoeing.medical === undefined ? false : true
+    horse: horse,
+    medical: medical,
+    updateable: uselatest
   })
 })
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
+  console.log(req.body)
   const horse = await Horse.findOne({ id: req.params.id })
   const report = new Report({
     horse_id: req.params.id,
     date: new Date(), //returns todays date
     farrier: req.user.username,
     jobType: req.body.job,
-    front: {}
-  })
-  //When you make a new shoeing, update horses last visit date.
-  horse.lastVisit = report.date
-
-  //Medical Analysis Info
-  if (
-    req.body.gait ||
-    req.body.lameness ||
-    req.body.blemishes ||
-    req.body.laminitus ||
-    req.body.notes
-  ) {
-    report.medical = {
+    front: {},
+    back: {},
+    images: [],
+    medical: {
       gait: req.body.gait,
       lameness: req.body.lameness,
       blemishes: req.body.blemishes,
       laminitus: req.body.laminitus,
-      notes: req.body.notes
-    }
-  }
+      notes: req.body.medicalNotes
+    },
+    notes: req.body.reportNotes
+  })
+  //When you make a new shoeing, update horses last visit date.
+  horse.lastVisit = report.date
 
   //If there are any shoeing info for front area left = horseshoe[0], right = horseshoe[1]
   if (req.body.job === 'Half' || req.body.job === 'Full' || req.body.job === 'Trim') {
-    if (req.body.shoes) {
+    report.front.notes = req.body.frontNotes
+
+    if (req.body.shoes !== undefined) {
       for (const shoe of req.body.shoes) {
         report.front.shoes.push(shoe)
       }
     }
-    if (req.body.materials) {
+    if (req.body.materials !== undefined) {
       for (const material of req.body.materials) {
         report.front.materials.push(material)
       }
     }
-    if (req.body.services) {
+    if (req.body.services !== undefined) {
       for (const service of req.body.services) {
         report.front.services.push(service)
       }
@@ -182,7 +183,9 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
   }
   //This catches the back area if there is any shoeing info for both front and back areas
   //left = horseshoe[0], right = horseshoe[1]
-  if (req.body.job === 'Full' || req.body.job === 'Trim') {
+  if (req.body.job === 'Full') {
+    report.back.notes = req.body.backNotes
+
     report.back.horseshoes.push({
       hoof: 'Left',
       shoeSize: req.body.backLeftSize,
@@ -197,70 +200,53 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 
   //If there are any images
   if (req.files) {
-    console.log(req.files)
     for (const field in req.files) {
-      console.log(field)
       //each array in parser object, <= 6 fields
-      const fieldname = field.substring(0, field.length - 6) //minus "Image" as named in horseshoe schema
-      console.log(fieldname)
-      for (const image of field) {
+      const fieldname = field.substring(0, field.length - 6) //minus "Images" as named in horseshoe schema
+      for (const image of req.files[field]) {
         //each file from the field array, <= 6 files
-        console.log(image)
-        const pic = new Image({
-          ref_id: report._id,
-          onType: 'report',
-          url: image.url,
-          public_id: image.public_id
-        }).save()
-        console.log(pic)
+
         //save image _id to relevant area
         switch (fieldname) {
           case 'frontLeft':
             if (report.front.horseshoes[0].hoof === 'Left') {
-              report.front.horseshoes[0].images.push(pic._id)
+              report.front.horseshoes[0].images.push(image.url)
             } else if (report.front.horseshoes[1].hoof === 'Left') {
-              report.front.horseshoes[1].images.push(pic._id)
+              report.front.horseshoes[1].images.push(image.url)
             }
-            console.log(report.front.horseshoes[0])
-            console.log(report.front.horseshoes[1])
             break
 
           case 'frontRight':
             if (report.front.horseshoes[1].hoof === 'Right') {
-              report.front.horseshoes[1].images.push(pic._id)
+              report.front.horseshoes[1].images.push(image.url)
             } else if (report.front.horseshoes[0].hoof === 'Right') {
-              report.front.horseshoes[0].images.push(pic._id)
+              report.front.horseshoes[0].images.push(image.url)
             }
-            console.log(report.front.horseshoes[0])
-            console.log(report.front.horseshoes[1])
             break
 
           case 'backLeft':
             if (report.back.horseshoes[0].hoof === 'Left') {
-              report.back.horseshoes[0].images.push(pic._id)
+              report.back.horseshoes[0].images.push(image.url)
             } else if (report.back.horseshoes[1].hoof === 'Left') {
-              report.back.horseshoes[1].images.push(pic._id)
+              report.back.horseshoes[1].images.push(image.url)
             }
-            console.log(report.back.horseshoes[0])
-            console.log(report.back.horseshoes[1])
             break
 
           case 'backRight':
             if (report.back.horseshoes[1].hoof === 'Right') {
-              report.back.horseshoes[1].images.push(pic._id)
+              report.back.horseshoes[1].images.push(image.url)
             } else if (report.back.horseshoes[0].hoof === 'Right') {
-              report.back.horseshoes[0].images.push(pic._id)
+              report.back.horseshoes[0].images.push(image.url)
             }
-            console.log(report.back.horseshoes[0])
-            console.log(report.back.horseshoes[1])
             break
 
           case 'medical':
-            report.medical.images.push(pic._id)
+            report.medical.images.push(image.url)
             break
 
-          case 'notes':
-            report.images.push(pic._id)
+          case 'report':
+            console.log(image.url)
+            report.images.push(image.url)
             break
         }
       }
@@ -274,7 +260,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 
 router.get('/:id/update', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  res.render('update-horse.ejs', { horse, name: req.user.username })
+  res.render('update-horse.ejs', { horse: horse, name: req.user.username })
 })
 
 router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) => {

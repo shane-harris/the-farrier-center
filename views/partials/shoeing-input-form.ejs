@@ -12,15 +12,15 @@
 <div class="col-sm-6 shoeing">
   <h1><%= hoof %></h1>
 
-  <h2>A/P</h2>
-  <input type="file" class="form-control" id="image" name="<%= hoofIdent %>Images" multiple>
-
-  <h2>M/L</h2>
-  <input type="file" class="form-control" id="image" name="<%= hoofIdent %>Images" multiple>
-
-  <h3>Measurements:</h3>
   <div class="form-group">
-    <label for="size">Shoe Size</label>
+    <h2>Images</h2>
+    <input type="file" class="form-control" id="images" name="<%= hoofIdent %>Images" multiple>
+  </div>
+
+  <div class="form-group">
+    <label for="size">
+      <h3>Shoe Size</h3>
+    </label>
     <input type="number" class="form-control" id="size" name="<%= hoofIdent %>Size"
       placeholder="Enter Horse Shoe size">
   </div>
@@ -30,6 +30,6 @@
       <H3>Notes:</H3>
     </label>
     <textarea class="form-control" id="notes" name="<%= hoofIdent %>Notes" rows="4"
-      placeholder="None, It went normally."></textarea>
+      placeholder="Notes specific to this shoe."></textarea>
   </div>
 </div>

@@ -95,7 +95,7 @@
             <h1>Farrier: <%= shoeings.farrier %></h1>
           </div>
         </div>
-        <%- include('partials/medical-input-fields', {medical: shoeings.medical, editable: false}) %>
+        <%- include('partials/report-medical-fields', {medical: shoeings.medical, editable: false}) %>
         <% } %>
         <% } else { %>
         <div align="center">
@@ -125,7 +125,7 @@
       <!--If shoeing is undefined shoeings.front and shoeings.back are ReferenceError-->
       <!-- <% if (shoeings !== undefined) { %> -->
       <div id="shoeing" class="collapse">
-        <% if (shoeings !== undefined || shoeings.front !== undefined) { %>
+        <% if (shoeings !== undefined) { %>
         <div class="row">
           <div class="col-sm-4">
             <h2>Most Recent Shoeing</h2>
@@ -139,8 +139,10 @@
             <h2>Farrier: <%= shoeings.farrier %></h2>
           </div>
         </div>
+        <% } %>
 
         <%# Shoeing Data %>
+        <% if (shoeings.front.horseshoes.length !== 0) { %>
         <div class="row">
           <div class="col-sm-6 form">
             <%- include('partials/shoeing', {area: 'Front Left', hoof: shoeings.front.horseshoes[0]}) %>
@@ -152,7 +154,7 @@
         </div>
         <% } %>
 
-        <% if (shoeings.back !== undefined) { %>
+        <% if (shoeings.back.horseshoes.length !== 0) { %>
         <div class="row">
           <div class="col-sm-6 form">
             <%- include('partials/shoeing', {area: 'Back Left', hoof: shoeings.back.horseshoes[0]}) %>
@@ -164,11 +166,17 @@
         </div>
 
         <% } %>
-        <% if (shoeings !== undefined || shoeings.front === undefined && shoeings.back === undefined) { %>
+        <% if (shoeings.front.horseshoes.length === undefined && shoeings.back.horseshoes.length === undefined) { %>
         <div align="center">
           <H2> No Shoeing reports have been created</H2>
         </div>
         <% } %>
+        <div>
+          <% for (url of shoeings.images) { %>
+          <label for="images">Other Images</label>
+          <img alt="Report images" id="images" class="img-fluid float-left" src=<%= url %> />
+          <% } %>
+        </div>
       </div>
       <!--If shoeings is undefined-->
       <!-- <% } %> -->

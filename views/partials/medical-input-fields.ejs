@@ -5,7 +5,7 @@
     @input {Boolean} editable Determines whether the text displayed can be changed.
 
     Implicitely passed in from horse route.
-    @input {Medical} medical is gotten from the backend to update the fields.
+    @input {Medical} medical is passed from the backend to update the fields.
 
     Example: include('partials/medical-input-fields', {editable: true})
 %>
@@ -33,6 +33,12 @@
         placeholder="None, Perfection."><%= updateable ? medical.laminitus : '' %></textarea>
 </div>
 <div class="form-group">
-    <label for="medicalImage">Images</label>
-    <input type="file" class="form-control" id="medicalImage" name="notesImages" multiple>
+    <label for="medicalNotes">Notes</label>
+    <textarea class="form-control" id="notes" name="medicalNotes" rows="4"
+        <%= editable ? '' : 'readonly' %>
+        placeholder="Medical specific notes."><%= updateable ? medical.notes : '' %></textarea>
+</div>
+<div class="form-group">
+    <label for="images">Medical Images</label>
+    <input type="file" class="form-control" id="images" name="medicalImages" multiple>
 </div>
