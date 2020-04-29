@@ -37,8 +37,7 @@ const date = lastVisitDate(horse)
   <td class="queue-cell">
     <address>
       <a class="link-unstyled queue-item-link" id='<%=horse.id%>' href="/horse/<%= horse.id %>">
-
-        <%= assignedFarrier != undefined ? assignedFarrier.fname.charAt(0) + '.' +   assignedFarrier.lname.charAt(0): "None" %>
+        <%= assignedFarrier != undefined ? assignedFarrier.fname.charAt(0) + '.' +   assignedFarrier.lname.charAt(0) : "None" %>
       </a>
     </address>
   </td>

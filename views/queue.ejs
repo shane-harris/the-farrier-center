@@ -24,7 +24,7 @@
           <tbody id="queue-body">
             <% for (horse of horses) { %>
 
-            <% let assignedFarrier = users.find(user => user._id == horse.assignedFarrier) %>
+            <% let assignedFarrier = users.find(user => user.id == horse.assignedFarrier) %>
             <%-  include('partials/queue-item', { horse,assignedFarrier, scripts }) %>
             <% } %>
           </tbody>

@@ -44,10 +44,16 @@ router.get('/queue', loggedIn, async (req, res) => {
     // Returns only horses assigned to you for View Assigned Horse queue
     User.find({})
   ])
+  const prunedUsers = users.map(user => ({
+    fname: user.fname != undefined ? user.fname : '!',
+    lname: user.lname != undefined ? user.lname : '!',
+    id: user.id
+  }))
+
   res.render('queue.ejs', {
     user: req.user,
     horses,
-    users,
+    users: prunedUsers,
     scripts: require('../scripts/queue-item')
   })
 })
@@ -216,7 +222,7 @@ router.post('/assign/:id', loggedIn, async (req, res) => {
       `Assigning horse '${horse.name}' to farrier '${req.user.fname + ' ' + req.user.lname}'.`
     )
   } else if (horse.assignedFarrier != req.user.id) {
-    const assignedFarrier = await User.findOne({ id: horse.assignedFarrier })
+    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
 
     console.log(
       `Horse '${horse.name}' is already assigned to farrier '${assignedFarrier.fname +
@@ -229,17 +235,17 @@ router.post('/assign/:id', loggedIn, async (req, res) => {
 
 router.post('/unassign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier == -1 || horse.assignedFarrier === undefined) {
+  if (horse.assignedFarrier === undefined) {
     console.log('Horse is not assigned a farrier')
     res.redirect(`/horse/queue/`)
   } else {
-    const assignedFarrier = await User.findOne({ id: horse.assignedFarrier })
+    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
     //admins can un-assign any horse from any user
     if (req.user.role === 'admin') {
-      horse.assignedFarrier = -1
+      horse.assignedFarrier = undefined
       //only allow users to un-assign farrier if they are assigned to the horse
     } else if (horse.assignedFarrier === req.user.id) {
-      horse.assignedFarrier = -1
+      horse.assignedFarrier = undefined
     }
     horse.save()
     console.log(
