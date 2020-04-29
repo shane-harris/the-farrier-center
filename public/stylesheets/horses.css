@@ -1,28 +1,48 @@
 @import 'general.css';
 
-#popup {
-  display: none;
-}
-
 .horse-profile {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 200px;
-  padding-bottom: 40px;
+  /* First element (img) aligned to top, second element (horse-info div) aligned to bottom.
+   * Default behavior has the div directly under the image, which looks weird if the image is not
+   * very tall. */
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
 
+  margin: 10px;
   border: solid var(--border-color);
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   color: var(--primary-text-color);
-
-  background-image: url('../images/horse_profile.png');
-  background-position: top center;
-  background-size: 90%;
-  background-repeat: no-repeat;
-
   background-color: var(--fg-color);
+}
+
+.profile-picture {
+  /* Picture does not touch the top */
+  margin-top: 10px;
+  /* Center the picture horizontally */
+  margin-left: auto;
+  margin-right: auto;
+  /* Picture does not touch the sides */
+  max-width: 90%;
+  /* Picture does not push the horse-info div down */
+  max-height: 80%;
+}
+
+.horse-info {
+  /* Give text some breathing room */
+  padding: 10px;
 }
 
 .horse-profile:hover {
   border: solid var(--border-hover-color);
+}
+
+body {
+  /* Prevent the footer from cutting off the bottom row of horses */
+  padding-bottom: 70px;
+}
+
+.container {
+  /* Allow the page content to take up to 80% the width of the screen */
+  max-width: 80vw;
 }
