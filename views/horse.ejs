@@ -107,7 +107,7 @@
       <!--If shoeings is undefined shoeing.medicals is a ReferenceError-->
       <div class="collapse" id="medical">
         <div class="row">
-          <% if (shoeings[0] !== undefined) { %>
+          <% if (shoeings[0] !== undefined && shoeings[0].medical !== undefined) { %>
           <div class="col-sm-4">
             <h1>Medical Analysis</h1>
           </div>

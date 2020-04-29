@@ -101,7 +101,6 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  console.log(shoeings[0])
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
@@ -110,20 +109,21 @@ router.get('/:id', loggedIn, async (req, res) => {
 })
 
 router.get('/:id/new-report', loggedIn, async (req, res) => {
-  const [horse, shoeing] = await Promise.all([
+  const [horse, shoeings] = await Promise.all([
     Horse.findOne({ id: req.params.id }),
     // Get the most recent medical analysis
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
   //check if first element in shoeing array has a medical field to avoid ReferenceError
-  const medical = maybe(shoeing[0].medical).or({})
-
-  const uselatest = medical === undefined ? false : true
-
+  let medical = undefined
+  if (shoeings.length > 0) {
+    medical = maybe(shoeings[0].medical).or({})
+  }
+  const useLatest = medical === undefined ? false : true
   res.render('new-report.ejs', {
     horse: horse,
     medical: medical,
-    updateable: uselatest
+    updateable: useLatest
   })
 })
 
