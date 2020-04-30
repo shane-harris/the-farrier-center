@@ -19,23 +19,24 @@ $(document).ready(function() {
     ],
 
     dom: '<"row"<"col"<"checkbox-area">><"col"fr>>tilpr',
-    initComplete: function(settings, json) {
+    initComplete: function() {
       if (localStorage.input === 'true') {
-        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+        $.fn.dataTable.ext.search.push(function(_, data) {
           return data[3].trim() === 'Yes'
         })
       }
     }
   })
   $('div.checkbox-area').html(
-    '<input id="view-assigned" class ="form-check-input"  type="checkbox" View Assigned Horses>  <label class="form-check-label" for="checkbox">View Assigned Horses</label'
+    `<input id="view-assigned" class ="form-check-input" type="checkbox" View Assigned Horses>
+     <label class="form-check-label" for="checkbox">View Assigned Horses</label>`
   )
 
   table.draw()
 
   $('#view-assigned').on('change', function() {
     if ($(this).is(':checked')) {
-      $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+      $.fn.dataTable.ext.search.push(function(_, data) {
         return data[3].trim() === 'Yes'
       })
     } else {
