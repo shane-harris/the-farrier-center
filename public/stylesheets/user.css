@@ -9,3 +9,11 @@
   max-width: 600px;
   align-content: center;
 }
+
+.single-user {
+  padding: 2rem;
+}
+
+.center {
+  justify-content: center;
+}
