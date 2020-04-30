@@ -20,6 +20,13 @@ const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
 const darkgreen = '#006400'
 const darkestgreen = '#001000'
+/* eslint-disable no-unused-vars */
+const red = '#ff0000'
+const blue = '#0000ff'
+const darkblue = '#00008b'
+const magenta = '#ff00ff'
+const indigo = '#4B0082'
+/* eslint-enable no-unused-vars */
 const lightbrown = '#be9063'
 const darknavy = '#14172b'
 const flatgrey = '#585c5a'
