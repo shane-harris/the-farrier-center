@@ -1,7 +1,7 @@
 'use strict'
 
 /* Direct ESLint to ignore the following undefined (as far as it can tell) variable(s): */
-/* global Hammer */
+/* global Hammer, userfname, userlname */
 
 $(document).ready(function() {
   var table = $('#queue').DataTable({
@@ -22,7 +22,9 @@ $(document).ready(function() {
     initComplete: function() {
       if (localStorage.input === 'true') {
         $.fn.dataTable.ext.search.push(function(_, data) {
-          return data[3].trim() === 'Yes'
+          return (
+            data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
+          )
         })
       }
     }
@@ -37,7 +39,9 @@ $(document).ready(function() {
   $('#view-assigned').on('change', function() {
     if ($(this).is(':checked')) {
       $.fn.dataTable.ext.search.push(function(_, data) {
-        return data[3].trim() === 'Yes'
+        return (
+          data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
+        )
       })
     } else {
       $.fn.dataTable.ext.search.pop()
