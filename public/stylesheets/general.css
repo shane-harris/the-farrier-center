@@ -152,3 +152,8 @@ nav {
 #search-button {
   height: 40px;
 }
+
+#page-container {
+  /* Prevent the footer from cutting off the bottom of the page */
+  padding-bottom: 70px;
+}

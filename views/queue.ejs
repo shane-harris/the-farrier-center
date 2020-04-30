@@ -17,26 +17,34 @@
               <th scope="col" id="left-col">Horse</th>
               <th scope="col">Location</th>
               <th scope="col" id="right-col">Last Visit</th>
-              <th scope="col" id="assigned">Assigned To Me</th>
+              <th scope="col" id="assigned">Assigned To</th>
               <th scope="col" id="button" data-orderable="false"></th>
             </tr>
           </thead>
           <tbody id="queue-body">
             <% for (horse of horses) { %>
-            <%-  include('partials/queue-item', { horse, scripts }) %>
+
+            <% let assignedFarrier = users.find(user => user.id == horse.assignedFarrier) %>
+            <%-  include('partials/queue-item', { horse,assignedFarrier, scripts }) %>
             <% } %>
           </tbody>
         </table>
       </div>
     </div>
-    <%- include('partials/footer') %>
-
+  </div>
 </body>
+<script>
+  const userfname = document.createElement('div');
+  userfname.innerText = `<%=user.fname %>`
+  const userlname = document.createElement('div');
+  userlname.innerText = `<%=user.lname %>`
+</script>
 
+<%- include('partials/footer') %>
 
 <script>
-  $(document).ready(function () {
 
+  $(document).ready(function () {
     var table = $('#queue').DataTable({
       responsive: {
         details: true
@@ -56,7 +64,7 @@
         if (localStorage.input === 'true') {
           $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
-              return data[3].trim() === "Yes"
+              return data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
             }
           )
         }
@@ -71,7 +79,7 @@
       if ($(this).is(':checked')) {
         $.fn.dataTable.ext.search.push(
           function (settings, data, dataIndex) {
-            return data[3].trim() === "Yes"
+            return data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
           }
         )
       } else {

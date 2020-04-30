@@ -37,7 +37,7 @@ const date = lastVisitDate(horse)
   <td class="queue-cell">
     <address>
       <a class="link-unstyled queue-item-link" id='<%=horse.id%>' href="/horse/<%= horse.id %>">
-        <%= (user.assignedHorses.includes(horse.id) === true ? "Yes" : "No") %>
+        <%= assignedFarrier != undefined ? assignedFarrier.fname.charAt(0) + '.' +   assignedFarrier.lname.charAt(0) : "None" %>
       </a>
     </address>
   </td>
@@ -47,7 +47,7 @@ const date = lastVisitDate(horse)
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       </button>
       <div class="dropdown-menu" aria-labelledby="triggerId">
-        <% if (user.assignedHorses.includes(horse.id)) { %>
+        <% if (horse.assignedFarrier == user._id) { %>
         <form action='/horse/unassign/<%=horse.id%>' method='POST'>
           <button class="dropdown-item">
             Unassign
