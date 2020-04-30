@@ -1,6 +1,13 @@
 @import 'general.css';
 
 .horse-profile {
+  /* First element (img) aligned to top, second element (horse-info div) aligned to bottom.
+   * Default behavior has the div directly under the image, which looks weird if the image is not
+   * very tall. */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   margin-top: 10px;
   margin-bottom: 10px;
   border: solid var(--border-color);
