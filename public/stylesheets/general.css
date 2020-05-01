@@ -157,3 +157,20 @@ nav {
   /* Prevent the footer from cutting off the bottom of the page */
   padding-bottom: 70px;
 }
+
+.horseshoe-icon-header {
+  padding-right: 10px;
+}
+
+.horseshoe-icon-footer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.horseshoe-icon {
+  height: 40px;
+}
+
+.about-modal-link {
+  padding-right: 10px;
+}
