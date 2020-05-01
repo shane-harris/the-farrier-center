@@ -58,7 +58,7 @@ $(document).ready(function() {
   })
 
   function dismiss(event) {
-    const url = 'http://localhost:8000/horse/dismiss/' + event.target.id
+    const url = '/horse/dismiss' + event.target.id
     console.log(event.target.id)
     $.post(url, function() {
       location.reload()
