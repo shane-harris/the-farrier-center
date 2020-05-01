@@ -79,8 +79,10 @@ body {
 }
 
 .single-shoe {
+  min-width: 8in;
   display: inline-flex;
   border: 1px solid #2a6496;
+  background: #f6f8fa;
 }
 
 .title {
