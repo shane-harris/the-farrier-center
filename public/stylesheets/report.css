@@ -29,6 +29,7 @@ body {
   display: flex;
   float: left;
   margin-bottom: 20px;
+  min-width: 8in;
 }
 
 .w-100 {
