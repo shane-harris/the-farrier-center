@@ -3,50 +3,68 @@
 <body>
   <%- include('partials/header-nav', {name: user.username}) %>
   <div id="page-container">
-    <div class="row">
+    <div class="row queue-row">
       <div class="col">
         <h2 class="text-center my-3">Queue</h2>
       </div>
     </div>
-    <div class="row">
-      <div class="col- mx-auto w-75">
+    <div class="row queue-row">
+      <div class="col">
 
-        <table id="queue" class="table table-striped table-dark">
+        <table id="queue" class="table table-striped table-dark" width="95%">
           <thead>
             <tr role="row">
               <th scope="col" id="left-col">Horse</th>
               <th scope="col">Location</th>
               <th scope="col" id="right-col">Last Visit</th>
-              <th scope="col" id="assigned">Assigned To Me</th>
+              <th scope="col" id="assigned">Assigned To</th>
               <th scope="col" id="button" data-orderable="false"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="queue-body">
             <% for (horse of horses) { %>
-            <%-  include('partials/queue-item', { horse, scripts }) %>
+
+            <% let assignedFarrier = users.find(user => user.id == horse.assignedFarrier) %>
+            <%-  include('partials/queue-item', { horse,assignedFarrier, scripts }) %>
             <% } %>
           </tbody>
         </table>
       </div>
     </div>
-    <%- include('partials/footer') %>
-
+  </div>
 </body>
+<script>
+  const userfname = document.createElement('div');
+  userfname.innerText = `<%=user.fname %>`
+  const userlname = document.createElement('div');
+  userlname.innerText = `<%=user.lname %>`
+</script>
 
+<%- include('partials/footer') %>
 
 <script>
-  //Filters Table Assigned Horses
-  $(document).ready(function () {
 
+  $(document).ready(function () {
     var table = $('#queue').DataTable({
+      responsive: {
+        details: true
+      },
+      order: [[2, "asc"]],
       bPaginate: false,
       stateSave: true,
-      "dom": '<"checkbox-area">rftilp',
+      //rowReorder: true,
+      columnDefs: [
+        { responsivePriority: 1, targets: 0 },
+        { responsivePriority: 2, targets: -1 },
+        { responsivePriority: 3, targets: 2 }
+      ],
+
+      "dom": '<"row"<"col"<"checkbox-area">><"col"fr>>tilpr',
       "initComplete": function (settings, json) {
         if (localStorage.input === 'true') {
           $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
-              return data[3].trim() === "Yes"
+              return data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
             }
           )
         }
@@ -61,7 +79,7 @@
       if ($(this).is(':checked')) {
         $.fn.dataTable.ext.search.push(
           function (settings, data, dataIndex) {
-            return data[3].trim() === "Yes"
+            return data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
           }
         )
       } else {
@@ -78,7 +96,22 @@
       localStorage.input = $(this).is(':checked');
     });
 
+    function dismiss(event) {
+      const url = 'http://localhost:8000/horse/dismiss/' + event.target.id
+      console.log(event.target.id)
+      $.post(url, function () {
+        location.reload()
+      })
+
+    }
+
+    var element = document.getElementById("queue-body")
+    var hammertime = new Hammer(element)
+    hammertime.on('swiperight', dismiss)
   })
+
+
+
 
 
 </script>

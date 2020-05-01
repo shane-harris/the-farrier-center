@@ -19,10 +19,10 @@ const loggedOut = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  if (req.user.role === 'admin') {
+  if (req.user !== undefined && req.user.role === 'admin') {
     return next()
   } else {
-    res.redirect('/queue')
+    res.redirect('horse/queue')
   }
 }
 
@@ -35,10 +35,12 @@ const transporter = nodemailer.createTransport({
   }
 })
 const sendRegistrationEmail = async (req, res) => {
+  let role = req.body.adminCheck === 'on' ? 'admin' : 'user'
   try {
     const token = jwt.sign(
       {
-        email: req.body.email
+        email: req.body.email,
+        role
       },
 
       process.env.JWT_KEY,
@@ -48,12 +50,19 @@ const sendRegistrationEmail = async (req, res) => {
     )
 
     const url = `http://localhost:8000/register/${token}`
-
-    await transporter.sendMail({
-      to: req.body.email,
-      subject: 'Welcome to The Farrier Center',
-      html: `Create Your Account: <a href="${url}">${url}</a>`
-    })
+    if (req.body.adminCheck === 'on') {
+      await transporter.sendMail({
+        to: req.body.email,
+        subject: 'Welcome to The Farrier Center',
+        html: `Create Your Admin Account: <a href="${url}">${url}</a>`
+      })
+    } else {
+      await transporter.sendMail({
+        to: req.body.email,
+        subject: 'Welcome to The Farrier Center',
+        html: `Create Your Account: <a href="${url}">${url}</a>`
+      })
+    }
   } catch (e) {
     console.log(e)
   }

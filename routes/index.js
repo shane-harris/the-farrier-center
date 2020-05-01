@@ -22,7 +22,7 @@ router.get('/favicon.ico', (_, res) => res.status(204))
 router.post('/register', loggedOut, (req, res, next) => {
   console.log('registering user')
   User.register(
-    new User({ username: req.body.username, email: req.body.email }),
+    new User({ username: req.body.email, role: req.body.role }),
     req.body.password,
     err => {
       if (err) {
@@ -38,12 +38,15 @@ router.post('/register', loggedOut, (req, res, next) => {
 })
 
 router.get('/register/:token', loggedOut, (req, res) => {
+  let email
+  let role
   jwt.verify(req.params.token, process.env.JWT_KEY, (err, body) => {
     if (err) return res.sendStatus(403)
-    req.email = body.email
+    email = body.email
+    role = body.role
   })
 
-  res.render('register.ejs', { email: req.email })
+  res.render('register.ejs', { email, role })
 })
 
 router.get('/login', loggedOut, (req, res) => {
@@ -64,25 +67,19 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/search', loggedIn, async (req, res) => {
-  const pureQuery = decodeURI(req.url.replace('/search?query=', ''))
+  const query = decodeURI(req.url.replace('/search?query=', ''))
 
-  let horses = await Horse.find({ name: pureQuery }).sort({ id: 1 })
+  const pattern = `.*${query}.*`
 
-  if (horses.length === 0) {
-    horses = await Horse.find({ owner: pureQuery }).sort({ id: 1 })
+  const [horsesByName, horsesByLocation, horsesByOwner] = await Promise.all([
+    Horse.find({ name: { $regex: pattern, $options: 'i' } }).sort({ name: 1 }),
+    Horse.find({ location: { $regex: pattern, $options: 'i' } }).sort({ location: 1 }),
+    Horse.find({ owner: { $regex: pattern, $options: 'i' } }).sort({ owner: 1 })
+  ])
 
-    if (horses.length === 0) {
-      horses = await Horse.find({ location: pureQuery }).sort({ id: 1 })
+  const horses = horsesByName.concat(horsesByLocation).concat(horsesByOwner)
 
-      /*No horses found via current query.
-      Search for all matches that begin with query*/
-      if (horses.length === 0) {
-        const pattern = pureQuery.replace(pureQuery, '^' + pureQuery + '.*')
-        horses = await Horse.find({ name: { $regex: pattern, $options: 'i' } })
-      }
-    }
-  }
-  res.render('search.ejs', { username: req.user.username, horses: horses })
+  res.render('search.ejs', { username: req.user.username, horses })
 })
 
 router.post('/search', async (req, res) => {

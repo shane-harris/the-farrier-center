@@ -6,6 +6,8 @@ const Schema = mongoose.Schema
 
 const HorseSchema = new Schema({
   image: { type: Schema.Types.ObjectId, ref: 'images' },
+  assignedFarrier: String,
+  deleted: { type: Boolean, default: false },
   name: String,
   gender: String,
   temperament: String,
