@@ -15,6 +15,10 @@
   color: var(--queue-text-color);
 }
 
+.queue-row {
+  margin-right: 0px;
+}
+
 .queue-cell {
   overflow: hidden;
 }
