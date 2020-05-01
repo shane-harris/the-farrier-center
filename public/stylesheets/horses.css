@@ -8,8 +8,8 @@
   flex-direction: column;
   justify-content: space-between;
 
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   border: solid var(--border-color);
   text-align: center;
   color: var(--primary-text-color);
