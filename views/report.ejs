@@ -85,8 +85,9 @@
     </h2>
     <% const singleShoeing = shoeings[0] %>
     <%-  include('partials/shoeing-visit', {singleShoeing}) %>
+</div>
 
-
+<div>
 <% for (const singleShoeing of shoeings.slice(1)) { %>
 
           <%-  include('partials/shoeing-visit', {singleShoeing}) %>

@@ -27,10 +27,12 @@ body {
 }
 
 #horse-overview {
-  display: flex;
+  padding-left: 0.5in;
+  display: inline-flex;
   float: left;
   margin-bottom: 20px;
   min-width: 8in;
+  alignment: center;
 }
 
 .w-100 {
