@@ -61,7 +61,7 @@ router.get('/queue', loggedIn, async (req, res) => {
 router.get('/all', loggedIn, async (_, res) => {
   // Get all horses and sort them by id (ascending)
   const horses = await Horse.find({ deleted: false })
-    .sort({ id: 1 })
+    .sort({ name: 1 })
     .populate('image')
   res.render('horses.ejs', { horses: horses })
 })
