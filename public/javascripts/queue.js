@@ -130,3 +130,8 @@ $(document).ready(function() {
   var hammertime = new Hammer(element)
   hammertime.on('swiperight', dismiss)
 })
+
+function changeFarrier(horse) {
+  const farrier = document.getElementById(horse + '-farrier').value
+  console.log(farrier)
+}
