@@ -212,10 +212,16 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.post('/assign/:hid/:uid', loggedIn, async (req, res) => {
-  //const horse = await Horse.findOne({ horseID: req.params.hid })
-  //const user = await users.findOne({ userID: req.params.uid })
-  console.log(req.params)
+router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ id: req.params.horseID })
+  if (req.params.userID === 'none') {
+    horse.assignedFarrier = undefined
+  } else {
+    horse.assignedFarrier = req.params.userID
+  }
+  await horse.save(err => {
+    console.log(err)
+  })
   res.redirect(`/horse/queue/`)
 })
 
