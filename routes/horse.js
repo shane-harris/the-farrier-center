@@ -45,8 +45,8 @@ router.get('/queue', loggedIn, async (req, res) => {
     User.find({})
   ])
   const prunedUsers = users.map(user => ({
-    fname: user.fname != undefined ? user.fname : '!',
-    lname: user.lname != undefined ? user.lname : '!',
+    fname: user.fname !== undefined && user.fname !== '' ? user.fname : 'NoFirstName',
+    lname: user.lname !== undefined && user.lname !== '' ? user.lname : 'NoLastName',
     id: user.id
   }))
 
@@ -212,6 +212,11 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   res.redirect(`/horse/${req.params.id}`)
 })
 
+router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
+  const horse = await Horse.findOne({ horseID: req.params.id })
+  const user = await users.findOne({ userID: req.params.id })
+  console.log(req.params)
+})
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
   if (horse.assignedFarrier == -1 || horse.assignedFarrier === undefined) {
