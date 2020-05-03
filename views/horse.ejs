@@ -92,60 +92,14 @@
     <div class="container form">
       <div class="row justify-content-center">
         <div class="pad">
-          <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
-            aria-expanded="false" aria-controls="medical">
-            Show Most Recent Shoeing Report
-          </a>
-        </div>
-        <div class="pad">
           <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New
             Shoeing</a>
         </div>
       </div>
 
-      <div id="shoeing" class="collapse">
-        <% if(shoeings.length > 0) { %>
+      <% if(shoeings.length > 0) { %>
         <% let mostRecentShoeing = shoeings[0]%>
-        <div class="row">
-          <div class="col-sm-4">
-            <h2>Most Recent Shoeing</h2>
-          </div>
-          <div class="col-sm-4">
-            <h1>Date:
-              <%= `${mostRecentShoeing.date.getMonth() + 1}/${mostRecentShoeing.date.getDate()}/${mostRecentShoeing.date.getFullYear()}` %>
-            </h1>
-          </div>
-          <div class="col-sm-4">
-            <h2>Farrier: Steve</h2>
-          </div>
-        </div>
 
-        <%# Shoeing Data %>
-        <div class="row">
-          <div class="col-sm-6 form">
-            <% horse.data.hoof = "Front Left" %>
-            <%- include('partials/shoeing', horse.data) %>
-          </div>
-
-          <div class="col-sm-6 form">
-            <% horse.data.hoof = "Front Right" %>
-            <%- include('partials/shoeing', horse.data) %>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-sm-6 form">
-            <% horse.data.hoof = "Back Left" %>
-            <%- include('partials/shoeing', horse.data) %>
-          </div>
-
-          <div class="col-sm-6 form">
-            <% horse.data.hoof = "Back Right" %>
-            <%- include('partials/shoeing', horse.data) %>
-          </div>
-        </div>
-
-      </div>
       <div class="accordion" id="shoeings-accordian">
 
         <!--Will be populated with all the shoeings done on a horse-->
