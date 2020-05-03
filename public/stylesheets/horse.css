@@ -10,6 +10,8 @@
 .shoeing-card {
   border: 2px solid var(--border-color);
   background-color: var(--shoeing-card-color);
+  display: inline-flex;
+  margin: 0.3%;
 }
 
 .shoeing-card-body {
@@ -23,4 +25,30 @@
 
 #new-shoeing-button {
   text-align: right;
+}
+
+input {
+  vertical-align: center;
+  margin-top: 0;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+}
+
+#new-shoeing-and-view {
+  float: right;
+  display: inline-flex;
+}
+.card-header {
+  display: inline-flex;
+}
+.shoeing-button {
+  margin-right: 20px;
+}
+.thumbnail-button {
+  float: left;
+}
+
+.visits {
+  padding: 0;
 }

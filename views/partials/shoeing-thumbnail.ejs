@@ -10,11 +10,16 @@
             <!-- In order for the collapse functionality to work each cell needs to have a unique ID,
                      So I am using a regexed version of the date to create the ID ensuring they will all be
                       unique unless (somehow) two reports are created in the same second-->
-            <button type="button" class="btn btn-link" data-toggle="collapse"
+
+            <button type="button" class="btn btn-link thumbnail-button shoeing-button" data-toggle="collapse"
                     data-target="#<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
                 <%= singleShoeing.farrier %>
                 <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %>
             </button>
+
+            <input class="checkbox" type="checkbox"
+                   id="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>"
+                   name="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
 
         </h2>
     </div>
