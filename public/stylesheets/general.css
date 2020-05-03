@@ -151,9 +151,27 @@ nav {
 }
 #search-button {
   height: 40px;
+  margin-right: 10px;
 }
 
 #page-container {
   /* Prevent the footer from cutting off the bottom of the page */
   padding-bottom: 70px;
+}
+
+.horseshoe-icon-header {
+  padding-right: 10px;
+}
+
+.footer-brand {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.horseshoe-icon {
+  height: 40px;
+}
+
+.about-modal-link {
+  padding-right: 10px;
 }
