@@ -92,42 +92,36 @@
     <div class="container form">
       <div class="row justify-content-center">
         <div class="pad">
-          <h2>Visits</h2>
+          <h2 id="shoeings-titles">Visits</h2>
         </div>
-      </div>
 
+
+      </div>
+      <div class="pad">
+        <a type="button" id = "new-shoeing-button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New
+          Shoeing</a>
+      </div>
       <% if(shoeings.length > 0) { %>
+        <% let mostRecentShoeing = shoeings[0]%>
+
       <div class="accordion" id="shoeings-accordian">
 
         <!--Will be populated with all the shoeings done on a horse-->
         <% for (const singleShoeing of shoeings) { %>
         <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
         <% } %>
-      </div>
 
+      </div>
+      <div id="all-report-button">
+        <a type="button" class="btn"
+           href="/horse/<%= horse.id %>/view-report">View Report</a>
+      </div>
       <% } else { %>
         <div align="center">
           <H2> No Shoeing reports have been created</H2>
         </div>
       <% } %>
-
-        <div id="new-shoeing-and-view" class="row">
-            <!--Only display view Reports button if there are reports-->
-            <% if(shoeings.length > 0) { %>
-            <div class="pad">
-                <a type="button" class="btn btn-dark"
-                   href="/horse/<%= horse.id %>/view-report">View Report</a>
-            </div>
-            <% }%>
-            <div class="pad">
-                <a type="button" id = "new-shoeing-button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New
-                    Shoeing</a>
-            </div>
-        </div>
-
     </div>
-
-
 
   </div>
   <%- include('partials/footer') %>

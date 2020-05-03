@@ -16,11 +16,6 @@
                 <%= singleShoeing.farrier %>
                 <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %>
             </button>
-
-            <input class="checkbox" type="checkbox"
-                   id="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>"
-                   name="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
-
         </h2>
     </div>
 
@@ -29,5 +24,13 @@
         <div class="card-body">
             <p>Notes: <%= singleShoeing.other %></p>
         </div>
+        <p id="include-in-report">
+            Include in report?
+            <input class="checkbox" type="checkbox"
+                   id="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "") %>"
+                   name="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "") %>">
+            <label for="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "") %>"></label>
+        </p>
+
     </div>
 </div>
