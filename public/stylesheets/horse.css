@@ -36,7 +36,7 @@ input {
 }
 
 #new-shoeing-and-view {
-  /*float: right;*/
+  text-align: right;
 
   display: inline-flex;
 }

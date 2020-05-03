@@ -1,125 +1,125 @@
 <%- include('partials/head', { title: 'Horse Profile', css: 'horse' }) %>
 
 <body>
-  <%- include('partials/header-nav') %>
-  <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-    aria-hidden="true">
+<%- include('partials/header-nav') %>
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirm Deletion</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete <%= horse.name %>?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <form action='/horse/delete/<%= horse.id %>' method="POST">
+                    <button type="submit" class="btn btn-primary">Yes</button>
+                </form>
+            </div>
         </div>
-        <div class="modal-body">
-          Are you sure you want to delete <%=horse.name%>?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-          <form action='/horse/delete/<%=horse.id%>' method="POST">
-            <button type="submit" class="btn btn-primary">Yes</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
-  <div id="page-container" class="container-fluid">
+<div id="page-container" class="container-fluid">
     <%# Horse Summary %>
     <div class="container form">
-      <div class="dropdown" align="right">
-        <button class="btn dropdown-toggle fa fa-edit" type="button"
-          data-toggle="dropdown"></button>
-        <ul class="dropdown-menu">
-          <form action="/horse/<%= horse.id %>/update" method="GET">
-            <button type="submit" class="dropdown-item">Update</button>
-          </form>
-          <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modelId">
-            Delete Horse
-          </button>
-        </ul>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <img alt="Horse" class="img-fluid float-left"
-            src=<%= horse.image === undefined ? "../public/images/horse_profile.png" : horse.image.url %> />
+        <div class="dropdown" align="right">
+            <button class="btn dropdown-toggle fa fa-edit" type="button"
+                    data-toggle="dropdown"></button>
+            <ul class="dropdown-menu">
+                <form action="/horse/<%= horse.id %>/update" method="GET">
+                    <button type="submit" class="dropdown-item">Update</button>
+                </form>
+                <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modelId">
+                    Delete Horse
+                </button>
+            </ul>
         </div>
-        <div class="col-sm-4">
-          <table class="table table-borderless">
-            <thead>
-              <tr></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Name:</th>
-                <td><%= horse.name %></td>
-              </tr>
-              <tr>
-                <th scope="row">Gender</th>
-                <td><%= horse.gender %></td>
-              </tr>
-              <tr>
-                <th scope="row">Temperament</th>
-                <td><%= horse.temperament %></td>
-              </tr>
-              <tr>
-                <th scope="row">Discipline</th>
-                <td><%= horse.discipline%></td>
-              </tr>
-              <tr>
-                <th scope="row">Location</th>
-                <td><%= horse.location %></td>
-              </tr>
-              <tr>
-                <th scope="row">Owner</th>
-                <td><%= horse.owner %></td>
-              </tr>
-              <tr>
-                <th scope="row">Vet</th>
-                <td><%= horse.vet %></td>
-              </tr>
-              <tr>
-                <th scope="row">History</th>
-                <td><%= horse.history %></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="row">
+            <div class="col-sm-4">
+                <img alt="Horse" class="img-fluid float-left"
+                     src=<%= horse.image === undefined ? "../public/images/horse_profile.png" : horse.image.url %>/>
+            </div>
+            <div class="col-sm-4">
+                <table class="table table-borderless">
+                    <thead>
+                    <tr></tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">Name:</th>
+                        <td><%= horse.name %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Gender</th>
+                        <td><%= horse.gender %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Temperament</th>
+                        <td><%= horse.temperament %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Discipline</th>
+                        <td><%= horse.discipline %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Location</th>
+                        <td><%= horse.location %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Owner</th>
+                        <td><%= horse.owner %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Vet</th>
+                        <td><%= horse.vet %></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">History</th>
+                        <td><%= horse.history %></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
     <%# Horse Most Recent Shoeing %>
     <div class="container form">
-      <div class="row justify-content-center">
-        <div class="pad">
-          <h2>Visits</h2>
+        <div class="row justify-content-center">
+            <div class="pad">
+                <h2>Visits</h2>
+            </div>
         </div>
-      </div>
 
-      <% if(shoeings.length > 0) { %>
-      <div class="accordion" id="shoeings-accordian">
-
-        <!--Will be populated with all the shoeings done on a horse-->
-        <% for (const singleShoeing of shoeings) { %>
-        <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
-        <% } %>
-      </div>
-
-      <% } else { %>
-        <div align="center">
-          <H2> No Shoeing reports have been created</H2>
-        </div>
-      <% } %>
         <% if(shoeings.length > 0) { %>
+            <div class="accordion" id="shoeings-accordian">
+
+                <!--Will be populated with all the shoeings done on a horse-->
+                <% for (const singleShoeing of shoeings) { %>
+                    <%- include('partials/shoeing-thumbnail', {singleShoeing}) %>
+                <% } %>
+            </div>
         <div id="new-shoeing-and-view" class="row">
+            <!--Only display view Reports button if there are reports-->
+
             <div class="pad">
                 <a type="button" class="btn btn-dark"
                    href="/horse/<%= horse.id %>/view-report">View Report</a>
             </div>
-            <% }%>
+
+            <% } else { %>
+                <div align="center">
+                    <H2> No Shoeing reports have been created</H2>
+                </div>
+            <% } %>
 
             <div class="pad">
-                <a type="button" id = "new-shoeing-button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New
+                <a type="button" id="new-shoeing-button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New
                     Shoeing</a>
             </div>
         </div>
@@ -127,7 +127,6 @@
     </div>
 
 
-
-  </div>
-  <%- include('partials/footer') %>
+</div>
+<%- include('partials/footer') %>
 </body>
