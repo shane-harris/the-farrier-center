@@ -212,11 +212,13 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   res.redirect(`/horse/${req.params.id}`)
 })
 
-router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ horseID: req.params.id })
-  const user = await users.findOne({ userID: req.params.id })
+router.post('/assign/:hid/:uid', loggedIn, async (req, res) => {
+  //const horse = await Horse.findOne({ horseID: req.params.hid })
+  //const user = await users.findOne({ userID: req.params.uid })
   console.log(req.params)
+  res.redirect(`/horse/queue/`)
 })
+
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
   if (horse.assignedFarrier == -1 || horse.assignedFarrier === undefined) {
