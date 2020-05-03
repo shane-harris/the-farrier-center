@@ -36,7 +36,8 @@ input {
 }
 
 #new-shoeing-and-view {
-  float: right;
+  /*float: right;*/
+
   display: inline-flex;
 }
 .card-header {
