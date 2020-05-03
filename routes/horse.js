@@ -45,8 +45,8 @@ router.get('/queue', loggedIn, async (req, res) => {
     User.find({})
   ])
   const prunedUsers = users.map(user => ({
-    fname: user.fname != undefined ? user.fname : '!',
-    lname: user.lname != undefined ? user.lname : '!',
+    fname: user.fname !== undefined && user.fname !== '' ? user.fname : 'NoFirstName',
+    lname: user.lname !== undefined && user.lname !== '' ? user.lname : 'NoLastName',
     id: user.id
   }))
 
@@ -60,7 +60,9 @@ router.get('/queue', loggedIn, async (req, res) => {
 
 router.get('/all', loggedIn, async (_, res) => {
   // Get all horses and sort them by id (ascending)
-  const horses = await Horse.find({ deleted: false }).sort({ id: 1 })
+  const horses = await Horse.find({ deleted: false })
+    .sort({ name: 1 })
+    .populate('image')
   res.render('horses.ejs', { horses: horses })
 })
 
@@ -268,19 +270,16 @@ router.post('/unassign/:id', loggedIn, async (req, res) => {
 
 router.post('/dismiss/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  //If this horse is assigned to this farrier, remove it from the farrier's queue
-  if (req.user.assignedHorses.includes(req.params.id)) {
-    const i = req.user.assignedHorses.indexOf(req.params.id)
-    if (i > -1) {
-      req.user.assignedHorses.splice(i, 1)
-    }
-    req.user.save()
-    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
-  }
-  //Update the lastVisitDate for the horse only. No reports are submitted.
   horse.lastVisit = new Date()
-  horse.save()
-  res.redirect(`/horse/queue/`)
+  if (horse.assignedFarrier === req.user.id) {
+    horse.assignedFarrier = undefined
+    await horse.save()
+    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
+  } else {
+    await horse.save()
+    console.log(`${horse.name} dismissed`)
+  }
+  res.redirect(`/horse/queue`)
 })
 
 router.post('/delete/:id', loggedIn, async (req, res) => {

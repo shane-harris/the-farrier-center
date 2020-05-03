@@ -6,14 +6,22 @@
 
     Example: include('partials/single-user', {user})
 %>
-<a class="col-md-3 link-unstyled" href="/user/<%= user.lname %>">
-    <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
-        <div class="single-user" data-toggle="tooltip">
-            <%= user.fname %>
-            <%= user.lname %>
-            <%= user.username %>
-            <%= user.phone %>
-            <%= user.email %>
+<div class="col-lg-4" >
+        <div class="single-user form">
+            <div class="row center">
+                <%= user.role === "user" ? "User" : "Admin" %>
+            </div>
+            <div class="row">
+                Name: <%= user.fname %> <%= user.lname %>
+            </div>
+            <div class="row">
+                Username: <%= user.username %>
+            </div>
+            <div class="row">
+                Phone: <%= user.phone %>
+            </div>
+            <div class="row">
+                Email: <%= user.email %>
+            </div>
         </div>
-    </span>
-</a>
+</div>
