@@ -143,9 +143,8 @@ router.get('/:id/new-shoeing', loggedIn, async (req, res) => {
 
 router.get('/:id/view-report', loggedIn, async (req, res) => {
   const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
-  const shoeings = await Promise.all([Shoeing.find({ _id: req.query.shoeings })])
-  console.log(req.query.shoeings[0])
-  console.log('shoeing_IDs: ', shoeings)
+  const shoeings = await Promise.all([Shoeing.find({ id: req.query.shoeings })])
+  console.log('shoeings: ', shoeings[0])
   res.render('view-report.ejs', { horse, shoeings })
 })
 
