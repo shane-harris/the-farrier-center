@@ -34,6 +34,8 @@ const parser = multer({ storage })
 
 //Fields used to parse images from /:id/new-reports route
 const imageFields = [
+  { name: 'frontImages', maxCount: 6 },
+  { name: 'backImages', maxCount: 6 },
   { name: 'backLeftImages', maxCount: 6 },
   { name: 'backRightImages', maxCount: 6 },
   { name: 'frontLeftImages', maxCount: 6 },
@@ -101,6 +103,7 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
+  console.log(shoeings[0])
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
@@ -143,7 +146,8 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
       lameness: req.body.lameness,
       blemishes: req.body.blemishes,
       laminitus: req.body.laminitus,
-      notes: req.body.medicalNotes
+      notes: req.body.medicalNotes,
+      images: []
     },
     notes: req.body.reportNotes
   })
@@ -153,20 +157,36 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
   //If there are any shoeing info for front area left = horseshoe[0], right = horseshoe[1]
   if (req.body.job === 'Half' || req.body.job === 'Full' || req.body.job === 'Trim') {
     report.front.notes = req.body.frontNotes
+    report.front.shoes = []
+    report.front.materials = []
+    report.front.services = []
+    report.front.images = []
 
-    if (req.body.shoes !== undefined) {
-      for (const shoe of req.body.shoes) {
-        report.front.shoes.push(shoe)
+    if (req.body.frontShoes !== undefined) {
+      if (req.body.frontShoes[0].length == 1) {
+        report.front.shoes.push(req.body.frontShoes)
+      } else if (req.body.frontShoes.length > 1) {
+        for (const shoe of req.body.frontShoes) {
+          report.front.shoes.push(shoe)
+        }
       }
     }
-    if (req.body.materials !== undefined) {
-      for (const material of req.body.materials) {
-        report.front.materials.push(material)
+    if (req.body.frontMaterials !== undefined) {
+      if (req.body.frontMaterials[0].length == 1) {
+        report.front.materials.push(req.body.frontMaterials)
+      } else if (req.body.frontMaterials.length > 1) {
+        for (const material of req.body.frontMaterials) {
+          report.front.materials.push(material)
+        }
       }
     }
-    if (req.body.services !== undefined) {
-      for (const service of req.body.services) {
-        report.front.services.push(service)
+    if (req.body.frontServices !== undefined) {
+      if (req.body.frontServices[0].length == 1) {
+        report.front.services.push(req.body.frontServices)
+      } else if (req.body.frontServices.length > 1) {
+        for (const service of req.body.frontServices) {
+          report.front.services.push(service)
+        }
       }
     }
 
@@ -185,7 +205,37 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
   //left = horseshoe[0], right = horseshoe[1]
   if (req.body.job === 'Full') {
     report.back.notes = req.body.backNotes
+    report.back.shoes = []
+    report.back.materials = []
+    report.back.services = []
 
+    if (req.body.backShoes !== undefined) {
+      if (req.body.backShoes[0].length == 1) {
+        report.back.shoes.push(req.body.backShoes)
+      } else if (req.body.backShoes.length > 1) {
+        for (const shoe of req.body.backShoes) {
+          report.back.shoes.push(shoe)
+        }
+      }
+    }
+    if (req.body.backMaterials !== undefined) {
+      if (req.body.backMaterials[0].length == 1) {
+        report.back.materials.push(req.body.backMaterials)
+      } else if (req.body.backMaterials.length > 1) {
+        for (const material of req.body.backMaterials) {
+          report.back.materials.push(material)
+        }
+      }
+    }
+    if (req.body.backServices !== undefined) {
+      if (req.body.backServices[0].length == 1) {
+        report.back.services.push(req.body.backServices)
+      } else if (req.body.backServices.length > 1) {
+        for (const service of req.body.backServices) {
+          report.back.services.push(service)
+        }
+      }
+    }
     report.back.horseshoes.push({
       hoof: 'Left',
       shoeSize: req.body.backLeftSize,
@@ -208,6 +258,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 
         //save image _id to relevant area
         switch (fieldname) {
+          case 'front':
+            report.front.images.push(image.url)
+            break
+
           case 'frontLeft':
             if (report.front.horseshoes[0].hoof === 'Left') {
               report.front.horseshoes[0].images.push(image.url)
@@ -222,6 +276,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
             } else if (report.front.horseshoes[0].hoof === 'Right') {
               report.front.horseshoes[0].images.push(image.url)
             }
+            break
+
+          case 'back':
+            report.back.images.push(image.url)
             break
 
           case 'backLeft':
@@ -245,7 +303,6 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
             break
 
           case 'report':
-            console.log(image.url)
             report.images.push(image.url)
             break
         }
