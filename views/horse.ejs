@@ -1,5 +1,3 @@
-
-
 <%- include('partials/head', { title: 'Horse Profile', css: 'horse' }) %>
 
 <body>
@@ -100,32 +98,36 @@
 
       </div>
       <div class="pad">
-        <a type="button" id = "new-shoeing-button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-shoeing">New
+        <a type="button" id="new-shoeing-button" class="btn btn-dark"
+          href="/horse/<%= horse.id %>/new-shoeing">New
           Shoeing</a>
       </div>
       <% if(shoeings.length > 0) { %>
-        <% let mostRecentShoeing = shoeings[0]%>
+      <% let mostRecentShoeing = shoeings[0]%>
+      <form class="form" action='/horse/<%=horse.id%>/view-report' method="POST">
 
-      <div class="accordion" id="shoeings-accordian">
+        <div class="accordion" id="shoeings-accordian">
 
-        <!--Will be populated with all the shoeings done on a horse-->
-        <% for (const singleShoeing of shoeings) { %>
-        <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
-        <% } %>
+          <!--Will be populated with all the shoeings done on a horse-->
+          <% for (const singleShoeing of shoeings) { %>
+          <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
+          <% } %>
 
-      </div>
-      <div id="all-report-button">
-        <a type="button" class="btn"
-           onclick="viewReport()"> View Report</a>
-      </div>
-      <% } else { %>
-        <div align="center">
-          <H2> No Shoeing reports have been created</H2>
         </div>
+        <div id="all-report-button">
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary mt-3">View Report</button>
+          </div>
+
+        </div>
+      </form>
+      <% } else { %>
+      <div align="center">
+        <H2> No Shoeing reports have been created</H2>
+      </div>
       <% } %>
     </div>
-    <a type="button" class="btn"
-       onclick="getSelectedShoeings()">Test Button</a>
+    <a type="button" class="btn" onclick="getSelectedShoeings()">Test Button</a>
   </div>
   <%- include('partials/footer') %>
 </body>

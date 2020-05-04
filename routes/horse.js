@@ -141,9 +141,15 @@ router.get('/:id/new-shoeing', loggedIn, async (req, res) => {
   res.render('new-shoeing.ejs', { horse })
 })
 
-router.get('/:id/view-report', loggedIn, async (req, res) => {
+router.post('/:id/view-report', loggedIn, async (req, res) => {
+  let ids = []
+  for (var key in req.body) {
+    ids.push(key)
+  }
+
   const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
-  const shoeings = await Promise.all([Shoeing.find({ id: req.query.shoeings })])
+  const shoeingsQuery = await Promise.all([Shoeing.find({ _id: { $in: ids } })])
+  const shoeings = shoeingsQuery[0]
   console.log('shoeings: ', shoeings[0])
   res.render('view-report.ejs', { horse, shoeings })
 })
