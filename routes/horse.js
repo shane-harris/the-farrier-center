@@ -151,7 +151,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     },
     notes: req.body.reportNotes
   })
-  //When you make a new shoeing, update horses last visit date.
+  //When you make a new shoeing, if date was not provided update horses last visit.
   horse.lastVisit = report.date
 
   //If there are any shoeing info for front area left = horseshoe[0], right = horseshoe[1]
@@ -195,6 +195,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
       shoeSize: req.body.frontLeftSize,
       notes: req.body.frontLeftNotes
     })
+
     report.front.horseshoes.push({
       hoof: 'Right',
       shoeSize: req.body.frontRightSize,
@@ -236,11 +237,13 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
+
     report.back.horseshoes.push({
       hoof: 'Left',
       shoeSize: req.body.backLeftSize,
       notes: req.body.backLeftNotes
     })
+
     report.back.horseshoes.push({
       hoof: 'Right',
       shoeSize: req.body.backRightSize,
