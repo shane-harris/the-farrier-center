@@ -340,13 +340,24 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   horse.owner = req.body.owner
   horse.vet = req.body.vet
   horse.history = req.body.history
-  horse.save()
   if (req.file) {
-    const image = await Image.findOne({ _id: horse.image })
-    image.url = req.file.url
-    image.public_id = req.file.public_id
-    image.save()
+    let image = await Image.findOne({ _id: horse.image })
+    if (!image) {
+      image = new Image({
+        ref_id: horse._id,
+        onType: 'horses',
+        url: req.file.url,
+        public_id: req.file.public_id
+      })
+      horse.image = image._id
+      image.save()
+    } else {
+      image.url = req.file.url
+      image.public_id = req.file.public_id
+      image.save()
+    }
   }
+  horse.save()
   res.redirect(`/horse/${req.params.id}`)
 })
 
