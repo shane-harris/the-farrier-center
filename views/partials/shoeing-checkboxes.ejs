@@ -1,9 +1,10 @@
 <%#
     This creates all of the checkboxes for the shoeing form.
 
-    area is part of report can be front or back.
+    passes variable names as keys to the checkbox template. Used to store selected checkbox values as an array of values. 
+    Key: name, value: String if only one checkbox is selected, [String] if multiple values per key.
 
-    Example: include('partials/shoeing-checkboxes' {area:area})
+    Example: include('partials/shoeing-checkboxes' {shoesName: 'frontShoes', mName: 'frontMaterials', sName: 'frontServices'})
 %>
 
 <div class="row form">
