@@ -7,6 +7,7 @@ const router = express.Router()
 const Horse = require('../models/horse')
 const Report = require('../models/report')
 const Image = require('../models/image')
+const User = require('../models/user')
 
 //import middlewares
 const { loggedIn } = require('../middleware/auth')
@@ -48,25 +49,31 @@ router.use('/public', express.static('public'))
 
 // Setup Routes
 router.get('/queue', loggedIn, async (req, res) => {
-  const [horses, assignedHorses] = await Promise.all([
+  const [horses, users] = await Promise.all([
     // Returns all horses to populate View All queue
     Horse.find({ deleted: false }).sort({ lastVisit: 1 }),
     // Returns only horses assigned to you for View Assigned Horse queue
-    Horse.find({ id: req.user.assignedHorses, deleted: false })
-      // Sort by lastVisit (ascending)
-      .sort({ lastVisit: 1 })
+    User.find({})
   ])
+  const prunedUsers = users.map(user => ({
+    fname: user.fname !== undefined && user.fname !== '' ? user.fname : 'NoFirstName',
+    lname: user.lname !== undefined && user.lname !== '' ? user.lname : 'NoLastName',
+    id: user.id
+  }))
+
   res.render('queue.ejs', {
     user: req.user,
     horses: horses,
-    assignedHorses: assignedHorses,
+    users: prunedUsers,
     scripts: require('../scripts/queue-item')
   })
 })
 
 router.get('/all', loggedIn, async (_, res) => {
   // Get all horses and sort them by id (ascending)
-  const horses = await Horse.find({ deleted: false }).sort({ id: 1 })
+  const horses = await Horse.find({ deleted: false })
+    .sort({ name: 1 })
+    .populate('image')
   res.render('horses.ejs', { horses: horses })
 })
 
@@ -345,47 +352,64 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
 
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  if (!req.user.assignedHorses.includes(req.params.id) && horse.assigned === false) {
-    req.user.assignedHorses.push(horse.id)
-    horse.assigned = true
-    horse.save
-    req.user.save()
-    console.log(`Assigned horse '${horse.name}' to farrier '${req.user.username}'.`)
-  } else if (req.user.assignedHorses.includes(req.params.id)) {
-    console.log(`Horse '${horse.name}' is already assigned to farrier '${req.user.username}'.`)
-  } else if (horse.assigned) {
-    console.log(horse.name + ' is already assigned to a farrier')
+  if (horse.assignedFarrier == -1 || horse.assignedFarrier === undefined) {
+    horse.assignedFarrier = String(req.user.id)
+    await horse.save(err => {
+      console.log(err)
+    })
+
+    console.log(
+      `Assigning horse '${horse.name}' to farrier '${req.user.fname + ' ' + req.user.lname}'.`
+    )
+  } else if (horse.assignedFarrier != req.user.id) {
+    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
+
+    console.log(
+      `Horse '${horse.name}' is already assigned to farrier '${assignedFarrier.fname +
+        ' ' +
+        assignedFarrier.lname}'.`
+    )
   }
   res.redirect(`/horse/queue/`)
 })
 
 router.post('/unassign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  const i = req.user.assignedHorses.indexOf(req.params.id)
-  if (i > -1) {
-    req.user.assignedHorses.splice(i, 1)
-  }
-  req.user.save()
-  console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
+  if (horse.assignedFarrier === undefined) {
+    console.log('Horse is not assigned a farrier')
+    res.redirect(`/horse/queue/`)
+  } else {
+    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
+    //admins can un-assign any horse from any user
+    if (req.user.role === 'admin') {
+      horse.assignedFarrier = undefined
+      //only allow users to un-assign farrier if they are assigned to the horse
+    } else if (horse.assignedFarrier === req.user.id) {
+      horse.assignedFarrier = undefined
+    }
+    horse.save()
+    console.log(
+      `Unassigned horse '${horse.name}' from farrier '${assignedFarrier.fname +
+        ' ' +
+        assignedFarrier.lname}'`
+    )
 
-  res.redirect(`/horse/queue/`)
+    res.redirect(`/horse/queue/`)
+  }
 })
 
 router.post('/dismiss/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  //If this horse is assigned to this farrier, remove it from the farrier's queue
-  if (req.user.assignedHorses.includes(req.params.id)) {
-    const i = req.user.assignedHorses.indexOf(req.params.id)
-    if (i > -1) {
-      req.user.assignedHorses.splice(i, 1)
-    }
-    req.user.save()
-    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
-  }
-  //Update the lastVisitDate for the horse only. No reports are submitted.
   horse.lastVisit = new Date()
-  horse.save()
-  res.redirect(`/horse/queue/`)
+  if (horse.assignedFarrier === req.user.id) {
+    horse.assignedFarrier = undefined
+    await horse.save()
+    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
+  } else {
+    await horse.save()
+    console.log(`${horse.name} dismissed`)
+  }
+  res.redirect(`/horse/queue`)
 })
 
 router.post('/delete/:id', loggedIn, async (req, res) => {

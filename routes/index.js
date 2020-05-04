@@ -21,16 +21,20 @@ router.get('/favicon.ico', (_, res) => res.status(204))
 
 router.post('/register', loggedOut, (req, res, next) => {
   console.log('registering user')
-  User.register(new User({ username: req.body.email, role: req.body.role }), req.body.password, err => {
-    if (err) {
-      console.log('error while user register!', err)
-      return next(err)
+  User.register(
+    new User({ username: req.body.email, role: req.body.role }),
+    req.body.password,
+    err => {
+      if (err) {
+        console.log('error while user register!', err)
+        return next(err)
+      }
+
+      console.log('user registered!')
+
+      res.redirect('/login')
     }
-
-    console.log('user registered!')
-
-    res.redirect('/login')
-  })
+  )
 })
 
 router.get('/register/:token', loggedOut, (req, res) => {
@@ -49,9 +53,13 @@ router.get('/login', loggedOut, (req, res) => {
   res.render('login.ejs', { user: req.user, message: req.flash('error') })
 })
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), (_, res) => {
-  res.redirect('/')
-})
+router.post(
+  '/login',
+  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+  (_, res) => {
+    res.redirect('/')
+  }
+)
 
 router.get('/logout', (req, res) => {
   req.logout()
@@ -59,25 +67,19 @@ router.get('/logout', (req, res) => {
 })
 
 router.get('/search', loggedIn, async (req, res) => {
-  const pureQuery = decodeURI(req.url.replace('/search?query=', ''))
+  const query = decodeURI(req.url.replace('/search?query=', ''))
 
-  let horses = await Horse.find({ name: pureQuery, deleted: false }).sort({ id: 1 })
+  const pattern = `.*${query}.*`
 
-  if (horses.length === 0) {
-    horses = await Horse.find({ owner: pureQuery, deleted: false }).sort({ id: 1 })
+  const [horsesByName, horsesByLocation, horsesByOwner] = await Promise.all([
+    Horse.find({ name: { $regex: pattern, $options: 'i' } }).sort({ name: 1 }),
+    Horse.find({ location: { $regex: pattern, $options: 'i' } }).sort({ location: 1 }),
+    Horse.find({ owner: { $regex: pattern, $options: 'i' } }).sort({ owner: 1 })
+  ])
 
-    if (horses.length === 0) {
-      horses = await Horse.find({ location: pureQuery, deleted: false }).sort({ id: 1 })
+  const horses = horsesByName.concat(horsesByLocation).concat(horsesByOwner)
 
-      /*No horses found via current query.
-      Search for all matches that begin with query*/
-      if (horses.length === 0) {
-        const pattern = pureQuery.replace(pureQuery, '^' + pureQuery + '.*')
-        horses = await Horse.find({ name: { $regex: pattern, $options: 'i' } })
-      }
-    }
-  }
-  res.render('search.ejs', { username: req.user.username, horses: horses })
+  res.render('search.ejs', { username: req.user.username, horses })
 })
 
 router.post('/search', async (req, res) => {
@@ -117,7 +119,8 @@ router.get('/autocomplete', loggedIn, async (req, res) => {
 
   //Removing duplicate results from full result array
   const result = fullResult.filter(
-    (item, index) => fullResult.indexOf(fullResult.find(found => found.label === item.label)) === index
+    (item, index) =>
+      fullResult.indexOf(fullResult.find(found => found.label === item.label)) === index
   )
   res.jsonp(result)
 })
