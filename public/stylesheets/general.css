@@ -175,3 +175,9 @@ nav {
 .about-modal-link {
   padding-right: 10px;
 }
+.ui-helper-hidden-accessible {
+  display: none;
+  visibility: hidden;
+  color: black;
+  max-height: 0px;
+}
