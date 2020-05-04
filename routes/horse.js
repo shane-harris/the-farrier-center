@@ -110,7 +110,7 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  console.log(shoeings[0])
+  console.log(horse)
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
@@ -326,12 +326,14 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 })
 
 router.get('/:id/update', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
+  const horse = await Horse.findOne({ id: req.params.id }).populate('image')
+  console.log(horse)
+  //update to show current image when editing
   res.render('update-horse.ejs', { horse: horse, name: req.user.username })
 })
 
 router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
+  const horse = await (await Horse.findOne({ id: req.params.id })).populate('image')
   horse.name = req.body.name
   horse.gender = req.body.gender
   horse.temperament = req.body.temperament
@@ -340,13 +342,19 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   horse.owner = req.body.owner
   horse.vet = req.body.vet
   horse.history = req.body.history
-  horse.save()
+
   if (req.file) {
-    const image = await Image.findOne({ _id: horse.image })
-    image.url = req.file.url
-    image.public_id = req.file.public_id
+    const image = new Image({
+      ref_id: horse._id,
+      onType: 'horses',
+      url: req.file.url,
+      public_id: req.file.public_id
+    })
+    horse.image = image._id
     image.save()
   }
+  await horse.save()
+
   res.redirect(`/horse/${req.params.id}`)
 })
 
