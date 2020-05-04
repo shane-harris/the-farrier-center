@@ -4,9 +4,9 @@
     Explicitly passed in on webpage.
     @input {User} user needs a User object to display their info.
 
-    Example: include('partials/single-user', {user})
+    Example: include('partials/single-user', {user: user})
 %>
-<a class="col-md-3 link-unstyled" href="/user/<%= user.lname %>">
+<div class="col-md-3 link-unstyled">
     <span class="tooltip-r" data-toggle="tooltip" data-placement="left" title="Explanation">
         <div class="single-user" data-toggle="tooltip">
             <%= user.fname %>
@@ -16,4 +16,4 @@
             <%= user.email %>
         </div>
     </span>
-</a>
+</div>
