@@ -116,7 +116,7 @@
       </div>
       <div id="all-report-button">
         <a type="button" class="btn"
-           href="/horse/<%= horse.id %>/view-report">View Report</a>
+           onclick="viewReport()"> View Report</a>
       </div>
       <% } else { %>
         <div align="center">
@@ -131,5 +131,7 @@
 </body>
 <script>
   const horse = <%-JSON.stringify(horse)%>
+  console.log("Look at this horse: ", <%- JSON.stringify(horse) %>)
+
 </script>
 <script src="/public/javascripts/horse.js"></script>
