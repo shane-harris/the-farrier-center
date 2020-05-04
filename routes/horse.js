@@ -227,7 +227,7 @@ router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
 
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier == -1 || horse.assignedFarrier === undefined) {
+  if (horse.assignedFarrier === undefined) {
     horse.assignedFarrier = String(req.user.id)
     await horse.save(err => {
       console.log(err)
@@ -236,7 +236,7 @@ router.post('/assign/:id', loggedIn, async (req, res) => {
     console.log(
       `Assigning horse '${horse.name}' to farrier '${req.user.fname + ' ' + req.user.lname}'.`
     )
-  } else if (horse.assignedFarrier != req.user.id) {
+  } else if (horse.assignedFarrier !== req.user.id) {
     const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
 
     console.log(
