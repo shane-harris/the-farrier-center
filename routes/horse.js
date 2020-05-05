@@ -351,9 +351,10 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
       public_id: req.file.public_id
     })
     horse.image = image._id
-    image.save()
+    await Promise.all([image.save(), horse.save()])
+  } else {
+    await horse.save()
   }
-  await horse.save()
 
   res.redirect(`/horse/${req.params.id}`)
 })
