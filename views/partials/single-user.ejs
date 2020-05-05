@@ -4,24 +4,24 @@
     Explicitly passed in on webpage.
     @input {User} user needs a User object to display their info.
 
-    Example: include('partials/single-user', {user})
+    Example: include('partials/single-user', {user: user})
 %>
-<div class="col-lg-4" >
-        <div class="single-user form">
-            <div class="row center">
-                <%= user.role === "user" ? "User" : "Admin" %>
-            </div>
-            <div class="row">
-                Name: <%= user.fname %> <%= user.lname %>
-            </div>
-            <div class="row">
-                Username: <%= user.username %>
-            </div>
-            <div class="row">
-                Phone: <%= user.phone %>
-            </div>
-            <div class="row">
-                Email: <%= user.email %>
-            </div>
+<div class="col-lg-4">
+    <div class="single-user form">
+        <div class="row center">
+            <%= user.role === "user" ? "User" : "Admin" %>
         </div>
+        <div class="row">
+            Name: <%= user.fname %> <%= user.lname %>
+        </div>
+        <div class="row">
+            Username: <%= user.username %>
+        </div>
+        <div class="row">
+            Phone: <%= user.phone %>
+        </div>
+        <div class="row">
+            Email: <%= user.email %>
+        </div>
+    </div>
 </div>

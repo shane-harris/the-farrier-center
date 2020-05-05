@@ -1,31 +1,44 @@
 <%#
-    This creates 4 textareas for medical analysis.
+    This creates 5 textareas for medical analysis.
 
     Explicitly passed in on webpage.
     @input {Boolean} editable Determines whether the text displayed can be changed.
 
     Implicitely passed in from horse route.
-    @input {Medical} medical is gotten from the backend to update the fields.
+    @input {Medical} medical is passed from the backend to update the fields.
 
     Example: include('partials/medical-input-fields', {editable: true})
 %>
 <div class="form-group">
     <label for="gait">Gait Analysis</label>
     <textarea class="form-control" id="gait" name="gait" rows="4" <%= editable ? '' : 'readonly' %>
-              placeholder="It walk nice." ><%= updateable ? medical.gait : '' %></textarea>
+        placeholder="It walk nice."><%= updateable ? medical.gait : '' %></textarea>
 </div>
 <div class="form-group">
     <label for="lameness">Lameness Analysis</label>
-    <textarea class="form-control" id="lameness" name="lameness" rows="4" <%= editable ? '' : 'readonly' %>
-              placeholder="This horse is a perfect example of the perfect horse"><%= updateable ? medical.lameness : '' %></textarea>
+    <textarea class="form-control" id="lameness" name="lameness" rows="4"
+        <%= editable ? '' : 'readonly' %>
+        placeholder="This horse is a perfect example of the perfect horse"><%= updateable ? medical.lameness : '' %></textarea>
 </div>
 <div class="form-group">
     <label for="blemishes">Blemishes Analysis</label>
-    <textarea class="form-control" id="blemishes" name="blemishes" rows="4" <%= editable ? '' : 'readonly' %>
-              placeholder="That is the biggest mole I have EVER seen."><%= updateable ? medical.blemishes : '' %></textarea>
+    <textarea class="form-control" id="blemishes" name="blemishes" rows="4"
+        <%= editable ? '' : 'readonly' %>
+        placeholder="That is the biggest mole I have EVER seen."><%= updateable ? medical.blemishes : '' %></textarea>
 </div>
 <div class="form-group">
     <label for="laminitus">Laminitus Analysis</label>
-    <textarea class="form-control" id="laminitus" name="laminitus" rows="4" <%= editable ? '' : 'readonly' %>
-              placeholder="None, Perfection."><%= updateable ? medical.laminitus : '' %></textarea>
+    <textarea class="form-control" id="laminitus" name="laminitus" rows="4"
+        <%= editable ? '' : 'readonly' %>
+        placeholder="None, Perfection."><%= updateable ? medical.laminitus : '' %></textarea>
+</div>
+<div class="form-group">
+    <label for="medicalNotes">Notes</label>
+    <textarea class="form-control" id="notes" name="medicalNotes" rows="4"
+        <%= editable ? '' : 'readonly' %>
+        placeholder="Medical specific notes."><%= updateable ? medical.notes : '' %></textarea>
+</div>
+<div class="form-group">
+    <label for="images">Medical Images</label>
+    <input type="file" class="form-control" id="images" name="medicalImages" multiple>
 </div>

@@ -2,12 +2,12 @@
     This creates a single checkbox and corresponding label within a div
 
     Explicitly passed in on webpage.
-    @input {String} displayName The label text
-    @input {String} name The value of the `name` and `id` attributes
+    @input {String} displayName is the label text includes spaces. labels refer to the id.
+    @input {String} name is the key, value is the value and has no spaces. name is an a general type and value is a specific thing.
 
-    Example: include('checkbox', {name: "pads", displayName: "Pads"})
+    Example: include('checkbox', {name: "shoes", value: "pads", displayName: "Pads"})
 %>
 <div class="form-check">
-  <input class="form-check-input" type="checkbox" name=<%= name %> id=<%= name %> value=true>
-  <label class="form-check-label" for=<%= name %>><%= displayName %></label>
+  <input class="form-check-input" type="checkbox" value=<%=value%> id=<%=value%> name=<%=name%>>
+  <label class="form-check-label" for=<%= value %>><%= displayName %></label>
 </div>

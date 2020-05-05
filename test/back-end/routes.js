@@ -142,34 +142,17 @@ describe('Routes', () => {
     })
   })
 
-  describe('GET /horse/1/new-medical-analysis', () => {
+  describe('GET /horse/1/new-report', () => {
     let req
     before(() => {
-      return (req = chai.request(app).get('/horse/1/new-medical-analysis'))
+      return (req = chai.request(app).get('/horse/1/new-report'))
     })
 
-    it('should get the new medical analysis page', () => {
+    it('should get the new report page', () => {
       return req.then(res => res.should.have.status(200))
     })
 
-    describe('The new medical analysis page', () => {
-      it('should render HTML', () => {
-        return req.then(res => res.should.be.html)
-      })
-    })
-  })
-
-  describe('GET /horse/1/new-shoeing', () => {
-    let req
-    before(() => {
-      return (req = chai.request(app).get('/horse/1/new-shoeing'))
-    })
-
-    it('should get the new shoeing page', () => {
-      return req.then(res => res.should.have.status(200))
-    })
-
-    describe('The new shoeing page', () => {
+    describe('The new report page', () => {
       it('should render HTML', () => {
         return req.then(res => res.should.be.html)
       })
