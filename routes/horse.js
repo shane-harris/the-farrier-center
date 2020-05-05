@@ -213,15 +213,38 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
 })
 
 router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
+  console.log(req.params)
   const horse = await Horse.findOne({ id: req.params.horseID })
-  if (req.params.userID === 'none') {
-    horse.assignedFarrier = undefined
+  console.log(horse)
+  if (req.params.userID !== 'none') {
+    const user = await User.findOne({ _id: req.params.userID })
+    console.log(user)
+    if (user !== undefined) {
+      console.log('User exists!')
+      if (req.user.role === 'admin') {
+        console.log("We're an admin!")
+        horse.assignedFarrier = req.params.userID
+      } else {
+        console.log("We're a regular user!")
+        if (horse.assignedFarrier === undefined || horse.assignedFarrier === '') {
+          console.log('The horse has no farrier!')
+          horse.assignedFarrier = req.params.userID
+        } else {
+          console.log('The horse already has a farrier!')
+        }
+        // Don't have permission, do nothing.
+      }
+      console.log("User doesn't exist!", req.params.userID)
+    }
   } else {
-    horse.assignedFarrier = req.params.userID
+    console.log("Setting user to 'none'")
+    if (req.user.role === 'admin' || horse.assignedFarrier === req.user.id) {
+      horse.assignedFarrier = ''
+    } else {
+      // Do nothing
+    }
   }
-  await horse.save(err => {
-    console.log(err)
-  })
+  await horse.save(err => {})
   res.redirect(`/horse/queue/`)
 })
 

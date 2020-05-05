@@ -132,8 +132,8 @@ $(document).ready(function() {
 })
 
 function changeFarrier(horse) {
-  const farrier = document.getElementById(horse + '-farrier').value
-  console.log(farrier)
+  const e = document.getElementById(horse + '-farrier')
+  const farrier = e.value
   $.post('/horse/assign/' + horse + '/' + farrier, function() {
     location.reload()
   })
