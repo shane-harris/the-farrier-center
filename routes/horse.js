@@ -119,21 +119,22 @@ router.get('/:id', loggedIn, async (req, res) => {
 })
 
 router.get('/:id/new-report', loggedIn, async (req, res) => {
-  const [horse, shoeings] = await Promise.all([
+  const [horse, reports] = await Promise.all([
     Horse.findOne({ id: req.params.id }),
     // Get the most recent medical analysis
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
   //check if first element in shoeing array has a medical field to avoid ReferenceError
   let medical = undefined
-  if (shoeings.length > 0) {
-    medical = maybe(shoeings[0].medical).or({})
+  if (reports.length > 0) {
+    medical = maybe(reports[0].medical).or({})
   }
   const useLatest = medical === undefined ? false : true
   res.render('new-report.ejs', {
     horse: horse,
     medical: medical,
-    updateable: useLatest
+    updateable: useLatest,
+    reports: reports
   })
 })
 
@@ -145,10 +146,11 @@ router.post('/:id/view-report', loggedIn, async (req, res) => {
 
   const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
   // eslint-disable-next-line no-undef
-  const shoeingsQuery = await Promise.all([Report.find({ _id: { $in: ids } })])
-  const shoeings = shoeingsQuery[0]
-  console.log('shoeings: ', shoeings[0])
-  res.render('view-report.ejs', { horse, shoeings })
+  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } })])
+  const reports = reportsQuery[0]
+  console.log('reports: ', reports[0])
+  console.log(horse)
+  res.render('view-report.ejs', { horse: horse[0], reports: reports })
 })
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {

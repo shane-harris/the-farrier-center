@@ -1,6 +1,6 @@
 <div class="shoeing">
-    <h4 class="farrier" style="text-align: center">Farrier: <%= singleShoeing.farrier %></h4>
-    <h4 class="title"> Date : <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %></h4>
+    <h4 class="farrier" style="text-align: center">Farrier: <%= report.farrier %></h4>
+    <h4 class="title"> Date : <%= `${report.date.getMonth() + 1}/${report.date.getDate()}/${report.date.getFullYear()}` %></h4>
 
     <div class="row">
         <div class="single-shoe">
@@ -34,6 +34,7 @@
             </div>
         </div>
     </div>
+
     <br>
     <div class="row">
         <div class="single-shoe">
@@ -94,7 +95,7 @@
     <div id="notes">
         <h4 style="text-align: center; background-color: white">Notes</h4>
         <p id="note-text" contenteditable="true">
-            <%= singleShoeing.other %>
+            <%= report.notes.toString() %>
         </p>
     </div>
     <br>

@@ -83,15 +83,15 @@
     <h2 class="title">
     Most Recent Shoeing
     </h2>
-    <% const singleShoeing = shoeings[0] %>
-    <%-  include('partials/shoeing-visit', {singleShoeing}) %>
+    <% const report = reports[0] %>
+    <%-  include('partials/shoeing-visit', {report}) %>
 </div>
 
 <div>
-<% for (const singleShoeing of shoeings.slice(1)) { %>
+<% for (const report of reports.slice(1)) { %>
 
-          <%-  include('partials/shoeing-visit', {singleShoeing}) %>
+          <%-  include('partials/shoeing-visit', {report}) %>
 
         <% } %>
-<div>
+</div>
 </body>
