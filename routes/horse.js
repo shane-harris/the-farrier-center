@@ -333,7 +333,7 @@ router.get('/:id/update', loggedIn, async (req, res) => {
 })
 
 router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) => {
-  const horse = await (await Horse.findOne({ id: req.params.id })).populate('image')
+  const horse = await Horse.findOne({ id: req.params.id }).populate('image')
   horse.name = req.body.name
   horse.gender = req.body.gender
   horse.temperament = req.body.temperament
