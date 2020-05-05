@@ -9,11 +9,7 @@
             <div class="shoeing-text">
                 <h3>Front Left</h3>
                 <p contenteditable="true">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu"
+                    <%= report.front.horseshoes[0].notes %>
                 </p>
             </div>
         </div>
@@ -25,16 +21,13 @@
             <div class="shoeing-text">
                 <h3>Front Right</h3>
                 <p contenteditable="true">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu"
+                    <%= report.front.horseshoes[1].notes %>
                 </p>
             </div>
         </div>
     </div>
 
+<% if(report.jobType !== 'Half') { %>
     <br>
     <div class="row">
         <div class="single-shoe">
@@ -42,11 +35,7 @@
             <div class="shoeing-text">
                 <h3>Back Left</h3>
                 <p contenteditable="true">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu"
+                    <%= report.back.horseshoes[0].notes %>
                 </p>
             </div>
         </div>
@@ -60,16 +49,12 @@
             <div class="shoeing-text">
                 <h3>Back Right</h3>
                 <p contenteditable="true">
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu"
+                    <%= report.back.horseshoes[1].notes %>
                 </p>
             </div>
         </div>
     </div>
-
+<% } %>
 
     <br>
 
@@ -77,15 +62,9 @@
       <div id="services">
         <h4 style="text-align: center">Services</h4>
           <ul class="list-horizontal" contenteditable="true">
-              <li>Inline list item #1</li>
-              <li>Inline list item #2</li>
-              <li>Inline list item #3</li>
-              <li>Inline list item #1</li>
-              <li>Inline list item #2</li>
-              <li>Inline list item #3</li>
-              <li>Inline list item #1</li>
-              <li>Inline list item #2</li>
-              <li>Inline list item #3</li>
+              <% for (const service of report.front.services) { %>
+              <li><%=service%></li>
+              <% } %>
           </ul>
       </div>
     </div>
