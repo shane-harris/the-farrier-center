@@ -83,6 +83,24 @@
               <% } %>
           </ul>
       </div>
+
+      <div id="shoes">
+          <h4 style="text-align: center">Shoes</h4>
+            <ul class="list-horizontal" contenteditable="true">
+                <% for (const shoe of report.front.shoes) { %>
+                <li><%=shoe%></li>
+                <% } %>
+            </ul>
+      </div>
+
+      <div id="materials">
+                <h4 style="text-align: center">Materials</h4>
+                  <ul class="list-horizontal" contenteditable="true">
+                      <% for (const material of report.front.materials) { %>
+                      <li><%=material%></li>
+                      <% } %>
+                  </ul>
+            </div>
     </div>
 
 

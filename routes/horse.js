@@ -146,7 +146,7 @@ router.post('/:id/view-report', loggedIn, async (req, res) => {
 
   const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
   // eslint-disable-next-line no-undef
-  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } })])
+  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } }).sort({ date: -1 })])
   const reports = reportsQuery[0]
   console.log('reports: ', reports[0])
   console.log(horse)
