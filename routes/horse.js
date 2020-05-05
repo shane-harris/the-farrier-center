@@ -4,15 +4,14 @@ const express = require('express')
 const router = express.Router()
 
 //Import mongoose models
-const Medical = require('../models/medical')
 const Horse = require('../models/horse')
-const User = require('../models/user')
-const Horseshoe = require('../models/horseshoe')
-const Shoeing = require('../models/shoeing')
+const Report = require('../models/report')
 const Image = require('../models/image')
+const User = require('../models/user')
 
 //import middlewares
 const { loggedIn } = require('../middleware/auth')
+const { maybe } = require('../scripts/util.js')
 
 const multer = require('multer')
 const cloudinary = require('cloudinary')
@@ -34,6 +33,18 @@ const storage = cloudinaryStorage({
 
 const parser = multer({ storage })
 
+//Fields used to parse images from /:id/new-reports route
+const imageFields = [
+  { name: 'frontImages', maxCount: 6 },
+  { name: 'backImages', maxCount: 6 },
+  { name: 'backLeftImages', maxCount: 6 },
+  { name: 'backRightImages', maxCount: 6 },
+  { name: 'frontLeftImages', maxCount: 6 },
+  { name: 'frontRightImages', maxCount: 6 },
+  { name: 'reportImages', maxCount: 6 },
+  { name: 'medicalImages', maxCont: 6 }
+]
+
 router.use('/public', express.static('public'))
 
 // Setup Routes
@@ -52,7 +63,7 @@ router.get('/queue', loggedIn, async (req, res) => {
 
   res.render('queue.ejs', {
     user: req.user,
-    horses,
+    horses: horses,
     users: prunedUsers,
     scripts: require('../scripts/queue-item')
   })
@@ -88,57 +99,42 @@ router.post('/new', loggedIn, parser.single('image'), async (req, res) => {
   await horse.save()
 
   if (req.body.submit === 'shoeing') {
-    res.redirect(`/horse/${horse.id}/new-shoeing`)
+    res.redirect(`/horse/${horse.id}/new-report`)
   } else {
     res.redirect('/horse/all')
   }
 })
 
 router.get('/:id', loggedIn, async (req, res) => {
-  const [horse, medicals, shoeings] = await Promise.all([
+  const [horse, shoeings] = await Promise.all([
     Horse.findOne({ id: req.params.id }).populate('image'),
-    Medical.find({ horse_id: req.params.id }).sort({ date: -1 }),
-    Shoeing.find({ horse_id: req.params.id }).sort({ date: -1 })
+    Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  if (horse.deleted) {
-    res.redirect('/horse/all')
-  } else {
-    res.render('horse.ejs', {
-      horse,
-      medical: medicals[0],
-      shoeings: shoeings,
-      updateable: medicals.length !== 0
-    })
-  }
+  console.log(horse)
+  res.render('horse.ejs', {
+    horse: horse,
+    shoeings: shoeings,
+    updateable: true
+  })
 })
 
-router.get('/:id/new-medical-analysis', loggedIn, async (req, res) => {
-  const [horse, medical] = await Promise.all([
+router.get('/:id/new-report', loggedIn, async (req, res) => {
+  const [horse, shoeings] = await Promise.all([
     Horse.findOne({ id: req.params.id }),
     // Get the most recent medical analysis
-    Medical.findOne({ horse_id: req.params.id }).sort({ date: -1 })
+    Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  res.render('new-medical-analysis.ejs', { horse, medical, updateable: !!medical })
-})
-
-router.post('/:id/new-medical-analysis', loggedIn, async (req, res) => {
-  const medical = new Medical({
-    horse_id: req.params.id,
-    date: new Date(),
-    farrier: 'Default Steve',
-    ...req.body
+  //check if first element in shoeing array has a medical field to avoid ReferenceError
+  let medical = undefined
+  if (shoeings.length > 0) {
+    medical = maybe(shoeings[0].medical).or({})
+  }
+  const useLatest = medical === undefined ? false : true
+  res.render('new-report.ejs', {
+    horse: horse,
+    medical: medical,
+    updateable: useLatest
   })
-  medical.save()
-  // When you make a new medical, update horse's last visit date.
-  const horse = await Horse.findOne({ id: req.params.id })
-  horse.lastVisit = medical.date
-  horse.save()
-  res.redirect(`/horse/${req.params.id}`)
-})
-
-router.get('/:id/new-shoeing', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
-  res.render('new-shoeing.ejs', { horse })
 })
 
 router.post('/:id/view-report', loggedIn, async (req, res) => {
@@ -148,65 +144,210 @@ router.post('/:id/view-report', loggedIn, async (req, res) => {
   }
 
   const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
-  const shoeingsQuery = await Promise.all([Shoeing.find({ _id: { $in: ids } })])
+  // eslint-disable-next-line no-undef
+  const shoeingsQuery = await Promise.all([Report.find({ _id: { $in: ids } })])
   const shoeings = shoeingsQuery[0]
   console.log('shoeings: ', shoeings[0])
   res.render('view-report.ejs', { horse, shoeings })
 })
 
-router.post('/:id/new-shoeing', loggedIn, async (req, res) => {
+router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
   console.log(req.body)
-  const shoeing = new Shoeing({
+  const horse = await Horse.findOne({ id: req.params.id })
+  const report = new Report({
     horse_id: req.params.id,
     date: new Date(), //returns todays date
-    farrier: 'Default Steve',
-    frontLeft: new Horseshoe({
-      jobType: req.body.frontLeftShoe, //full, half, trim
-      shoeSize: req.body.frontLeftSize,
-      notes: req.body.frontLeftNotes,
-      hoofImage1: null,
-      hoofImage2: null
-    }),
-    frontRight: new Horseshoe({
-      jobType: req.body.frontRightShoe,
-      shoeSize: req.body.frontRightSize,
-      notes: req.body.frontRightNotes,
-      hoofImage1: null,
-      hoofImage2: null
-    }),
-    backLeft: new Horseshoe({
-      jobType: req.body.backLeftShoe,
-      shoeSize: req.body.backLeftSize,
-      notes: req.body.backLeftNotes,
-      hoofImage1: null,
-      hoofImage2: null
-    }),
-    backRight: new Horseshoe({
-      jobType: req.body.backRightShoe,
-      shoeSize: req.body.backRightSize,
-      notes: req.body.backRightNotes,
-      hoofImage1: null,
-      hoofImage2: null
-    }),
-
-    ...req.body
+    farrier: req.user.username,
+    jobType: req.body.job,
+    front: {},
+    back: {},
+    images: [],
+    medical: {
+      gait: req.body.gait,
+      lameness: req.body.lameness,
+      blemishes: req.body.blemishes,
+      laminitus: req.body.laminitus,
+      notes: req.body.medicalNotes,
+      images: []
+    },
+    notes: req.body.reportNotes
   })
-  shoeing.save()
+  //When you make a new shoeing, if date was not provided update horses last visit.
+  horse.lastVisit = report.date
 
-  //When you make a new shoeing, update horses last visit date.
-  const horse = await Horse.findOne({ id: req.params.id })
-  horse.lastVisit = shoeing.date
+  //If there are any shoeing info for front area left = horseshoe[0], right = horseshoe[1]
+  if (req.body.job === 'Half' || req.body.job === 'Full' || req.body.job === 'Trim') {
+    report.front.notes = req.body.frontNotes
+    report.front.shoes = []
+    report.front.materials = []
+    report.front.services = []
+    report.front.images = []
+
+    if (req.body.frontShoes !== undefined) {
+      if (req.body.frontShoes[0].length == 1) {
+        report.front.shoes.push(req.body.frontShoes)
+      } else if (req.body.frontShoes.length > 1) {
+        for (const shoe of req.body.frontShoes) {
+          report.front.shoes.push(shoe)
+        }
+      }
+    }
+    if (req.body.frontMaterials !== undefined) {
+      if (req.body.frontMaterials[0].length == 1) {
+        report.front.materials.push(req.body.frontMaterials)
+      } else if (req.body.frontMaterials.length > 1) {
+        for (const material of req.body.frontMaterials) {
+          report.front.materials.push(material)
+        }
+      }
+    }
+    if (req.body.frontServices !== undefined) {
+      if (req.body.frontServices[0].length == 1) {
+        report.front.services.push(req.body.frontServices)
+      } else if (req.body.frontServices.length > 1) {
+        for (const service of req.body.frontServices) {
+          report.front.services.push(service)
+        }
+      }
+    }
+
+    report.front.horseshoes.push({
+      hoof: 'Left',
+      shoeSize: req.body.frontLeftSize,
+      notes: req.body.frontLeftNotes
+    })
+
+    report.front.horseshoes.push({
+      hoof: 'Right',
+      shoeSize: req.body.frontRightSize,
+      notes: req.body.frontRightNotes
+    })
+  }
+  //This catches the back area if there is any shoeing info for both front and back areas
+  //left = horseshoe[0], right = horseshoe[1]
+  if (req.body.job === 'Full') {
+    report.back.notes = req.body.backNotes
+    report.back.shoes = []
+    report.back.materials = []
+    report.back.services = []
+
+    if (req.body.backShoes !== undefined) {
+      if (req.body.backShoes[0].length == 1) {
+        report.back.shoes.push(req.body.backShoes)
+      } else if (req.body.backShoes.length > 1) {
+        for (const shoe of req.body.backShoes) {
+          report.back.shoes.push(shoe)
+        }
+      }
+    }
+    if (req.body.backMaterials !== undefined) {
+      if (req.body.backMaterials[0].length == 1) {
+        report.back.materials.push(req.body.backMaterials)
+      } else if (req.body.backMaterials.length > 1) {
+        for (const material of req.body.backMaterials) {
+          report.back.materials.push(material)
+        }
+      }
+    }
+    if (req.body.backServices !== undefined) {
+      if (req.body.backServices[0].length == 1) {
+        report.back.services.push(req.body.backServices)
+      } else if (req.body.backServices.length > 1) {
+        for (const service of req.body.backServices) {
+          report.back.services.push(service)
+        }
+      }
+    }
+
+    report.back.horseshoes.push({
+      hoof: 'Left',
+      shoeSize: req.body.backLeftSize,
+      notes: req.body.backLeftNotes
+    })
+
+    report.back.horseshoes.push({
+      hoof: 'Right',
+      shoeSize: req.body.backRightSize,
+      notes: req.body.backRightNotes
+    })
+  }
+
+  //If there are any images
+  if (req.files) {
+    for (const field in req.files) {
+      //each array in parser object, <= 6 fields
+      const fieldname = field.substring(0, field.length - 6) //minus "Images" as named in horseshoe schema
+      for (const image of req.files[field]) {
+        //each file from the field array, <= 6 files
+
+        //save image _id to relevant area
+        switch (fieldname) {
+          case 'front':
+            report.front.images.push(image.url)
+            break
+
+          case 'frontLeft':
+            if (report.front.horseshoes[0].hoof === 'Left') {
+              report.front.horseshoes[0].images.push(image.url)
+            } else if (report.front.horseshoes[1].hoof === 'Left') {
+              report.front.horseshoes[1].images.push(image.url)
+            }
+            break
+
+          case 'frontRight':
+            if (report.front.horseshoes[1].hoof === 'Right') {
+              report.front.horseshoes[1].images.push(image.url)
+            } else if (report.front.horseshoes[0].hoof === 'Right') {
+              report.front.horseshoes[0].images.push(image.url)
+            }
+            break
+
+          case 'back':
+            report.back.images.push(image.url)
+            break
+
+          case 'backLeft':
+            if (report.back.horseshoes[0].hoof === 'Left') {
+              report.back.horseshoes[0].images.push(image.url)
+            } else if (report.back.horseshoes[1].hoof === 'Left') {
+              report.back.horseshoes[1].images.push(image.url)
+            }
+            break
+
+          case 'backRight':
+            if (report.back.horseshoes[1].hoof === 'Right') {
+              report.back.horseshoes[1].images.push(image.url)
+            } else if (report.back.horseshoes[0].hoof === 'Right') {
+              report.back.horseshoes[0].images.push(image.url)
+            }
+            break
+
+          case 'medical':
+            report.medical.images.push(image.url)
+            break
+
+          case 'report':
+            report.images.push(image.url)
+            break
+        }
+      }
+    }
+  }
+  //If there are images to save the references are saved when shoeing is saved. Only saves subdocuments when shoeing is saved
+  report.save()
   horse.save()
   res.redirect(`/horse/${req.params.id}`)
 })
 
 router.get('/:id/update', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
-  res.render('update-horse.ejs', { horse, name: req.user.username })
+  const horse = await Horse.findOne({ id: req.params.id }).populate('image')
+  console.log(horse)
+  //update to show current image when editing
+  res.render('update-horse.ejs', { horse: horse, name: req.user.username })
 })
 
 router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
+  const horse = await Horse.findOne({ id: req.params.id }).populate('image')
   horse.name = req.body.name
   horse.gender = req.body.gender
   horse.temperament = req.body.temperament
@@ -215,13 +356,20 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   horse.owner = req.body.owner
   horse.vet = req.body.vet
   horse.history = req.body.history
-  horse.save()
+
   if (req.file) {
-    const image = await Image.findOne({ _id: horse.image })
-    image.url = req.file.url
-    image.public_id = req.file.public_id
-    image.save()
+    const image = new Image({
+      ref_id: horse._id,
+      onType: 'horses',
+      url: req.file.url,
+      public_id: req.file.public_id
+    })
+    horse.image = image._id
+    await Promise.all([image.save(), horse.save()])
+  } else {
+    await horse.save()
   }
+
   res.redirect(`/horse/${req.params.id}`)
 })
 

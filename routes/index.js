@@ -79,11 +79,11 @@ router.get('/search', loggedIn, async (req, res) => {
 
   const horses = horsesByName.concat(horsesByLocation).concat(horsesByOwner)
 
-  res.render('search.ejs', { username: req.user.username, horses })
+  res.render('search.ejs', { username: req.user.username, horses: horses })
 })
 
 router.post('/search', async (req, res) => {
-  const howMany = await Horse.find({ name: req.body.query })
+  const howMany = await Horse.find({ name: req.body.query, deleted: false })
 
   if (howMany.length === 1) {
     res.redirect(`/horse/${howMany[0].id}`)
@@ -103,11 +103,11 @@ router.get('/autocomplete', loggedIn, async (req, res) => {
   const regex = new RegExp(req.query['term'], 'i')
 
   const [horseName, horseOwner, horseLocation] = await Promise.all([
-    Horse.find({ name: regex }, { name: 1 }).limit(30),
+    Horse.find({ name: regex, deleted: false }, { name: 1 }).limit(30),
 
-    Horse.find({ owner: regex }, { owner: 1 }).limit(30),
+    Horse.find({ owner: regex, deleted: false }, { owner: 1 }).limit(30),
 
-    Horse.find({ location: regex }, { location: 1 }).limit(30)
+    Horse.find({ location: regex, deleted: false }, { location: 1 }).limit(30)
   ])
 
   const horses = horseOwner.concat(horseLocation).concat(horseName)

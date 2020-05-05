@@ -13,7 +13,7 @@
           </button>
         </div>
         <div class="modal-body">
-          Are you sure you want to delete <%=horse.name%>?
+          <p>Are you sure you want to delete <%=horse.name%>?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -94,8 +94,6 @@
         <div class="pad">
           <h2 id="shoeings-titles">Visits</h2>
         </div>
-
-
       </div>
       <div class="pad">
         <a type="button" id="new-shoeing-button" class="btn btn-dark"
@@ -107,7 +105,6 @@
       <form class="form" action='/horse/<%=horse.id%>/view-report' method="POST">
 
         <div class="accordion" id="shoeings-accordian">
-
           <!--Will be populated with all the shoeings done on a horse-->
           <% for (const singleShoeing of shoeings) { %>
           <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
@@ -124,6 +121,8 @@
       <% } else { %>
       <div align="center">
         <H2> No Shoeing reports have been created</H2>
+      </div>
+
       </div>
       <% } %>
     </div>
