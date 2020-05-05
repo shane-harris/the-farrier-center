@@ -151,6 +151,7 @@ nav {
 }
 #search-button {
   height: 40px;
+  margin-right: 10px;
 }
 
 #page-container {
@@ -162,7 +163,7 @@ nav {
   padding-right: 10px;
 }
 
-.horseshoe-icon-footer {
+.footer-brand {
   margin-left: auto;
   margin-right: auto;
 }
@@ -173,4 +174,10 @@ nav {
 
 .about-modal-link {
   padding-right: 10px;
+}
+.ui-helper-hidden-accessible {
+  display: none;
+  visibility: hidden;
+  color: black;
+  max-height: 0px;
 }

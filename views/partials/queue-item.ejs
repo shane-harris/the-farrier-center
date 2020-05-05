@@ -17,7 +17,7 @@ const date = lastVisitDate(horse)
 
 
 <tr>
-  <td headers="Horse" class="queue-cell" style=<%- computeBorderStyle(horse) %></td>
+  <td headers="Horse" class="queue-cell" style=<%- computeBorderStyle(horse) %>>
     <a class="link-unstyled queue-item-link" id='<%=horse.id%>-name' href="/horse/<%= horse.id %>">
       <%= horse.name %>
     </a>
@@ -35,7 +35,6 @@ const date = lastVisitDate(horse)
     </a>
   </td>
   <td class="queue-cell">
-    <!--<a class="link-unstyled queue-item-link" id='<%#=horse.id%>' href="/horse/<%#= horse.id %>">-->
     <% if (user.role == 'admin') { %>
     <form action='/horse/assign/<%=horse.id%>/' method="POST">
       <select class="form-control" id="<%= horse.id %>-farrier" name="farrier" size="1" onchange='changeFarrier(<%=horse.id%>)'>
@@ -67,8 +66,6 @@ const date = lastVisitDate(horse)
       <noscript><input type="submit" value="Submit"></noscript>
     </form>
     <% } %>
-    <%# assignedFarrier != undefined ? assignedFarrier.fname.charAt(0) + '.' +   assignedFarrier.lname.charAt(0) : "None" %>
-    <!--</a>-->
   </td>
   <td class="queue-item-dropdown">
     <div class="dropdown open dropleft">

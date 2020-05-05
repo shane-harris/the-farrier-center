@@ -5,10 +5,9 @@
     Explicitly passed in on webpage.
     @input {Horse} horse to get the horse's ID for going to its profile and name.
 
-    Example: include('partials/horse-profile', horse)
+    Example: include('partials/horse-profile', {horse: horse})
 %>
 <a class="col-xl-2 col-md-3 col-sm-4 col-6 link-unstyled" href="/horse/<%= horse.id %>">
-
   <div class="horse-profile">
     <img class="profile-picture"
       src="<%= horse.image === undefined ? "/public/images/horse_profile.png" : horse.image.url %>">

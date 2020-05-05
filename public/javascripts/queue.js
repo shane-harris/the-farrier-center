@@ -1,7 +1,7 @@
 'use strict'
 
 /* Direct ESLint to ignore the following undefined (as far as it can tell) variable(s): */
-/* global Hammer, userfname, userlname, users, horses */
+/* global Hammer, horses, user, users */
 
 /**
  * Shorten the user's name based on the width of the container it will be displayed in.
@@ -33,6 +33,7 @@ function shortenName(fname, lname, width) {
   if (charsAllowed >= fname.length + 3) {
     return `${fname} ${lname.charAt(0)}.`
   }
+  // Truncate first name to length charsAllowed - 4 (leaving 4 chars for last initial part)
   return `${fname.slice(0, charsAllowed - 4)}. ${lname.charAt(0)}.`
 }
 
@@ -43,7 +44,7 @@ function showAssignedFarriers() {
   // Get the width (in pixels) of the browser window
   const width = $(window).width()
 
-  $('.assigned-ferrier').each(function() {
+  $('.assigned-farrier').each(function() {
     // The HTML id is set to the horse's id, so we can get it with:
     const id = $(this).attr('id')
     // Find a horse with a matching id (there should only be one)
@@ -64,6 +65,26 @@ showAssignedFarriers()
 
 $(window).resize(showAssignedFarriers)
 
+/**
+ * Filters the queue to show only the horses assigned to the current user.
+ * Uses a custom DataTable search to filter down the list.
+ */
+function filterAssigned() {
+  // In order to filter by "Assigned To Me", we effectively do a custom search for all horses
+  // assigned to the logged in user. queueRow[3] is the part of the table row that containst
+  // the horse's id.
+  $.fn.dataTable.ext.search.push((_, __, ___, queueRow) => {
+    // queueRow[3] is the raw html text of the "Assigned To" column of the current row.
+    // Extract the horse's id number from the html:
+    const horseId = Number(queueRow[3].match(/id="([0-9]+)"/)[1])
+    // Get the horse with that id.
+    const horse = horses.find(horse => horseId === horse.id)
+    // Return true if this horse is assigned to the logged in user.
+    // (Returning true adds this row to the "search results").
+    return user._id === horse.assignedFarrier
+  })
+}
+
 $(document).ready(function() {
   var table = $('#queue').DataTable({
     responsive: {
@@ -82,11 +103,7 @@ $(document).ready(function() {
     dom: '<"row"<"col"<"checkbox-area">><"col"fr>>tilpr',
     initComplete: function() {
       if (localStorage.input === 'true') {
-        $.fn.dataTable.ext.search.push(function(_, data) {
-          return (
-            data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
-          )
-        })
+        filterAssigned()
       }
     }
   })
@@ -99,11 +116,7 @@ $(document).ready(function() {
 
   $('#view-assigned').on('change', function() {
     if ($(this).is(':checked')) {
-      $.fn.dataTable.ext.search.push(function(_, data) {
-        return (
-          data[3].trim() === userfname.innerText.charAt(0) + '.' + userlname.innerText.charAt(0)
-        )
-      })
+      filterAssigned()
     } else {
       $.fn.dataTable.ext.search.pop()
     }

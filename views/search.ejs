@@ -5,14 +5,14 @@
     <div id="page-container">
         <h2 class="text-center my-3">Search Results</h2>
         <div class="text-center">
-            Every horse should be available below. Clicking on a box should navigate to that horse's
+            Result of query available below. Clicking on a horse will navigate to that horse's
             profile page.
         </div>
 
         <div class="container mt-3">
             <div class="row">
                 <% for (horse of horses) { %>
-                <%-  include('partials/horse-profile', horse) %>
+                <%-  include('partials/horse-profile', {horse: horse} ) %>
                 <% } %>
             </div>
         </div>
