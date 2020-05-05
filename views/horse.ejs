@@ -104,6 +104,7 @@
           </a>
         </div>
       </div>
+
       <!--If shoeings is undefined shoeing.medicals is a ReferenceError-->
       <div class="collapse" id="medical">
         <div class="row">
@@ -120,15 +121,17 @@
             <h1>Farrier: <%= shoeings[0].farrier %></h1>
           </div>
         </div>
-        <%- include('partials/report-medical-fields', {medical: shoeings[0], editable: false}) %>
-        <% } else { %>
-        <div align="center">
-          <H2> No medical reports have been created</H2>
+        <div>
+          <%- include('partials/report-medical-fields', {medical: shoeings[0], editable: false}) %>
+          <% } else { %>
+          <div class="col-sm-12">
+            <H2> No medical reports have been created</H2>
+          </div>
+          <% } %>
         </div>
-        <% } %>
       </div>
+
     </div>
-  </div>
     <%# Horse Most Recent Shoeing %>
     <div class="container form">
       <div class="row justify-content-center">
@@ -149,8 +152,14 @@
         <%# Shoeing Data %>
         <div class="accordion" id="shoeings-accordian">
           <!--Will be populated with all the shoeings done on a horse-->
+          <% if (shoeings.length > 0) { %>
           <% for (const singleShoeing of shoeings) { %>
           <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
+          <% } %>
+          <% } else { %>
+          <div>
+            <H2> No shoeing reports have been created</H2>
+          </div>
           <% } %>
         </div>
       </div>

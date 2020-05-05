@@ -6,56 +6,19 @@ const charcoal = '#1e1e1e'
 const slate = '#333'
 const ivory = '#aaa'
 const darkIvory = '#878787'
-const dimwhite = '#ddd'
 const white = 'white'
 const yellow = '#ffc535'
 const cadetblue = 'cadetblue'
 const lightblue = 'lightblue'
 const lightbluegray = '#eeeef5'
 const oceanblue = '#033860'
-const coffee = '#3a2b29'
-const firgreen = '#386150'
-const darksteel = '#232528'
-const blueslate = '#37383b'
 const turqoisegray = '#7d9fa0'
 const neongreen = '#0f0'
-const darkgreen = '#006400'
-const darkestgreen = '#001000'
-/* eslint-disable no-unused-vars */
-const red = '#ff0000'
-const blue = '#0000ff'
-const darkblue = '#00008b'
-const magenta = '#ff00ff'
-const indigo = '#4B0082'
-/* eslint-enable no-unused-vars */
 const lightbrown = '#be9063'
 const darknavy = '#14172b'
 const flatgrey = '#585c5a'
 const graywood = '#a4978e'
 const yellowgray = '#454544'
-const neonred = 'red'
-const darkred = '#640000'
-const darkestred = '#280000'
-
-const neonyellow = '#FFFF00'
-const darkyellow = '#a8a800'
-const darkestyellow = '#646400'
-
-const iceblue = '#F0F8FF'
-const skyblue = '#00BFFF'
-const royalblue = '#4169E1'
-
-const lightestpink = '#FFF3F5'
-const pink = '#FF69B4'
-const darkpink = '#9a4d67'
-
-const orange = '#ffa500'
-const darkorange = '#a96a00'
-const darkestorange = '#925a00'
-
-const neonpurple = '#FF00FF'
-const darkpurple = '#8b008b'
-const darkestpurple = '#4d004d'
 
 const themes = {
   Dark: {
@@ -86,6 +49,33 @@ const themes = {
     readonlyTextFieldBg: coal,
     shoeingCard: yellowgray,
     shoeingCardBody: charcoal
+  },
+  'Dark Rustic': {
+    bg: darknavy,
+    border: ivory,
+    borderHover: lightbrown,
+    button: graywood,
+    buttonBorderHover: lightbrown,
+    buttonHover: darknavy,
+    buttonText: white,
+    buttonTextHover: ivory,
+    dropdownBg: flatgrey,
+    dropdownDivider: graywood,
+    dropdownItemBgHover: ivory,
+    dropdownItemText: graywood,
+    dropdownItemTextHover: white,
+    fg: darknavy,
+    linkHover: graywood,
+    loginText: graywood,
+    nav: flatgrey,
+    navBorder: ivory,
+    navText: ivory,
+    navTextHover: white,
+    placeholderText: darkIvory,
+    primaryText: ivory,
+    queue: darknavy,
+    queueText: ivory,
+    readonlyTextFieldBg: darknavy
   },
   Light: {
     bg: white,
@@ -145,222 +135,6 @@ const themes = {
     queueText: white,
     readonlyTextFieldBg: black,
     shoeingCard: slate
-  },
-  'Dark Rustic': {
-    bg: darknavy,
-    border: ivory,
-    borderHover: lightbrown,
-    button: graywood,
-    buttonBorderHover: lightbrown,
-    buttonHover: darknavy,
-    buttonText: white,
-    buttonTextHover: ivory,
-    dropdownBg: flatgrey,
-    dropdownDivider: graywood,
-    dropdownItemBgHover: ivory,
-    dropdownItemText: graywood,
-    dropdownItemTextHover: white,
-    fg: darknavy,
-    linkHover: graywood,
-    loginText: graywood,
-    nav: flatgrey,
-    navBorder: ivory,
-    navText: ivory,
-    navTextHover: white,
-    placeholderText: darkIvory,
-    primaryText: ivory,
-    queue: darknavy,
-    queueText: ivory,
-    readonlyTextFieldBg: darknavy
-  },
-  Green: {
-    bg: darkestgreen,
-    border: neongreen,
-    borderHover: darkgreen,
-    button: neongreen,
-    buttonBorderHover: neongreen,
-    buttonHover: darkestgreen,
-    buttonText: darkestgreen,
-    buttonTextHover: neongreen,
-    dropdownBg: darkgreen,
-    dropdownDivider: neongreen,
-    dropdownItemBgHover: darkgreen,
-    dropdownItemText: neongreen,
-    dropdownItemTextHover: darkestgreen,
-    fg: darkgreen,
-    linkHover: neongreen,
-    loginText: neongreen,
-    nav: darkgreen,
-    navBorder: neongreen,
-    navText: neongreen,
-    navTextHover: neongreen,
-    placeholderText: '#009b00',
-    primaryText: neongreen,
-    queue: darkgreen,
-    queueText: neongreen,
-    readonlyTextFieldBg: darkestgreen
-  },
-  Red: {
-    bg: darkestred,
-    border: neonred,
-    borderHover: darkred,
-    button: neonred,
-    buttonBorderHover: neonred,
-    buttonHover: darkestred,
-    buttonText: darkestred,
-    buttonTextHover: neonred,
-    dropdownBg: darkred,
-    dropdownDivider: neonred,
-    dropdownItemBgHover: darkred,
-    dropdownItemText: neonred,
-    dropdownItemTextHover: darkestred,
-    fg: darkred,
-    linkHover: neonred,
-    loginText: neonred,
-    nav: darkred,
-    navBorder: neonred,
-    navText: neonred,
-    navTextHover: neonred,
-    placeholderText: '#9b0000',
-    primaryText: neonred,
-    queue: darkred,
-    queueText: neonred,
-    readonlyTextFieldBg: darkestred
-  },
-  Yellow: {
-    bg: darkestyellow,
-    border: neonyellow,
-    borderHover: darkyellow,
-    button: neonyellow,
-    buttonBorderHover: neonyellow,
-    buttonHover: darkestyellow,
-    buttonText: darkestyellow,
-    buttonTextHover: neonyellow,
-    dropdownBg: darkyellow,
-    dropdownDivider: neonyellow,
-    dropdownItemBgHover: darkyellow,
-    dropdownItemText: neonyellow,
-    dropdownItemTextHover: darkestyellow,
-    fg: darkyellow,
-    linkHover: neonyellow,
-    loginText: neonyellow,
-    nav: darkyellow,
-    navBorder: neonyellow,
-    navText: neonyellow,
-    navTextHover: neonyellow,
-    placeholderText: '#c2c200',
-    primaryText: neonyellow,
-    queue: darkyellow,
-    queueText: neonyellow,
-    readonlyTextFieldBg: darkestyellow
-  },
-  'Pastel Blue': {
-    bg: royalblue,
-    border: iceblue,
-    borderHover: skyblue,
-    button: iceblue,
-    buttonBorderHover: iceblue,
-    buttonHover: royalblue,
-    buttonText: royalblue,
-    buttonTextHover: iceblue,
-    dropdownBg: skyblue,
-    dropdownDivider: iceblue,
-    dropdownItemBgHover: skyblue,
-    dropdownItemText: iceblue,
-    dropdownItemTextHover: royalblue,
-    fg: skyblue,
-    linkHover: iceblue,
-    loginText: iceblue,
-    nav: skyblue,
-    navBorder: iceblue,
-    navText: iceblue,
-    navTextHover: iceblue,
-    placeholderText: dimwhite,
-    primaryText: iceblue,
-    queue: skyblue,
-    queueText: iceblue,
-    readonlyTextFieldBg: royalblue
-  },
-  Pink: {
-    bg: darkpink,
-    border: lightestpink,
-    borderHover: pink,
-    button: lightestpink,
-    buttonBorderHover: lightestpink,
-    buttonHover: darkpink,
-    buttonText: darkpink,
-    buttonTextHover: lightestpink,
-    dropdownBg: pink,
-    dropdownDivider: lightestpink,
-    dropdownItemBgHover: pink,
-    dropdownItemText: lightestpink,
-    dropdownItemTextHover: darkpink,
-    fg: pink,
-    linkHover: lightestpink,
-    loginText: lightestpink,
-    nav: pink,
-    navBorder: lightestpink,
-    navText: lightestpink,
-    navTextHover: lightestpink,
-    placeholderText: '#aaa1a2',
-    primaryText: lightestpink,
-    queue: pink,
-    queueText: lightestpink,
-    readonlyTextFieldBg: darkpink
-  },
-  Orange: {
-    bg: darkestorange,
-    border: orange,
-    borderHover: darkorange,
-    button: orange,
-    buttonBorderHover: orange,
-    buttonHover: darkestorange,
-    buttonText: darkestorange,
-    buttonTextHover: orange,
-    dropdownBg: darkorange,
-    dropdownDivider: orange,
-    dropdownItemBgHover: darkorange,
-    dropdownItemText: orange,
-    dropdownItemTextHover: darkestorange,
-    fg: darkorange,
-    linkHover: orange,
-    loginText: orange,
-    nav: darkorange,
-    navBorder: orange,
-    navText: orange,
-    navTextHover: orange,
-    placeholderText: dimwhite,
-    primaryText: orange,
-    queue: darkorange,
-    queueText: orange,
-    readonlyTextFieldBg: darkestorange
-  },
-  Purple: {
-    bg: darkestpurple,
-    border: neonpurple,
-    borderHover: darkpurple,
-    button: neonpurple,
-    buttonBorderHover: neonpurple,
-    buttonHover: darkestpurple,
-    buttonText: darkestpurple,
-    buttonTextHover: neonpurple,
-    dropdownBg: darkpurple,
-    dropdownDivider: neonpurple,
-    dropdownItemBgHover: darkpurple,
-    dropdownItemText: neonpurple,
-    dropdownItemTextHover: darkestpurple,
-    fg: darkpurple,
-    linkHover: neonpurple,
-    loginText: neonpurple,
-    nav: darkpurple,
-    navBorder: neonpurple,
-    navText: neonpurple,
-    navTextHover: neonpurple,
-    placeholderText: '#a200a2',
-    primaryText: neonpurple,
-    queue: darkpurple,
-    queueText: neonpurple,
-    readonlyTextFieldBg: darkestpurple
   }
 }
 
