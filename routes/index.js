@@ -72,14 +72,20 @@ router.get('/search', loggedIn, async (req, res) => {
   const pattern = `.*${query}.*`
 
   const [horsesByName, horsesByLocation, horsesByOwner] = await Promise.all([
-    Horse.find({ name: { $regex: pattern, $options: 'i' } }).sort({ name: 1 }),
-    Horse.find({ location: { $regex: pattern, $options: 'i' } }).sort({ location: 1 }),
-    Horse.find({ owner: { $regex: pattern, $options: 'i' } }).sort({ owner: 1 })
+    Horse.find({ deleted: false, name: { $regex: pattern, $options: 'i' } })
+      .sort({ name: 1 })
+      .populate('image'),
+    Horse.find({ deleted: false, location: { $regex: pattern, $options: 'i' } })
+      .sort({ location: 1 })
+      .populate('image'),
+    Horse.find({ deleted: false, owner: { $regex: pattern, $options: 'i' } })
+      .sort({ owner: 1 })
+      .populate('image')
   ])
 
   const horses = horsesByName.concat(horsesByLocation).concat(horsesByOwner)
 
-  res.render('search.ejs', { username: req.user.username, horses: horses })
+  res.render('horses.ejs', { horses })
 })
 
 router.post('/search', async (req, res) => {
@@ -103,11 +109,11 @@ router.get('/autocomplete', loggedIn, async (req, res) => {
   const regex = new RegExp(req.query['term'], 'i')
 
   const [horseName, horseOwner, horseLocation] = await Promise.all([
-    Horse.find({ name: regex, deleted: false }, { name: 1 }).limit(30),
+    Horse.find({ deleted: false, name: regex }, { name: 1 }).limit(30),
 
-    Horse.find({ owner: regex, deleted: false }, { owner: 1 }).limit(30),
+    Horse.find({ deleted: false, owner: regex }, { owner: 1 }).limit(30),
 
-    Horse.find({ location: regex, deleted: false }, { location: 1 }).limit(30)
+    Horse.find({ deleted: false, location: regex }, { location: 1 }).limit(30)
   ])
 
   const horses = horseOwner.concat(horseLocation).concat(horseName)
