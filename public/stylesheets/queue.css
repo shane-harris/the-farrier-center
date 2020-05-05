@@ -69,3 +69,23 @@ table.dataTable thead .sorting_desc:before {
 .queue-entry {
   padding-right: 0px;
 }
+
+.horse-name-col {
+  width: 25%;
+}
+
+.horse-loc-col {
+  width: 40%;
+}
+
+.horse-visit-col {
+  width: 10%;
+}
+
+.horse-assigned-col {
+  width: 20%;
+}
+
+.horse-button-col {
+  width: 5%;
+}

@@ -41,25 +41,26 @@ const date = lastVisitDate(horse)
         <option value="none">None</option>
         <% for(const i in users) { %>
           <option value="<%= users[i].id %>" <%= (horse.assignedFarrier == users[i].id) ? 'selected' : '' %>>
-            <%= users[i].fname.substr(0,4) + " " + users[i].lname.substr(0,4) %></option>
+            <%= users[i].fname + " " + users[i].lname %></option>
         <% } %>
       </select>
       <noscript><input type="submit" value="Submit"></noscript>
     </form>
     <% } else { %>
     <form action='/horse/assign/<%=horse.id%>' method="POST">
-      <select class="form-control" id="<%= horse.id %>-farrier" name="farrier" size="1"
-              <%= (horse.assignedFarrier == undefined || horse.assignedFarrier == "" || horse.assignedFarrier == user.id) ? "" : "disabled"%> onchange="changeFarrier(<%=horse.id%>)">
+      <select class="form-control assigned-farrier" id="<%= horse.id %>-farrier" name="farrier" size="1"
+              <%= (horse.assignedFarrier === undefined || horse.assignedFarrier === "" || horse.assignedFarrier === user.id) ? "" : "disabled"%>
+              onchange="changeFarrier(<%=horse.id%>)">
         <option value="none">None</option>
         <% if ((horse.assignedFarrier != undefined && horse.assignedFarrier !== "") && horse.assignedFarrier != user.id) { %>
           <% for(const i in users) { %>
             <option value="<%= users[i].id %>" <%= (horse.assignedFarrier == users[i].id) ? 'selected' : '' %>>
-              <%= users[i].fname.substr(0,4) + " " + users[i].lname.substr(0,4) %>
+              <%= users[i].fname + " " + users[i].lname %>
             </option>
           <% } %>
         <% } else { %>
           <option value="<%= user.id%>" <%= (horse.assignedFarrier == user.id) ? 'selected' : '' %>>
-            <%= user.fname.substr(0,4) + " " + user.lname.substr(0,4) %>
+            <%= user.fname + " " + user.lname %>
           </option>
         <% } %>
       </select>
