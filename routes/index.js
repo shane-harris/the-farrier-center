@@ -79,7 +79,7 @@ router.get('/search', loggedIn, async (req, res) => {
 
   const horses = horsesByName.concat(horsesByLocation).concat(horsesByOwner)
 
-  res.render('search.ejs', { username: req.user.username, horses })
+  res.render('search.ejs', { username: req.user.username, horses: horses })
 })
 
 router.post('/search', async (req, res) => {
