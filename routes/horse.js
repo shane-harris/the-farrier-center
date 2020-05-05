@@ -359,9 +359,45 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
   res.redirect(`/horse/${req.params.id}`)
 })
 
+router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
+  console.log(req.params)
+  const horse = await Horse.findOne({ id: req.params.horseID })
+  console.log(horse)
+  if (req.params.userID !== 'none') {
+    const user = await User.findOne({ _id: req.params.userID })
+    console.log(user)
+    if (user !== undefined) {
+      console.log('User exists!')
+      if (req.user.role === 'admin') {
+        console.log("We're an admin!")
+        horse.assignedFarrier = req.params.userID
+      } else {
+        console.log("We're a regular user!")
+        if (horse.assignedFarrier === undefined || horse.assignedFarrier === '') {
+          console.log('The horse has no farrier!')
+          horse.assignedFarrier = req.params.userID
+        } else {
+          console.log('The horse already has a farrier!')
+        }
+        // Don't have permission, do nothing.
+      }
+      console.log("User doesn't exist!", req.params.userID)
+    }
+  } else {
+    console.log("Setting user to 'none'")
+    if (req.user.role === 'admin' || horse.assignedFarrier === req.user.id) {
+      horse.assignedFarrier = ''
+    } else {
+      // Do nothing
+    }
+  }
+  await horse.save(err => {})
+  res.redirect(`/horse/queue/`)
+})
+
 router.post('/assign/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier == -1 || horse.assignedFarrier === undefined) {
+  if (horse.assignedFarrier === undefined) {
     horse.assignedFarrier = String(req.user.id)
     await horse.save(err => {
       console.log(err)
@@ -370,7 +406,7 @@ router.post('/assign/:id', loggedIn, async (req, res) => {
     console.log(
       `Assigning horse '${horse.name}' to farrier '${req.user.fname + ' ' + req.user.lname}'.`
     )
-  } else if (horse.assignedFarrier != req.user.id) {
+  } else if (horse.assignedFarrier !== req.user.id) {
     const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
 
     console.log(
