@@ -1,0 +1,37 @@
+<div class="form-group">
+    <label for="gait">Gait Analysis</label>
+    <textarea class="form-control" id="gait" name="gait" rows="4" <%= editable ? '' : 'readonly' %>
+        placeholder="It walk nice."><%= updateable ? medical.gait : '' %></textarea>
+</div>
+<div class="form-group">
+    <label for="lameness">Lameness Analysis</label>
+    <textarea class="form-control" id="lameness" name="lameness" rows="4"
+        <%= editable ? '' : 'readonly' %>
+        placeholder="This horse is a perfect example of the perfect horse">
+        <%= updateable ? medical.lameness : '' %>
+    </textarea>
+</div>
+<div class="form-group">
+    <label for="blemishes">Blemishes Analysis</label>
+    <textarea class="form-control" id="blemishes" name="blemishes" rows="4"
+        <%= editable ? '' : 'readonly' %> placeholder="That is the biggest mole I have EVER seen.">
+        <%= updateable ? medical.blemishes : '' %>
+    </textarea>
+</div>
+<div class="form-group">
+    <label for="laminitus">Laminitus Analysis</label>
+    <textarea class="form-control" id="laminitus" name="laminitus" rows="4"
+        <%= editable ? '' : 'readonly' %> placeholder="None, Perfection.">
+        <%= updateable ? medical.laminitus : '' %>
+    </textarea>
+</div>
+<div class="form-group">
+    <label for="notes">Notes</label>
+    <textarea class="form-control" id="notes" name="notes" rows="4"
+        <%= editable ? '' : 'readonly' %> placeholder="Notes.">
+        <%= updateable ? medical.notes : '' %>
+    </textarea>
+</div>
+<% for (url of medical.images) { %>
+<img alt="Medical images" class="img-fluid float-left" src=<%= url %> />
+<% } %>

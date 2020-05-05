@@ -89,7 +89,7 @@ router.get('/search', loggedIn, async (req, res) => {
 })
 
 router.post('/search', async (req, res) => {
-  const howMany = await Horse.find({ name: req.body.query })
+  const howMany = await Horse.find({ name: req.body.query, deleted: false })
 
   if (howMany.length === 1) {
     res.redirect(`/horse/${howMany[0].id}`)

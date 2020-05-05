@@ -1,55 +1,55 @@
 <%#
     This creates all of the checkboxes for the shoeing form.
 
-    Nothing needs to be passed in.
+    passes variable names as keys to the checkbox template. Used to store selected checkbox values as an array of values. 
+    Key: name, value: String if only one checkbox is selected, [String] if multiple values per key.
 
-    Example: include('partials/shoeing-checkboxes')
+    Example: include('partials/shoeing-checkboxes' {shoesName: 'frontShoes', mName: 'frontMaterials', sName: 'frontServices'})
 %>
 
 <div class="row form">
     <div class="column form" id="shoes">
-        <label for="shoes">
+        <label for="<%= shoesName %>">
             <H3>Shoes</H3>
         </label>
-        <%- include('checkbox', {name: "pads", displayName: "Pads"}) %>
-        <%- include('checkbox', {name: "straightbarshoe", displayName: "Straight Bar Shoe"}) %>
-        <%- include('checkbox', {name: "eggbar", displayName: "Egg Bar"}) %>
-        <%- include('checkbox', {name: "specialbarshoe", displayName: "Specialty Barshoe"}) %>
-        <%- include('checkbox', {name: "rolledtoe", displayName: "Rolled Toe"}) %>
-        <%- include('checkbox', {name: "onionheel", displayName: "Onion Heel"}) %>
-        <%- include('checkbox', {name: "wideweb", displayName: "Wide Web"}) %>
-        <%- include('checkbox', {name: "narrowweb", displayName: "Narrow Web"}) %>
+        <div name="shoes">
+            <%- include('checkbox', {name:shoesName, value:"pads", displayName:"Pads"}) %>
+            <%- include('checkbox',{name:shoesName,value:"straightbarshoe",displayName:"Straight Bar Shoe"})%>
+            <%- include('checkbox', {name:shoesName, value: "eggbar", displayName: "Egg Bar"}) %>
+            <%- include('checkbox', {name:shoesName, value: "specialbarshoe", displayName:"Specialty Barshoe"}) %>
+            <%- include('checkbox', {name:shoesName, value: "rolledtoe", displayName:"Rolled Toe"}) %>
+            <%- include('checkbox', {name:shoesName, value: "onionheel", displayName:"Onion Heel"}) %>
+            <%- include('checkbox', {name:shoesName, value: "wideweb", displayName: "Wide Web"}) %>
+            <%- include('checkbox', {name:shoesName, value: "narrowweb", displayName:"Narrow Web"}) %>
+        </div>
     </div>
     <div class="column form" id="materials">
-        <label for="materials">
+        <label for="<%= mName %>">
             <H3>Materials</H3>
         </label>
-        <%- include('checkbox', {name: "limbbrace", displayName: "Limb Brace"}) %>
-        <%- include('checkbox', {name: "aluminium", displayName: "Aluminium"}) %>
-        <%- include('checkbox', {name: "titanium", displayName: "Titanium"}) %>
-        <%- include('checkbox', {name: "poly", displayName: "Poly"}) %>
-        <%- include('checkbox', {name: "impressionmaterials", displayName: "Impression Materials"}) %>
-        <%- include('checkbox', {name: "glueonshoes", displayName: "Glue-on Shoe"}) %>
-        <%- include('checkbox', {name: "equilibrium", displayName: "Equilibrium"}) %>
-        <%- include('checkbox', {name: "pourin", displayName: "Pour In"}) %>
-        <%- include('checkbox', {name: "glue", displayName: "Glue"}) %>
+        <div name="materials">
+            <%- include('checkbox', {name:mName, value: "limbbrace", displayName:"Limb Brace"}) %>
+            <%- include('checkbox', {name:mName, value: "aluminium", displayName:"Aluminium"}) %>
+            <%- include('checkbox', {name:mName, value: "titanium", displayName:"Titanium"}) %>
+            <%- include('checkbox', {name:mName, value: "poly", displayName:"Poly"}) %>
+            <%-include('checkbox',{name:mName,value:"impressionmaterials",displayName:"Impression Materials"})%>
+            <%- include('checkbox', {name:mName, value: "glueonshoes",displayName: "Glue-on Shoe"}) %>
+            <%- include('checkbox', {name:mName, value: "equilibrium",displayName: "Equilibrium"}) %>
+            <%- include('checkbox', {name:mName, value: "pourin", displayName:"Pour In"}) %>
+            <%- include('checkbox', {name:mName, value: "glue", displayName:"Glue"}) %>
+        </div>
     </div>
     <div class="column form" id="services">
-        <label for="services">
+        <label for="<%= sName %>">
             <H3>Services</H3>
         </label>
-        <%- include('checkbox', {name: "drilltap", displayName: "Drill & Tap"}) %>
-        <%- include('checkbox', {name: "gluerepair", displayName: "Glue Repair"}) %>
-        <%- include('checkbox', {name: "quartercrackrepair", displayName: "Quarter Crack Repair"}) %>
-        <%- include('checkbox', {name: "resection", displayName: "Resection"}) %>
-        <%- include('checkbox', {name: "rehabilitation", displayName: "Rehabilitation Service"}) %>
-        <%- include('checkbox', {name: "surgeonconsult", displayName: "Surgeon Consult"}) %>
-    </div>
-
-    <div class="column form">
-        <label class="control-label" for="other">
-            <H3>Other:</H3>
-        </label>
-        <input type="text" class="form-control " id="other" name="other">
+        <div name="services">
+            <%- include('checkbox',{name:sName,value:"drilltap",displayName:"Drill & Tap"})%>
+            <%- include('checkbox',{name:sName,value:"gluerepair",displayName:"Glue Repair"})%>
+            <%- include('checkbox',{name:sName,value:"quartercrackrepair",displayName:"Quarter Crack Repair"})%>
+            <%- include('checkbox',{name:sName,value:"resection",displayName:"Resection"})%>
+            <%- include('checkbox',{name:sName,value:"rehabilitation",displayName:"Rehabilitation Service"})%>
+            <%- include('checkbox',{name:sName,value:"surgeonconsult",displayName:"Surgeon Consult"})%>
+        </div>
     </div>
 </div>
