@@ -5,7 +5,7 @@ body {
 }
 
 #report-title {
-  padding-top: 85px;
+  margin-top: 85px;
 }
 
 #logo {
@@ -87,7 +87,9 @@ body {
 }
 
 .single-shoe {
-  min-width: 8in;
+  min-width: 100%;
+
+  max-width: 7in;
   display: inline-flex;
   border: 1px solid #2a6496;
   background: #f6f8fa;
@@ -116,7 +118,7 @@ body {
 }
 
 #notes {
-  border: 1px solid #2a6496;
+  border: 2px solid #2a6496;
 }
 
 .page-breaker {
@@ -134,8 +136,16 @@ body {
 }
 
 .section-notes {
-  min-width: 8in;
-  display: inline-flex;
-  border: 2px solid #3885c8;
+  min-width: 100%;
+  /*display: inline-flex;*/
+  border: 3px solid #3885c8;
   background: #f6f8fa;
+}
+
+.note-title {
+  text-align: center;
+}
+
+.date {
+  text-align: right;
 }
