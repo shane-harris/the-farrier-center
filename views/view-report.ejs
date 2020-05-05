@@ -79,6 +79,7 @@
     </div>
 </div>
 
+<p class="page-breaker">
 <div>
     <h2 class="title">
     Most Recent Shoeing
@@ -89,7 +90,7 @@
 
 <div>
 <% for (const report of reports.slice(1)) { %>
-
+    <p class="page-breaker"></p>
           <%-  include('partials/shoeing-visit', {report}) %>
 
         <% } %>

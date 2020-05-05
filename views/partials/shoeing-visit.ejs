@@ -27,6 +27,17 @@
         </div>
     </div>
 
+        <div class="row section-notes">
+            <div class="single-shoe">
+                <div class="shoeing-text">
+                    <h3>Notes For The Front Hooves</h3>
+                    <p contenteditable="true">
+                        <%= report.front.notes %>
+                    </p>
+                </div>
+            </div>
+        </div>
+
 <% if(report.jobType !== 'Half') { %>
     <br>
     <div class="row">
