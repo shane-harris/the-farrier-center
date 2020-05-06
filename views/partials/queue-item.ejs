@@ -13,32 +13,60 @@ const { lastVisitDate, computeBorderStyle } = scripts
 const date = lastVisitDate(horse)
 %>
 <%# computBorderStyle determines the status color of the horse in queue %>
-<%# lastVisitDate makes sure the date isn't undetermined %>
+<%# lastVisitDate makes sure the date isn't undefined %>
 
 
 <tr>
-  <td class="queue-cell" style=<%- computeBorderStyle(horse) %>>
-    <a class="link-unstyled queue-item-link" id='<%=horse.id%>' href="/horse/<%= horse.id %>">
+  <td headers="Horse" class="queue-cell" style=<%- computeBorderStyle(horse) %>>
+    <a class="link-unstyled queue-item-link" id='<%=horse.id%>-name' href="/horse/<%= horse.id %>">
       <%= horse.name %>
     </a>
   </td>
-  <td class="queue-cell">
+  <td headers="Location" class="queue-cell">
     <address>
-      <a class="link-unstyled queue-item-link" id='<%=horse.id%>' href="/horse/<%= horse.id %>">
+      <a class="link-unstyled queue-item-link" id='<%=horse.id%>-loc' href="/horse/<%= horse.id %>">
         <%= horse.location %>
       </a>
     </address>
   </td>
-  <td class="queue-cell">
-    <a class="link-unstyled queue-item-link" href="/horse/<%= horse.id %>">
+  <td headers="Last Visit" class="queue-cell">
+    <a class="link-unstyled queue-item-link" id='<%=horse.id%>-visit' href="/horse/<%= horse.id %>">
       <%= `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}` %>
     </a>
   </td>
   <td class="queue-cell">
-    <a class="link-unstyled queue-item-link assigned-farrier" id='<%=horse.id%>'
-      href="/horse/<%= horse.id %>">
-      <!-- Will be filled by JS -->
-    </a>
+    <% if (user.role == 'admin') { %>
+    <form action='/horse/assign/<%=horse.id%>/' method="POST">
+      <select class="form-control" id="<%= horse.id %>-farrier" name="farrier" size="1" onchange='changeFarrier(<%=horse.id%>)'>
+        <option value="none">None</option>
+        <% for(const i in users) { %>
+          <option value="<%= users[i].id %>" <%= (horse.assignedFarrier == users[i].id) ? 'selected' : '' %>>
+            <%= users[i].fname + " " + users[i].lname %></option>
+        <% } %>
+      </select>
+      <noscript><input type="submit" value="Submit"></noscript>
+    </form>
+    <% } else { %>
+    <form action='/horse/assign/<%=horse.id%>' method="POST">
+      <select class="form-control assigned-farrier" id="<%= horse.id %>-farrier" name="farrier" size="1"
+              <%= (horse.assignedFarrier === undefined || horse.assignedFarrier === "" || horse.assignedFarrier === user.id) ? "" : "disabled"%>
+              onchange="changeFarrier(<%=horse.id%>)">
+        <option value="none">None</option>
+        <% if ((horse.assignedFarrier != undefined && horse.assignedFarrier !== "") && horse.assignedFarrier != user.id) { %>
+          <% for(const i in users) { %>
+            <option value="<%= users[i].id %>" <%= (horse.assignedFarrier == users[i].id) ? 'selected' : '' %>>
+              <%= users[i].fname + " " + users[i].lname %>
+            </option>
+          <% } %>
+        <% } else { %>
+          <option value="<%= user.id%>" <%= (horse.assignedFarrier == user.id) ? 'selected' : '' %>>
+            <%= user.fname + " " + user.lname %>
+          </option>
+        <% } %>
+      </select>
+      <noscript><input type="submit" value="Submit"></noscript>
+    </form>
+    <% } %>
   </td>
   <td class="queue-item-dropdown">
     <div class="dropdown open dropleft">

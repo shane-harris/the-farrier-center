@@ -76,7 +76,7 @@ function filterAssigned() {
   $.fn.dataTable.ext.search.push((_, __, ___, queueRow) => {
     // queueRow[3] is the raw html text of the "Assigned To" column of the current row.
     // Extract the horse's id number from the html:
-    const horseId = Number(queueRow[3].match(/id="([0-9]+)"/)[1])
+    const horseId = Number(queueRow[3].match(/id="([0-9]+)-farrier"/)[1])
     // Get the horse with that id.
     const horse = horses.find(horse => horseId === horse.id)
     // Return true if this horse is assigned to the logged in user.
