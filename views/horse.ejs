@@ -106,8 +106,14 @@
 
         <div class="accordion" id="shoeings-accordian">
           <!--Will be populated with all the shoeings done on a horse-->
+          <% if (shoeings.length > 0) { %>
           <% for (const singleShoeing of shoeings) { %>
           <%-  include('partials/shoeing-thumbnail', {singleShoeing}) %>
+          <% } %>
+          <% } else { %>
+          <div>
+            <H2> No shoeing reports have been created</H2>
+          </div>
           <% } %>
 
         </div>
