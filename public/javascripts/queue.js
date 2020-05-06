@@ -24,6 +24,7 @@ function filterAssigned() {
 }
 
 $(document).ready(function() {
+  $.fn.dataTable.moment('M/D/YYYY')
   var table = $('#queue').DataTable({
     responsive: {
       details: true
@@ -31,6 +32,7 @@ $(document).ready(function() {
     order: [[2, 'asc']],
     bPaginate: false,
     stateSave: true,
+
     //rowReorder: true,
     columnDefs: [
       { responsivePriority: 1, targets: 0 },
