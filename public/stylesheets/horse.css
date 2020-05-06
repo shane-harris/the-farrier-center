@@ -69,3 +69,7 @@ input {
 .container-fluid {
   text-align: center;
 }
+
+.horizontal-list li {
+  display: inline;
+}

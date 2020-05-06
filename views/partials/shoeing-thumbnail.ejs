@@ -21,9 +21,6 @@
 
     <div id="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>"
          class="collapse shoeing-card-body" aria-labelledby="headingOne" data-parent="#shoeings-accordian">
-        <div class="card-body">
-            <p>Notes: <%= singleShoeing.other %></p>
-        </div>
         <p id="include-in-report">
             Include in report?
             <input class="checkbox" type="checkbox"
@@ -31,6 +28,17 @@
                    name="<%= singleShoeing._id %>">
             <label for="<%= singleShoeing._id%>"></label>
         </p>
+        <div class="card-body">
+            <p>Job Type: <%= singleShoeing.jobType%></p>
+            <p>Front Shoes: <%= singleShoeing.front.shoes%></p>
+            <p>Back Shoes: <%= singleShoeing.front.shoes%></p>
+            <p>Front Materials: <%= singleShoeing.front.materials%></p>
+            <p>Back Materials: <%= singleShoeing.back.materials%></p>
+            <p>Front Services: <%= singleShoeing.front.services%></p>
+            <p>Back Services: <%= singleShoeing.back.services%></p>
+            <p>Notes: <%= singleShoeing.notes%></p>
+        </div>
+
 
     </div>
 </div>
