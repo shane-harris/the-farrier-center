@@ -24,6 +24,7 @@ const HorseshoeSchema = new Schema({
 })
 
 const ShoeingSchema = new Schema({
+  images: [String],
   horseshoes: [HorseshoeSchema],
   notes: [String],
   shoes: [
