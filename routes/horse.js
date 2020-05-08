@@ -113,7 +113,7 @@ router.get('/:id', loggedIn, async (req, res) => {
   if (!horse || horse.deleted) {
     res.redirect('/horse/all')
   }
-  console.log(shoeings[0])
+  console.log(horse)
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
