@@ -11,8 +11,9 @@
                      So I am using a regexed version of the date to create the ID ensuring they will all be
                       unique unless (somehow) two reports are created in the same second-->
 
-            <button type="button" class="btn btn-link thumbnail-button shoeing-button" data-toggle="collapse"
-                    data-target="#<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
+            <button type="button" class="btn btn-link thumbnail-button shoeing-button"
+                data-toggle="collapse"
+                data-target="#<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
                 <%= singleShoeing.farrier %>
                 <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %>
             </button>
@@ -20,18 +21,18 @@
     </div>
 
     <div id="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>"
-         class="collapse shoeing-card-body" aria-labelledby="headingOne" data-parent="#shoeings-accordian">
+        class="collapse shoeing-card-body" aria-labelledby="headingOne"
+        data-parent="#shoeings-accordian">
         <p id="include-in-report">
             Include in report?
-            <input class="checkbox" type="checkbox"
-                   id="<%= singleShoeing._id %>"
-                   name="<%= singleShoeing._id %>">
+            <input class="checkbox" type="checkbox" id="<%= singleShoeing._id %>"
+                name="<%= singleShoeing._id %>">
             <label for="<%= singleShoeing._id%>"></label>
         </p>
         <div class="card-body">
             <p>Job Type: <%= singleShoeing.jobType%></p>
             <p>Front Shoes: <%= singleShoeing.front.shoes%></p>
-            <p>Back Shoes: <%= singleShoeing.front.shoes%></p>
+            <p>Back Shoes: <%= singleShoeing.back.shoes%></p>
             <p>Front Materials: <%= singleShoeing.front.materials%></p>
             <p>Back Materials: <%= singleShoeing.back.materials%></p>
             <p>Front Services: <%= singleShoeing.front.services%></p>
