@@ -110,9 +110,7 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  if (!horse || horse.deleted) {
-    res.redirect('/horse/all')
-  }
+
   console.log(shoeings[0])
   res.render('horse.ejs', {
     horse: horse,
@@ -127,13 +125,13 @@ router.post('/:id/view-report', loggedIn, async (req, res) => {
     ids.push(key)
   }
 
-  const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
-  // eslint-disable-next-line no-undef
-  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } }).sort({ date: -1 })])
-  const reports = reportsQuery[0]
-  console.log('reports: ', reports[0])
-  console.log(horse)
-  res.render('view-report.ejs', { horse: horse[0], reports: reports })
+  const [horse, reportsQuery] = await Promise.all([
+    Horse.findOne({ id: req.params.id }).populate('image'),
+    Report.find({ _id: { $in: ids } }).sort({ date: -1 })
+  ])
+  console.log('reports: ', reportsQuery)
+  //Need styling for this page to mark boundary of a report
+  res.render('view-report.ejs', { horse: horse, reports: reportsQuery })
 })
 
 router.get('/:id/new-report', loggedIn, async (req, res) => {
@@ -142,7 +140,6 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
     // Get the most recent medical analysis
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  //check if first element in shoeing array has a medical field to avoid ReferenceError
   let medical = undefined
   if (reports.length > 0) {
     medical = maybe(reports[0].medical).or({})
