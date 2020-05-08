@@ -4,9 +4,11 @@
 
     <div class="row">
         <div class="single-shoe">
+        <% if (report.front !== undefined) { if(report.front.horseshoes !== undefined) { if(report.front.horseshoes[0].images !== undefined){
             <img src= <%= report.front.horseshoes[0].images[0] === undefined ?
             "noimage.png" : report.front.horseshoes[0].images[0] %>
              onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+             <% }}} %>
             <div class="shoeing-text">
                 <h3>Front Left</h3>
                 <p contenteditable="true">
