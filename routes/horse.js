@@ -110,6 +110,9 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
+  if (!horse || horse.deleted) {
+    res.redirect('/horse/all')
+  }
   console.log(horse)
   res.render('horse.ejs', {
     horse: horse,
