@@ -10,8 +10,10 @@
             <!-- In order for the collapse functionality to work each cell needs to have a unique ID,
                      So I am using a regexed version of the date to create the ID ensuring they will all be
                       unique unless (somehow) two reports are created in the same second-->
-            <button type="button" class="btn btn-link" data-toggle="collapse"
-                    data-target="#<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
+
+            <button type="button" class="btn btn-link thumbnail-button shoeing-button"
+                data-toggle="collapse"
+                data-target="#<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>">
                 <%= singleShoeing.farrier %>
                 <%= `${singleShoeing.date.getMonth() + 1}/${singleShoeing.date.getDate()}/${singleShoeing.date.getFullYear()}` %>
             </button>
@@ -19,9 +21,56 @@
     </div>
 
     <div id="<%= singleShoeing.date.toString().replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")%>"
-         class="collapse shoeing-card-body" aria-labelledby="headingOne" data-parent="#shoeings-accordian">
+        class="collapse shoeing-card-body" aria-labelledby="headingOne"
+        data-parent="#shoeings-accordian">
+        <p id="include-in-report">
+            Include in report?
+            <input class="checkbox" type="checkbox" id="<%= singleShoeing._id %>"
+                name="<%= singleShoeing._id %>">
+            <label for="<%= singleShoeing._id%>"></label>
+        </p>
         <div class="card-body">
-            <p>Notes: <%= singleShoeing.other %></p>
+        <% if (singleShoeing.jobType !== undefined) {%>
+        <p>Job Type: <%= singleShoeing.jobType%></p>
+        <% }%>
+
+        <%if(singleShoeing.front !== undefined) {%>
+            <% if (singleShoeing.front.shoes !== undefined) {%>
+            <p>Front Shoes: <%= singleShoeing.front.shoes%></p>
+
+            <% }%>
+
+            <% if (singleShoeing.front.materials !== undefined) {%>
+                <p>Front Materials: <%= singleShoeing.front.materials%></p>
+            <% }%>
+            <% if (singleShoeing.front.services !== undefined) {%>
+                <p>Front Services: <%= singleShoeing.front.services%></p>
+            <% }%>
+        <% }%>
+
+        <%if(singleShoeing.back !== undefined) {%>
+            <% if (singleShoeing.back.shoes !== undefined) {%>
+            <p>Back Shoes: <%= singleShoeing.back.shoes%></p>
+            <% }%>
+
+            <% if (singleShoeing.back.materials !== undefined) {%>
+
+            <p>Back Materials: <%= singleShoeing.back.materials%></p>
+            <% }%>
+
+
+
+            <% if (singleShoeing.back.services !== undefined) {%>
+            <p>Back Services: <%= singleShoeing.back.services%></p>
+            <% }%>
+        <% }%>
+
+        <% if (singleShoeing.notes !== undefined) {%>
+        <p>Notes: <%= singleShoeing.notes%></p>
+        <% }%>
+
         </div>
+
+
     </div>
 </div>

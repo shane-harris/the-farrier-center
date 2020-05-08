@@ -1,0 +1,154 @@
+<div class="shoeing">
+    <h4 class="farrier" style="text-align: center">Farrier: <%= report.farrier %></h4>
+    <h4 class="title"> Date : <%= `${report.date.getMonth() + 1}/${report.date.getDate()}/${report.date.getFullYear()}` %></h4>
+
+    <div class="row">
+        <div class="single-shoe">
+        <% if (report.front !== undefined) { if(report.front.horseshoes[0] !== undefined) { if(report.front.horseshoes[0].images !== undefined){ %>
+            <img src= <%= report.front.horseshoes[0].images[0] === undefined ?
+            "noimage.png" : report.front.horseshoes[0].images[0] %>
+             onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+        <% }}} %>
+            <div class="shoeing-text">
+                <h3>Front Left</h3>
+                <p contenteditable="true">
+                <% if (report.front !== undefined) { if(report.front.horseshoes[0] !== undefined) { if(report.front.horseshoes[0].notes !== undefined){ %>
+                    <%= report.front.horseshoes[0].notes %>
+                <% } } } %>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="single-shoe">
+        <% if (report.front !== undefined) { if(report.front.horseshoes[1] !== undefined) { if(report.front.horseshoes[1].images !== undefined){ %>
+            <img src= <%= report.front.horseshoes[1].images[0] === undefined ?
+                        "noimage.png" : report.front.horseshoes[1].images[0] %>
+                        onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+        <% }}} %>
+            <div class="shoeing-text">
+                <h3>Front Right</h3>
+                <p contenteditable="true">
+                <% if (report.front !== undefined) { if(report.front.horseshoes[1] !== undefined) { if(report.front.horseshoes[1].notes !== undefined){ %>
+                    <%= report.front.horseshoes[1].notes %>
+                <% } } } %>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="section-notes">
+            <div class="shoeing-text">
+                <h3 class="note-title">Notes For The Front Hooves</h3>
+                <p contenteditable="true">
+                <% if (report.front !== undefined) { if(report.front.notes !== undefined) { %>
+                    <%= report.front.notes %>
+                    <% }} %>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="single-shoe">
+            <% if (report.back !== undefined) { if(report.back.horseshoes[0] !== undefined) { if(report.back.horseshoes[0].images !== undefined){ %>
+
+            <img src= <%= report.back.horseshoes[0].images[0] === undefined ?
+                                    "noimage.png" : report.back.horseshoes[0].images[0] %>
+                                    onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+            <% } } } %>
+            <div class="shoeing-text">
+                <h3>Back Left</h3>
+                <p contenteditable="true">
+                <% if (report.back !== undefined) { if(report.back.horseshoes[0] !== undefined) { %>
+                    <%= report.back.horseshoes[0].notes %>
+                    <%}}%>
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="single-shoe">
+             <% if (report.back !== undefined) { if(report.back.horseshoes[1] !== undefined) { if(report.back.horseshoes[1].images !== undefined){ %>
+
+            <img src= <%= report.back.horseshoes[1].images[0] === undefined ?
+                                    "noimage.png" : report.back.horseshoes[1].images[0] %>
+                                    onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+
+            <% } } } %>
+            <div class="shoeing-text">
+                <h3>Back Right</h3>
+                <p contenteditable="true">
+                <% if (report.back !== undefined) { if(report.back.horseshoes[1] !== undefined) { %>
+                    <%= report.back.horseshoes[1].notes %>
+                <% } }%>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="section-notes">
+            <div class="shoeing-text">
+                <h3 class="note-title">Notes For The Back Hooves</h3>
+                <p contenteditable="true">
+                <% if (report.back !== undefined) { if(report.back.notes !== undefined) { %>
+                    <%= report.back.notes %>
+                 <% } } %>
+                </p>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div id="services-and-notes">
+      <div id="services">
+        <h4 style="text-align: center">Services</h4>
+          <ul contenteditable="true">
+              <% for (const service of report.front.services) { %>
+              <li><%=service%></li>
+              <% } %>
+          </ul>
+      </div>
+
+      <div id="shoes">
+          <h4 style="text-align: center">Shoes</h4>
+            <ul class="list-horizontal" contenteditable="true">
+                <% for (const shoe of report.front.shoes) { %>
+                <li><%=shoe%></li>
+                <% } %>
+            </ul>
+      </div>
+
+      <div id="materials">
+                <h4 style="text-align: center">Materials</h4>
+                  <ul class="list-horizontal" contenteditable="true">
+                      <% for (const material of report.front.materials) { %>
+                      <li><%=material%></li>
+                      <% } %>
+                  </ul>
+            </div>
+    </div>
+
+
+
+    <div id="notes">
+        <h4 style="text-align: center; background-color: white">Notes</h4>
+        <p id="note-text" contenteditable="true">
+            <%= report.notes.toString() %>
+        </p>
+    </div>
+    <br>
+    <br>
+
+</div>

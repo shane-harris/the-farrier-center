@@ -122,22 +122,38 @@ router.get('/:id', loggedIn, async (req, res) => {
 })
 
 router.get('/:id/new-report', loggedIn, async (req, res) => {
-  const [horse, shoeings] = await Promise.all([
+  const [horse, reports] = await Promise.all([
     Horse.findOne({ id: req.params.id }),
     // Get the most recent medical analysis
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
   //check if first element in shoeing array has a medical field to avoid ReferenceError
   let medical = undefined
-  if (shoeings.length > 0) {
-    medical = maybe(shoeings[0].medical).or({})
+  if (reports.length > 0) {
+    medical = maybe(reports[0].medical).or({})
   }
   const useLatest = medical === undefined ? false : true
   res.render('new-report.ejs', {
     horse: horse,
     medical: medical,
-    updateable: useLatest
+    updateable: useLatest,
+    reports: reports
   })
+})
+
+router.post('/:id/view-report', loggedIn, async (req, res) => {
+  let ids = []
+  for (var key in req.body) {
+    ids.push(key)
+  }
+
+  const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
+  // eslint-disable-next-line no-undef
+  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } }).sort({ date: -1 })])
+  const reports = reportsQuery[0]
+  console.log('reports: ', reports[0])
+  console.log(horse)
+  res.render('view-report.ejs', { horse: horse[0], reports: reports })
 })
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
@@ -171,6 +187,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     report.front.materials = []
     report.front.services = []
     report.front.images = []
+    report.back.notes = req.body.backNotes
+    report.back.shoes = []
+    report.back.materials = []
+    report.back.services = []
 
     if (req.body.frontShoes !== undefined) {
       if (req.body.frontShoes[0].length == 1) {
@@ -199,27 +219,6 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
-
-    report.front.horseshoes.push({
-      hoof: 'Left',
-      shoeSize: req.body.frontLeftSize,
-      notes: req.body.frontLeftNotes
-    })
-
-    report.front.horseshoes.push({
-      hoof: 'Right',
-      shoeSize: req.body.frontRightSize,
-      notes: req.body.frontRightNotes
-    })
-  }
-  //This catches the back area if there is any shoeing info for both front and back areas
-  //left = horseshoe[0], right = horseshoe[1]
-  if (req.body.job === 'Full') {
-    report.back.notes = req.body.backNotes
-    report.back.shoes = []
-    report.back.materials = []
-    report.back.services = []
-
     if (req.body.backShoes !== undefined) {
       if (req.body.backShoes[0].length == 1) {
         report.back.shoes.push(req.body.backShoes)
@@ -247,6 +246,18 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
+
+    report.front.horseshoes.push({
+      hoof: 'Left',
+      shoeSize: req.body.frontLeftSize,
+      notes: req.body.frontLeftNotes
+    })
+
+    report.front.horseshoes.push({
+      hoof: 'Right',
+      shoeSize: req.body.frontRightSize,
+      notes: req.body.frontRightNotes
+    })
 
     report.back.horseshoes.push({
       hoof: 'Left',

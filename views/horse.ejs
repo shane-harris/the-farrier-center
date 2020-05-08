@@ -88,68 +88,22 @@
         </div>
       </div>
     </div>
-    <%# Horse Medical Analysis %>
-
-    <div class="container form">
-      <div class="row justify-content-center">
-        <div class="pad">
-          <a class="btn btn-dark" data-toggle="collapse" href="#medical" role="button"
-            aria-expanded="false" aria-controls="medical">
-            Show Medical Analysis
-          </a>
-        </div>
-        <div class="pad">
-          <a type="button" class="btn" href="/horse/<%= horse.id %>/new-report">
-            New Medical Analysis
-          </a>
-        </div>
-      </div>
-
-      <!--If shoeings is undefined shoeing.medicals is a ReferenceError-->
-      <div class="collapse" id="medical">
-        <div class="row">
-          <% if (shoeings[0] !== undefined && shoeings[0].medical !== undefined) { %>
-          <div class="col-sm-4">
-            <h1>Medical Analysis</h1>
-          </div>
-          <div class="col-sm-4">
-            <h1>Date:
-              <%= `${shoeings[0].date.getMonth() + 1}/${shoeings[0].date.getDate()}/${shoeings[0].date.getFullYear()}` %>
-            </h1>
-          </div>
-          <div class="col-sm-4">
-            <h1>Farrier: <%= shoeings[0].farrier %></h1>
-          </div>
-        </div>
-        <div>
-          <%- include('partials/report-medical-fields', {medical: shoeings[0], editable: false}) %>
-          <% } else { %>
-          <div class="col-sm-12">
-            <H2> No medical reports have been created</H2>
-          </div>
-          <% } %>
-        </div>
-      </div>
-
-    </div>
     <%# Horse Most Recent Shoeing %>
     <div class="container form">
       <div class="row justify-content-center">
         <div class="pad">
-          <a class="btn btn-dark" data-toggle="collapse" href="#shoeing" role="button"
-            aria-expanded="false" aria-controls="medical">
-            Show Reports
-          </a>
-        </div>
-        <div class="pad">
-          <a type="button" class="btn btn-dark" href="/horse/<%= horse.id %>/new-report">
-            New Shoeing
-          </a>
+          <h2 id="shoeings-titles">Visits</h2>
         </div>
       </div>
-      <!--If shoeing is undefined shoeings.front and shoeings.back are ReferenceError-->
-      <div id="shoeing" class="collapse">
-        <%# Shoeing Data %>
+      <div class="pad">
+        <a type="button" id="new-shoeing-button" class="btn btn-dark"
+          href="/horse/<%= horse.id %>/new-report">New Report
+        </a>
+      </div>
+      <% if(shoeings.length > 0) { %>
+      <% let mostRecentShoeing = shoeings[0]%>
+      <form class="form" action='/horse/<%=horse.id%>/view-report' method="POST">
+
         <div class="accordion" id="shoeings-accordian">
           <!--Will be populated with all the shoeings done on a horse-->
           <% if (shoeings.length > 0) { %>
@@ -161,9 +115,25 @@
             <H2> No shoeing reports have been created</H2>
           </div>
           <% } %>
+
         </div>
+
+        <button id="all-report-button" type="submit" class="btn btn-primary mt-3">View Report</button>
+
+      </form>
+      <% } else { %>
+      <div align="center">
+        <H2> No Shoeing reports have been created</H2>
       </div>
+
+      </div>
+      <% } %>
     </div>
   </div>
   <%- include('partials/footer') %>
 </body>
+<script>
+  const horse = <%-JSON.stringify(horse)%>
+  console.log("Look at this horse: ", <%- JSON.stringify(horse) %>)
+</script>
+<script src="/public/javascripts/horse.js"></script>
