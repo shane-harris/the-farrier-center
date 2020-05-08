@@ -113,12 +113,27 @@ router.get('/:id', loggedIn, async (req, res) => {
   if (!horse || horse.deleted) {
     res.redirect('/horse/all')
   }
-  console.log(horse)
+  console.log(shoeings[0])
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
     updateable: true
   })
+})
+
+router.post('/:id/view-report', loggedIn, async (req, res) => {
+  let ids = []
+  for (var key in req.body) {
+    ids.push(key)
+  }
+
+  const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
+  // eslint-disable-next-line no-undef
+  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } }).sort({ date: -1 })])
+  const reports = reportsQuery[0]
+  console.log('reports: ', reports[0])
+  console.log(horse)
+  res.render('view-report.ejs', { horse: horse[0], reports: reports })
 })
 
 router.get('/:id/new-report', loggedIn, async (req, res) => {
@@ -139,21 +154,6 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
     updateable: useLatest,
     reports: reports
   })
-})
-
-router.post('/:id/view-report', loggedIn, async (req, res) => {
-  let ids = []
-  for (var key in req.body) {
-    ids.push(key)
-  }
-
-  const horse = await Promise.all([Horse.findOne({ id: req.params.id }).populate('image')])
-  // eslint-disable-next-line no-undef
-  const reportsQuery = await Promise.all([Report.find({ _id: { $in: ids } }).sort({ date: -1 })])
-  const reports = reportsQuery[0]
-  console.log('reports: ', reports[0])
-  console.log(horse)
-  res.render('view-report.ejs', { horse: horse[0], reports: reports })
 })
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
