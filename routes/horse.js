@@ -110,6 +110,9 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
+  if (!horse || horse.deleted) {
+    res.redirect('/horse/all')
+  }
   console.log(horse)
   res.render('horse.ejs', {
     horse: horse,
@@ -184,6 +187,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     report.front.materials = []
     report.front.services = []
     report.front.images = []
+    report.back.notes = req.body.backNotes
+    report.back.shoes = []
+    report.back.materials = []
+    report.back.services = []
 
     if (req.body.frontShoes !== undefined) {
       if (req.body.frontShoes[0].length == 1) {
@@ -212,27 +219,6 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
-
-    report.front.horseshoes.push({
-      hoof: 'Left',
-      shoeSize: req.body.frontLeftSize,
-      notes: req.body.frontLeftNotes
-    })
-
-    report.front.horseshoes.push({
-      hoof: 'Right',
-      shoeSize: req.body.frontRightSize,
-      notes: req.body.frontRightNotes
-    })
-  }
-  //This catches the back area if there is any shoeing info for both front and back areas
-  //left = horseshoe[0], right = horseshoe[1]
-  if (req.body.job === 'Full') {
-    report.back.notes = req.body.backNotes
-    report.back.shoes = []
-    report.back.materials = []
-    report.back.services = []
-
     if (req.body.backShoes !== undefined) {
       if (req.body.backShoes[0].length == 1) {
         report.back.shoes.push(req.body.backShoes)
@@ -260,6 +246,18 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
+
+    report.front.horseshoes.push({
+      hoof: 'Left',
+      shoeSize: req.body.frontLeftSize,
+      notes: req.body.frontLeftNotes
+    })
+
+    report.front.horseshoes.push({
+      hoof: 'Right',
+      shoeSize: req.body.frontRightSize,
+      notes: req.body.frontRightNotes
+    })
 
     report.back.horseshoes.push({
       hoof: 'Left',
