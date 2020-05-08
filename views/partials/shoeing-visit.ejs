@@ -4,31 +4,39 @@
 
     <div class="row">
         <div class="single-shoe">
-        <% if (report.front !== undefined) { if(report.front.horseshoes !== undefined) { if(report.front.horseshoes[0].images !== undefined){
+        <% if (report.front !== undefined) { if(report.front.horseshoes[0] !== undefined) { if(report.front.horseshoes[0].images !== undefined){ %>
             <img src= <%= report.front.horseshoes[0].images[0] === undefined ?
             "noimage.png" : report.front.horseshoes[0].images[0] %>
              onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
-             <% }}} %>
+        <% }}} %>
             <div class="shoeing-text">
                 <h3>Front Left</h3>
                 <p contenteditable="true">
+                <% if (report.front !== undefined) { if(report.front.horseshoes[0] !== undefined) { if(report.front.horseshoes[0].notes !== undefined){ %>
                     <%= report.front.horseshoes[0].notes %>
+                <% } } } %>
                 </p>
             </div>
+
         </div>
     </div>
     <br>
     <div class="row">
         <div class="single-shoe">
+        <% if (report.front !== undefined) { if(report.front.horseshoes[1] !== undefined) { if(report.front.horseshoes[1].images !== undefined){ %>
             <img src= <%= report.front.horseshoes[1].images[0] === undefined ?
                         "noimage.png" : report.front.horseshoes[1].images[0] %>
                         onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+        <% }}} %>
             <div class="shoeing-text">
                 <h3>Front Right</h3>
                 <p contenteditable="true">
+                <% if (report.front !== undefined) { if(report.front.horseshoes[1] !== undefined) { if(report.front.horseshoes[1].notes !== undefined){ %>
                     <%= report.front.horseshoes[1].notes %>
+                <% } } } %>
                 </p>
             </div>
+
         </div>
     </div>
     <br>
@@ -37,7 +45,9 @@
             <div class="shoeing-text">
                 <h3 class="note-title">Notes For The Front Hooves</h3>
                 <p contenteditable="true">
+                <% if (report.front !== undefined) { if(report.front.notes !== undefined) { %>
                     <%= report.front.notes %>
+                    <% }} %>
                 </p>
             </div>
         </div>
@@ -46,14 +56,20 @@
     <br>
     <div class="row">
         <div class="single-shoe">
+            <% if (report.back !== undefined) { if(report.back.horseshoes[0] !== undefined) { if(report.back.horseshoes[0].images !== undefined){ %>
+
             <img src= <%= report.back.horseshoes[0].images[0] === undefined ?
                                     "noimage.png" : report.back.horseshoes[0].images[0] %>
                                     onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+            <% } } } %>
             <div class="shoeing-text">
                 <h3>Back Left</h3>
                 <p contenteditable="true">
+                <% if (report.back !== undefined) { if(report.back.horseshoes[0] !== undefined) { %>
                     <%= report.back.horseshoes[0].notes %>
+                    <%}}%>
                 </p>
+
             </div>
         </div>
     </div>
@@ -62,15 +78,22 @@
 
     <div class="row">
         <div class="single-shoe">
+             <% if (report.back !== undefined) { if(report.back.horseshoes[1] !== undefined) { if(report.back.horseshoes[1].images !== undefined){ %>
+
             <img src= <%= report.back.horseshoes[1].images[0] === undefined ?
                                     "noimage.png" : report.back.horseshoes[1].images[0] %>
                                     onerror="this.onerror=null; this.src='Default.jpg'" class="shoeing-img" alt="">
+
+            <% } } } %>
             <div class="shoeing-text">
                 <h3>Back Right</h3>
                 <p contenteditable="true">
+                <% if (report.back !== undefined) { if(report.back.horseshoes[1] !== undefined) { %>
                     <%= report.back.horseshoes[1].notes %>
+                <% } }%>
                 </p>
             </div>
+
         </div>
     </div>
     <br>
@@ -79,7 +102,9 @@
             <div class="shoeing-text">
                 <h3 class="note-title">Notes For The Back Hooves</h3>
                 <p contenteditable="true">
+                <% if (report.back !== undefined) { if(report.back.notes !== undefined) { %>
                     <%= report.back.notes %>
+                 <% } } %>
                 </p>
             </div>
         </div>
