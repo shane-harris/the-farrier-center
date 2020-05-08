@@ -29,14 +29,43 @@
             <label for="<%= singleShoeing._id%>"></label>
         </p>
         <div class="card-body">
-            <p>Job Type: <%= singleShoeing.jobType%></p>
+        <% if (singleShoeing.jobType !== undefined) {%>
+        <p>Job Type: <%= singleShoeing.jobType%></p>
+        <% }%>
+
+        <%if(singleShoeing.front !== undefined) {%>
+            <% if (singleShoeing.front.shoes !== undefined) {%>
             <p>Front Shoes: <%= singleShoeing.front.shoes%></p>
-            <p>Back Shoes: <%= singleShoeing.front.shoes%></p>
-            <p>Front Materials: <%= singleShoeing.front.materials%></p>
+            <% }%>
+
+            <% if (singleShoeing.front.materials !== undefined) {%>
+                <p>Front Materials: <%= singleShoeing.front.materials%></p>
+            <% }%>
+            <% if (singleShoeing.front.services !== undefined) {%>
+                <p>Front Services: <%= singleShoeing.front.services%></p>
+            <% }%>
+        <% }%>
+
+        <%if(singleShoeing.back !== undefined) {%>
+            <% if (singleShoeing.back.shoes !== undefined) {%>
+            <p>Back Shoes: <%= singleShoeing.back.shoes%></p>
+            <% }%>
+
+            <% if (singleShoeing.back.materials !== undefined) {%>
             <p>Back Materials: <%= singleShoeing.back.materials%></p>
-            <p>Front Services: <%= singleShoeing.front.services%></p>
+            <% }%>
+
+
+
+            <% if (singleShoeing.back.services !== undefined) {%>
             <p>Back Services: <%= singleShoeing.back.services%></p>
-            <p>Notes: <%= singleShoeing.notes%></p>
+            <% }%>
+        <% }%>
+
+        <% if (singleShoeing.notes !== undefined) {%>
+        <p>Notes: <%= singleShoeing.notes%></p>
+        <% }%>
+
         </div>
 
 
