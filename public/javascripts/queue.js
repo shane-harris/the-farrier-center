@@ -48,8 +48,8 @@ $(document).ready(function() {
     }
   })
   $('div.checkbox-area').html(
-    `<input id="view-assigned" class ="form-check-input" type="checkbox" View Assigned Horses>
-     <label class="form-check-label" for="checkbox">View Assigned Horses</label>`
+    `<input id="view-assigned" class ="form-check-input" type="checkbox">
+     <label class="form-check-label" for="checkbox">My Queue</label>`
   )
 
   table.draw()
