@@ -70,8 +70,8 @@ const date = lastVisitDate(horse)
   </td>
   <td class="queue-item-dismiss">
     <div class="dropright">
-      <form action='/horse/dismiss/<%=horse.id%>' method='POST' id="dismiss">
-        <button type="submit" form="dismiss" class="btn btn-secondary" id="triggerId" onclick="submit">Dismiss
+      <form action='/horse/dismiss/<%=horse.id%>' method='POST' id="dismiss-<%=horse.id%>">
+        <button type="submit" form="dismiss-<%=horse.id%>" class="btn btn-secondary" id="triggerId-<%=horse.id%>" onclick="submit">Dismiss
         </button>
       </form>
     </div>
