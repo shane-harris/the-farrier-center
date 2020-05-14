@@ -110,8 +110,6 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-
-  console.log(shoeings[0])
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
@@ -129,7 +127,6 @@ router.post('/:id/view-report', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ _id: { $in: ids } }).sort({ date: -1 })
   ])
-  console.log('reports: ', reportsQuery)
   //Need styling for this page to mark boundary of a report
   res.render('view-report.ejs', { horse: horse, reports: reportsQuery })
 })
@@ -154,7 +151,6 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
 })
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
-  console.log(req.body)
   const horse = await Horse.findOne({ id: req.params.id })
   const report = new Report({
     horse_id: req.params.id,
@@ -338,7 +334,6 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 
 router.get('/:id/update', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id }).populate('image')
-  console.log(horse)
   //update to show current image when editing
   res.render('update-horse.ejs', { horse: horse, name: req.user.username })
 })
@@ -404,7 +399,7 @@ router.post('/dismiss/:id', loggedIn, async (req, res) => {
     await horse.save()
   } else {
     await horse.save()
-    console.log(`${horse.name} dismissed`)
+    console.log(`${horse.name} dismissed.`)
   }
   res.redirect(`/horse/queue`)
 })

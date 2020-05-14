@@ -15,11 +15,8 @@ router.get('/', async (req, res) => {
 
 router.post('/register', async (req, res) => {
   const role = req.body.adminCheck === 'on' ? 'admin' : 'user'
-  if (role === 'admin') {
-    console.log('Registering admin user')
-  }
   await User.register(new User({ username: req.body.username, role }), req.body.password)
-  console.log('User registered.')
+  console.log(`User registered: ${req.body.username}`)
   res.redirect('/admin')
 })
 

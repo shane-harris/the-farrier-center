@@ -118,7 +118,9 @@
 
         </div>
 
-        <button id="all-report-button" type="submit" class="btn btn-primary mt-3">View Report</button>
+        <button id="all-report-button" type="submit" class="btn btn-primary mt-3">
+          View Report
+        </button>
 
       </form>
       <% } else { %>
@@ -126,14 +128,13 @@
         <H2> No Shoeing reports have been created</H2>
       </div>
 
-      </div>
-      <% } %>
     </div>
+    <% } %>
+  </div>
   </div>
   <%- include('partials/footer') %>
 </body>
 <script>
   const horse = <%-JSON.stringify(horse)%>
-  console.log("Look at this horse: ", <%- JSON.stringify(horse) %>)
 </script>
 <script src="/public/javascripts/horse.js"></script>

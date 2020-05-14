@@ -73,7 +73,6 @@ $(document).ready(function() {
 
   function dismiss(event) {
     const url = '/horse/dismiss' + event.target.id
-    console.log(event.target.id)
     $.post(url, function() {
       location.reload()
     })

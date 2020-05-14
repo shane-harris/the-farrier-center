@@ -13,15 +13,15 @@ const makeDefaultAdmin = async () => {
   }
 
   const user = await User.findOne({ email: 'farrierdev@gmail.com' })
-  if (user) {
-    console.log('Found default admin, skipping creation...')
-  } else {
+  if (!user) {
     console.log('Default admin not found, creating user...')
     User.register(new User(defaultUser), defaultUser.password, err => {
       if (err) {
-        console.log('error while user register!', err)
+        console.log('Error while registering default user', err)
       } else {
-        console.log('default admin successfuly created')
+        console.log('Default admin successfuly created.')
+        console.log(`Username: ${defaultUser.username}`)
+        console.log(`Password: ${defaultUser.password}`)
       }
     })
   }
