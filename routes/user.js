@@ -26,7 +26,6 @@ router.get('/theme', loggedIn, (req, res) => {
 })
 
 router.post('/theme', loggedIn, async (req, res) => {
-  console.log(`Changing theme for '${req.user.username}' to '${req.body.theme}'`)
   req.user.theme = req.body.theme
   await req.user.save()
   res.redirect('/user')

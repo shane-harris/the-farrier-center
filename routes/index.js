@@ -20,17 +20,16 @@ router.get('/', loggedIn, (_, res) => {
 router.get('/favicon.ico', (_, res) => res.status(204))
 
 router.post('/register', loggedOut, (req, res, next) => {
-  console.log('registering user')
   User.register(
     new User({ username: req.body.email, role: req.body.role }),
     req.body.password,
     err => {
       if (err) {
-        console.log('error while user register!', err)
+        console.log(`Error while registering user: ${req.body.email}`, err)
         return next(err)
       }
 
-      console.log('user registered!')
+      console.log(`User registered: ${req.body.email}`)
 
       res.redirect('/login')
     }
