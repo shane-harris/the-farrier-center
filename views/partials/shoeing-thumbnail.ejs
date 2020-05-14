@@ -36,32 +36,32 @@
 
         <%if(singleShoeing.front !== undefined) {%>
             <% if (singleShoeing.front.shoes !== undefined) {%>
-            <p>Front Shoes: <%= singleShoeing.front.shoes%></p>
+            <p>Front Shoes: <%= singleShoeing.front.shoes.toString().replace(/,/g, ', ')%></p>
 
             <% }%>
 
             <% if (singleShoeing.front.materials !== undefined) {%>
-                <p>Front Materials: <%= singleShoeing.front.materials%></p>
+                <p>Front Materials: <%= singleShoeing.front.materials.toString().replace(/,/g, ', ')%></p>
             <% }%>
             <% if (singleShoeing.front.services !== undefined) {%>
-                <p>Front Services: <%= singleShoeing.front.services%></p>
+                <p>Front Services: <%= singleShoeing.front.services.toString().replace(/,/g, ', ')%></p>
             <% }%>
         <% }%>
 
         <%if(singleShoeing.back !== undefined) {%>
             <% if (singleShoeing.back.shoes !== undefined) {%>
-            <p>Back Shoes: <%= singleShoeing.back.shoes%></p>
+            <p>Back Shoes: <%= singleShoeing.back.shoes.toString().replace(/,/g, ', ')%></p>
             <% }%>
 
             <% if (singleShoeing.back.materials !== undefined) {%>
 
-            <p>Back Materials: <%= singleShoeing.back.materials%></p>
+            <p>Back Materials: <%= singleShoeing.back.materials.toString().replace(/,/g, ', ')%></p>
             <% }%>
 
 
 
             <% if (singleShoeing.back.services !== undefined) {%>
-            <p>Back Services: <%= singleShoeing.back.services%></p>
+            <p>Back Services: <%= singleShoeing.back.services.toString().replace(/,/g, ', ')%></p>
             <% }%>
         <% }%>
 
