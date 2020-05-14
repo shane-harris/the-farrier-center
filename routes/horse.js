@@ -387,7 +387,7 @@ router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
       // Do nothing
     }
   }
-  await horse.save(err => {})
+  await horse.save()
   res.redirect(`/horse/queue/`)
 })
 

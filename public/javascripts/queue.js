@@ -1,7 +1,7 @@
 'use strict'
 
 /* Direct ESLint to ignore the following undefined (as far as it can tell) variable(s): */
-/* global Hammer, horses, user, users */
+/* global Hammer, horses, user */
 
 /**
  * Filters the queue to show only the horses assigned to the current user.
@@ -90,6 +90,7 @@ $(document).ready(function() {
  *
  * @param {string} horse: horse id retrieved from queue-item.ejs form
  */
+// eslint-disable-next-line no-unused-vars
 function changeFarrier(horse) {
   const farrier = document.getElementById(horse + '-farrier').value
   $.post('/horse/assign/' + horse + '/' + farrier)
