@@ -371,31 +371,21 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
 })
 
 router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
-  console.log(req.params)
   const horse = await Horse.findOne({ id: req.params.horseID })
-  console.log(horse)
   if (req.params.userID !== 'none') {
     const user = await User.findOne({ _id: req.params.userID })
-    console.log(user)
     if (user !== undefined) {
-      console.log('User exists!')
       if (req.user.role === 'admin') {
-        console.log("We're an admin!")
         horse.assignedFarrier = req.params.userID
       } else {
-        console.log("We're a regular user!")
         if (horse.assignedFarrier === undefined || horse.assignedFarrier === '') {
-          console.log('The horse has no farrier!')
           horse.assignedFarrier = req.params.userID
         } else {
-          console.log('The horse already has a farrier!')
+          // Don't have permission, do nothing.
         }
-        // Don't have permission, do nothing.
       }
-      console.log("User doesn't exist!", req.params.userID)
     }
   } else {
-    console.log("Setting user to 'none'")
     if (req.user.role === 'admin' || horse.assignedFarrier === req.user.id) {
       horse.assignedFarrier = ''
     } else {
@@ -406,61 +396,12 @@ router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
   res.redirect(`/horse/queue/`)
 })
 
-router.post('/assign/:id', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier === undefined) {
-    horse.assignedFarrier = String(req.user.id)
-    await horse.save(err => {
-      console.log(err)
-    })
-
-    console.log(
-      `Assigning horse '${horse.name}' to farrier '${req.user.fname + ' ' + req.user.lname}'.`
-    )
-  } else if (horse.assignedFarrier !== req.user.id) {
-    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
-
-    console.log(
-      `Horse '${horse.name}' is already assigned to farrier '${assignedFarrier.fname +
-        ' ' +
-        assignedFarrier.lname}'.`
-    )
-  }
-  res.redirect(`/horse/queue/`)
-})
-
-router.post('/unassign/:id', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier === undefined) {
-    console.log('Horse is not assigned a farrier')
-    res.redirect(`/horse/queue/`)
-  } else {
-    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
-    //admins can un-assign any horse from any user
-    if (req.user.role === 'admin') {
-      horse.assignedFarrier = undefined
-      //only allow users to un-assign farrier if they are assigned to the horse
-    } else if (horse.assignedFarrier === req.user.id) {
-      horse.assignedFarrier = undefined
-    }
-    horse.save()
-    console.log(
-      `Unassigned horse '${horse.name}' from farrier '${assignedFarrier.fname +
-        ' ' +
-        assignedFarrier.lname}'`
-    )
-
-    res.redirect(`/horse/queue/`)
-  }
-})
-
 router.post('/dismiss/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
   horse.lastVisit = new Date()
   if (horse.assignedFarrier === req.user.id) {
     horse.assignedFarrier = undefined
     await horse.save()
-    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
   } else {
     await horse.save()
     console.log(`${horse.name} dismissed`)
