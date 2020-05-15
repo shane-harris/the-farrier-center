@@ -48,10 +48,11 @@ PORT=80
 ## Set up NodeMailer credentials and Jsonwebtokens
 
 In `.env`, add the following lines
+Ensure the Gmail account you use allows less secure apps
 
 ```
-GMAIL_USER='farrierdev@gmail.com'
-GMAIL_PASS='farierdevsacstate'
+GMAIL_USER=''
+GMAIL_PASS=''
 JWT_KEY='bb8710e8f071a10891b1e256a69c0e4c5fbd7c8724e7202703093f6327b4ff625461e516e6a8dcd35c1d60309a4b3c56b4f2a322a1b049255dca82d331b30d41'
 ```
 
