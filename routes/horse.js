@@ -152,9 +152,24 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
+
+  let reportDate
+  const today = new Date()
+  //make sure report date isn't empty string
+  if (req.body.date === '') {
+    reportDate = new Date()
+  } else {
+    reportDate = new Date(req.body.date)
+  }
+
+  //Make sure the report date isn't in the future.
+  if (+reportDate.getTime() > +today.getTime()) {
+    reportDate = today
+  }
+
   const report = new Report({
     horse_id: req.params.id,
-    date: req.body.date, //returns todays date
+    date: reportDate,
     farrier: `${req.user.fname} ${req.user.lname}`,
     jobType: req.body.job,
     front: {},
@@ -172,7 +187,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
   })
   //When you make a new shoeing, if date was not provided update horses last visit.
   //The +s are to make sure javascript doesn't try to compare strings instead of numbers
-  if (+report.date.getTime() > +maybe(horse.lastVisit.getTime()).or(0)) {
+  if (+reportDate.getTime() > +maybe(horse.lastVisit.getTime()).or(0)) {
     horse.lastVisit = report.date
   }
 
