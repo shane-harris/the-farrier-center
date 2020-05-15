@@ -399,7 +399,6 @@ router.post('/dismiss/:id', loggedIn, async (req, res) => {
     await horse.save()
   } else {
     await horse.save()
-    console.log(`${horse.name} dismissed.`)
   }
   res.redirect(`/horse/queue`)
 })
@@ -408,7 +407,6 @@ router.post('/delete/:id', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
   horse.deleted = true
   horse.save()
-  console.log(`Deleting horse: '${horse.name}`)
 
   res.redirect(`/horse/all/`)
 })

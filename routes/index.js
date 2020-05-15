@@ -29,7 +29,6 @@ router.post('/register', loggedOut, (req, res) => {
     req.body.password,
     err => {
       if (err) {
-        console.log(`Error while registering user: ${req.body.email}`, err)
         req.flash('error', 'Error while registering user')
         res.redirect('/login')
       } else {
