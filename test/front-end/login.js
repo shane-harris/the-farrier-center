@@ -24,6 +24,38 @@ describe('Login page', () => {
     await url.should.equal('http://localhost:9090/login')
   })
 
+  it('Should fail to login with correct username, wrong password', async () => {
+    await driver.findElement(By.id('username')).sendKeys('dimitri')
+    await driver.findElement(By.id('password')).sendKeys('wrongpassword')
+    await driver.findElement(By.id('login')).click()
+    const url = await driver.getCurrentUrl()
+    await url.should.equal('http://localhost:9090/login')
+  })
+
+  it('Should fail to login with another users password', async () => {
+    await driver.findElement(By.id('username')).sendKeys('test')
+    await driver.findElement(By.id('password')).sendKeys('password1')
+    await driver.findElement(By.id('login')).click()
+    const url = await driver.getCurrentUrl()
+    await url.should.equal('http://localhost:9090/login')
+  })
+
+  it('Should fail to login with correct username in the wrong capitalization', async () => {
+    await driver.findElement(By.id('username')).sendKeys('DIMITRI')
+    await driver.findElement(By.id('password')).sendKeys('password1')
+    await driver.findElement(By.id('login')).click()
+    const url = await driver.getCurrentUrl()
+    await url.should.equal('http://localhost:9090/login')
+  })
+
+  it('Should fail to login with correct password in the wrong capitalization', async () => {
+    await driver.findElement(By.id('username')).sendKeys('dimitri')
+    await driver.findElement(By.id('password')).sendKeys('PASSWORD1')
+    await driver.findElement(By.id('login')).click()
+    const url = await driver.getCurrentUrl()
+    await url.should.equal('http://localhost:9090/login')
+  })
+
   it('Should successfully login with valid credentials', async () => {
     await driver.findElement(By.id('username')).sendKeys('test')
     await driver.findElement(By.id('password')).sendKeys('test')
