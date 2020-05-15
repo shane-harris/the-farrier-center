@@ -26,7 +26,6 @@ router.get('/theme', loggedIn, (req, res) => {
 })
 
 router.post('/theme', loggedIn, async (req, res) => {
-  console.log(`Changing theme for '${req.user.username}' to '${req.body.theme}'`)
   req.user.theme = req.body.theme
   await req.user.save()
   res.redirect('/user')
@@ -119,7 +118,7 @@ router.post('/update-info', async (req, res) => {
     user.fname = req.body.fname
     user.lname = req.body.lname
     user.phone = req.body.phone
-    user.save()
+    await user.save()
   } finally {
     res.redirect('/user')
   }

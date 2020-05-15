@@ -110,10 +110,6 @@ router.get('/:id', loggedIn, async (req, res) => {
     Horse.findOne({ id: req.params.id }).populate('image'),
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  if (!horse || horse.deleted) {
-    res.redirect('/horse/all')
-  }
-  console.log(horse)
   res.render('horse.ejs', {
     horse: horse,
     shoeings: shoeings,
@@ -121,27 +117,40 @@ router.get('/:id', loggedIn, async (req, res) => {
   })
 })
 
+router.post('/:id/view-report', loggedIn, async (req, res) => {
+  let ids = []
+  for (var key in req.body) {
+    ids.push(key)
+  }
+
+  const [horse, reportsQuery] = await Promise.all([
+    Horse.findOne({ id: req.params.id }).populate('image'),
+    Report.find({ _id: { $in: ids } }).sort({ date: -1 })
+  ])
+  //Need styling for this page to mark boundary of a report
+  res.render('view-report.ejs', { horse: horse, reports: reportsQuery })
+})
+
 router.get('/:id/new-report', loggedIn, async (req, res) => {
-  const [horse, shoeings] = await Promise.all([
+  const [horse, reports] = await Promise.all([
     Horse.findOne({ id: req.params.id }),
     // Get the most recent medical analysis
     Report.find({ horse_id: req.params.id }).sort({ date: -1 })
   ])
-  //check if first element in shoeing array has a medical field to avoid ReferenceError
   let medical = undefined
-  if (shoeings.length > 0) {
-    medical = maybe(shoeings[0].medical).or({})
+  if (reports.length > 0) {
+    medical = maybe(reports[0].medical).or({})
   }
   const useLatest = medical === undefined ? false : true
   res.render('new-report.ejs', {
     horse: horse,
     medical: medical,
-    updateable: useLatest
+    updateable: useLatest,
+    reports: reports
   })
 })
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
-  console.log(req.body)
   const horse = await Horse.findOne({ id: req.params.id })
   const report = new Report({
     horse_id: req.params.id,
@@ -171,6 +180,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     report.front.materials = []
     report.front.services = []
     report.front.images = []
+    report.back.notes = req.body.backNotes
+    report.back.shoes = []
+    report.back.materials = []
+    report.back.services = []
 
     if (req.body.frontShoes !== undefined) {
       if (req.body.frontShoes[0].length == 1) {
@@ -199,27 +212,6 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
-
-    report.front.horseshoes.push({
-      hoof: 'Left',
-      shoeSize: req.body.frontLeftSize,
-      notes: req.body.frontLeftNotes
-    })
-
-    report.front.horseshoes.push({
-      hoof: 'Right',
-      shoeSize: req.body.frontRightSize,
-      notes: req.body.frontRightNotes
-    })
-  }
-  //This catches the back area if there is any shoeing info for both front and back areas
-  //left = horseshoe[0], right = horseshoe[1]
-  if (req.body.job === 'Full') {
-    report.back.notes = req.body.backNotes
-    report.back.shoes = []
-    report.back.materials = []
-    report.back.services = []
-
     if (req.body.backShoes !== undefined) {
       if (req.body.backShoes[0].length == 1) {
         report.back.shoes.push(req.body.backShoes)
@@ -247,6 +239,18 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
         }
       }
     }
+
+    report.front.horseshoes.push({
+      hoof: 'Left',
+      shoeSize: req.body.frontLeftSize,
+      notes: req.body.frontLeftNotes
+    })
+
+    report.front.horseshoes.push({
+      hoof: 'Right',
+      shoeSize: req.body.frontRightSize,
+      notes: req.body.frontRightNotes
+    })
 
     report.back.horseshoes.push({
       hoof: 'Left',
@@ -330,7 +334,6 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
 
 router.get('/:id/update', loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id }).populate('image')
-  console.log(horse)
   //update to show current image when editing
   res.render('update-horse.ejs', { horse: horse, name: req.user.username })
 })
@@ -363,87 +366,29 @@ router.post('/:id/update', parser.single('image'), loggedIn, async (req, res) =>
 })
 
 router.post('/assign/:horseID/:userID', loggedIn, async (req, res) => {
-  console.log(req.params)
   const horse = await Horse.findOne({ id: req.params.horseID })
-  console.log(horse)
   if (req.params.userID !== 'none') {
     const user = await User.findOne({ _id: req.params.userID })
-    console.log(user)
     if (user !== undefined) {
-      console.log('User exists!')
       if (req.user.role === 'admin') {
-        console.log("We're an admin!")
         horse.assignedFarrier = req.params.userID
       } else {
-        console.log("We're a regular user!")
         if (horse.assignedFarrier === undefined || horse.assignedFarrier === '') {
-          console.log('The horse has no farrier!')
           horse.assignedFarrier = req.params.userID
         } else {
-          console.log('The horse already has a farrier!')
+          // Don't have permission, do nothing.
         }
-        // Don't have permission, do nothing.
       }
-      console.log("User doesn't exist!", req.params.userID)
     }
   } else {
-    console.log("Setting user to 'none'")
     if (req.user.role === 'admin' || horse.assignedFarrier === req.user.id) {
       horse.assignedFarrier = ''
     } else {
       // Do nothing
     }
   }
-  await horse.save(err => {})
+  await horse.save()
   res.redirect(`/horse/queue/`)
-})
-
-router.post('/assign/:id', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier === undefined) {
-    horse.assignedFarrier = String(req.user.id)
-    await horse.save(err => {
-      console.log(err)
-    })
-
-    console.log(
-      `Assigning horse '${horse.name}' to farrier '${req.user.fname + ' ' + req.user.lname}'.`
-    )
-  } else if (horse.assignedFarrier !== req.user.id) {
-    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
-
-    console.log(
-      `Horse '${horse.name}' is already assigned to farrier '${assignedFarrier.fname +
-        ' ' +
-        assignedFarrier.lname}'.`
-    )
-  }
-  res.redirect(`/horse/queue/`)
-})
-
-router.post('/unassign/:id', loggedIn, async (req, res) => {
-  const horse = await Horse.findOne({ id: req.params.id })
-  if (horse.assignedFarrier === undefined) {
-    console.log('Horse is not assigned a farrier')
-    res.redirect(`/horse/queue/`)
-  } else {
-    const assignedFarrier = await User.findOne({ _id: horse.assignedFarrier })
-    //admins can un-assign any horse from any user
-    if (req.user.role === 'admin') {
-      horse.assignedFarrier = undefined
-      //only allow users to un-assign farrier if they are assigned to the horse
-    } else if (horse.assignedFarrier === req.user.id) {
-      horse.assignedFarrier = undefined
-    }
-    horse.save()
-    console.log(
-      `Unassigned horse '${horse.name}' from farrier '${assignedFarrier.fname +
-        ' ' +
-        assignedFarrier.lname}'`
-    )
-
-    res.redirect(`/horse/queue/`)
-  }
 })
 
 router.post('/dismiss/:id', loggedIn, async (req, res) => {
@@ -452,10 +397,9 @@ router.post('/dismiss/:id', loggedIn, async (req, res) => {
   if (horse.assignedFarrier === req.user.id) {
     horse.assignedFarrier = undefined
     await horse.save()
-    console.log(`Unassigned horse '${horse.name}' from farrier '${req.user.username}'`)
   } else {
     await horse.save()
-    console.log(`${horse.name} dismissed`)
+    console.log(`${horse.name} dismissed.`)
   }
   res.redirect(`/horse/queue`)
 })

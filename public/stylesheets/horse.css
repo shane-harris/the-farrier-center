@@ -3,15 +3,73 @@
 .shoeing {
   border: 1px solid black;
   border-radius: 10px;
-  padding: 20px;
+  /*padding: 20px;*/
   margin-top: 2px;
 }
 
 .shoeing-card {
   border: 2px solid var(--border-color);
   background-color: var(--shoeing-card-color);
+  /*display: inline-flex;*/
+  margin: 0.3%;
+  min-width: 100%;
+  text-align: center;
 }
 
 .shoeing-card-body {
   background-color: var(--shoeing-card-body-color);
+  text-align: left;
+}
+
+#all-report-button {
+  text-align: right;
+  padding: 2%;
+}
+
+#new-shoeing-button {
+  text-align: right;
+}
+
+#include-in-report {
+  padding-bottom: 0;
+  text-align: right;
+}
+input {
+  vertical-align: center;
+  margin-top: 0;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+}
+
+#new-shoeing-and-view {
+  /*float: right;*/
+  display: inline-flex;
+}
+
+#view-button {
+  float: left;
+}
+
+.card-header {
+  display: inline-block;
+  align-content: center;
+}
+.shoeing-button {
+  margin-right: 20px;
+}
+.thumbnail-button {
+  float: right;
+}
+
+.visits {
+  padding: 0;
+}
+
+.container-fluid {
+  text-align: center;
+}
+
+.horizontal-list li {
+  display: inline;
 }

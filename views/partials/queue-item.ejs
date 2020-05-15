@@ -68,31 +68,12 @@ const date = lastVisitDate(horse)
     </form>
     <% } %>
   </td>
-  <td class="queue-item-dropdown">
-    <div class="dropdown open dropleft">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId"
-        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      </button>
-      <div class="dropdown-menu" aria-labelledby="triggerId">
-        <% if (horse.assignedFarrier == user._id) { %>
-        <form action='/horse/unassign/<%=horse.id%>' method='POST'>
-          <button class="dropdown-item">
-            Unassign
-          </button>
-        </form>
-        <%} else { %>
-        <form action='/horse/assign/<%=horse.id%>' method='POST'>
-          <button class="dropdown-item">
-            Assign to me
-          </button>
-        </form>
-        <% } %>
-        <form action='/horse/dismiss/<%=horse.id%>' method='POST'>
-          <button class="dropdown-item">
-            Dismiss
-          </button>
-        </form>
-      </div>
+  <td class="queue-item-dismiss">
+    <div class="dropright">
+      <form action='/horse/dismiss/<%=horse.id%>' method='POST' id="dismiss-<%=horse.id%>">
+        <button type="submit" form="dismiss-<%=horse.id%>" class="btn btn-secondary" id="triggerId-<%=horse.id%>" onclick="submit">Dismiss
+        </button>
+      </form>
     </div>
   </td>
 </tr>
