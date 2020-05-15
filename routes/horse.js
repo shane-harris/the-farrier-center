@@ -27,7 +27,7 @@ cloudinary.config({
 const storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: 'dev-bojack',
-  allowedFormats: ['jpg', 'png'],
+  allowedFormats: ['jpg', 'jpe', 'jpeg', 'heif', 'heic', 'png'],
   transformation: [{ width: 500, height: 500, crop: 'limit' }]
 })
 
@@ -155,7 +155,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
   const report = new Report({
     horse_id: req.params.id,
     date: req.body.date, //returns todays date
-    farrier: req.user.username,
+    farrier: `${req.user.fname} ${req.user.lname}`,
     jobType: req.body.job,
     front: {},
     back: {},
