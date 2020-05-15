@@ -7,9 +7,7 @@ const User = new Schema({
   fname: String,
   lname: String,
   email: {
-    type: String,
-    // required: 'Email address cannot be left blank.',
-    unique: true
+    type: String
   },
   phone: String,
   role: {

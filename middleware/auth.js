@@ -1,5 +1,5 @@
 'use strict'
-
+const config = require('../config/config.js')
 const nodemailer = require('nodemailer')
 var jwt = require('jsonwebtoken')
 
@@ -49,7 +49,7 @@ const sendRegistrationEmail = async (req, res) => {
       }
     )
 
-    const url = `http://localhost:8000/register/${token}`
+    const url = `${config.host}:${config.port}/register/${token}`
     if (req.body.adminCheck === 'on') {
       await transporter.sendMail({
         to: req.body.email,
