@@ -1,5 +1,4 @@
 'use strict'
-
 const passport = require('passport')
 const express = require('express')
 const router = express.Router()
@@ -19,19 +18,24 @@ router.get('/', loggedIn, (_, res) => {
 // Send 204 No Content to avoid a 404 error
 router.get('/favicon.ico', (_, res) => res.status(204))
 
-router.post('/register', loggedOut, (req, res, next) => {
+router.post('/register', loggedOut, (req, res) => {
   User.register(
-    new User({ username: req.body.email, role: req.body.role }),
+    new User({
+      username: req.body.email,
+      role: req.body.role,
+      fname: req.body.fname,
+      lname: req.body.lname
+    }),
     req.body.password,
     err => {
       if (err) {
         console.log(`Error while registering user: ${req.body.email}`, err)
-        return next(err)
+        req.flash('error', 'Error while registering user')
+        res.redirect('/login')
+      } else {
+        req.flash('error', 'Successfuly Registered')
+        res.redirect('/login')
       }
-
-      console.log(`User registered: ${req.body.email}`)
-
-      res.redirect('/login')
     }
   )
 })

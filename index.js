@@ -108,5 +108,5 @@ mongoose
 
 // Listen for user requests
 app.listen(config.port, () => {
-  console.log(`Listening at http://localhost:${config.port}`)
+  console.log(`Listening at ${config.host}:${config.port}`)
 })

@@ -1,5 +1,5 @@
 'use strict'
-
+const config = require('../config/config.js')
 const express = require('express')
 const router = express.Router()
 const nodemailer = require('nodemailer')
@@ -32,7 +32,7 @@ router.post('/theme', loggedIn, async (req, res) => {
 })
 
 router.post('/forgot-password', async (req, res) => {
-  const user = await User.findOne({ email: req.body.email })
+  const user = await User.findOne({ username: req.body.email })
   if (!user) {
     req.flash('error', 'could not find account with that email adress')
     return res.redirect('/login')
@@ -49,7 +49,7 @@ router.post('/forgot-password', async (req, res) => {
         }
       )
 
-      const url = `http://localhost:8000/user/reset-password/${token}`
+      const url = `${config.host}:${config.port}/user/reset-password/${token}`
 
       transporter.sendMail({
         to: req.body.email,
@@ -81,7 +81,7 @@ router.post('/reset-password/:token', async (req, res) => {
     userEmail = message.email
   })
   try {
-    const user = await User.findOne({ email: userEmail })
+    const user = await User.findOne({ username: userEmail })
     if (!user) return res.sendStatus(500)
     user.setPassword(req.body.password1, (err, user) => {
       if (err) {
