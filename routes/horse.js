@@ -171,8 +171,8 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     notes: req.body.reportNotes
   })
   //When you make a new shoeing, if date was not provided update horses last visit.
-  console.log(report.date)
-  if (+report.date.getTime() > +horse.lastVisit.getTime()) {
+  //The +s are to make sure javascript doesn't try to compare strings instead of numbers
+  if (+report.date.getTime() > +maybe(horse.lastVisit.getTime()).or(0)) {
     horse.lastVisit = report.date
   }
 
