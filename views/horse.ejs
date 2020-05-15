@@ -83,6 +83,10 @@
                 <th scope="row">History</th>
                 <td><%= horse.history %></td>
               </tr>
+              <tr>
+                <th scope="row">Last Modified</th>
+                <td><%= horse.lastVisit.getMonth() + 1 %>/<%=horse.lastVisit.getDate() %>/<%= horse.lastVisit.getFullYear() %></td>
+              </tr>
             </tbody>
           </table>
         </div>
