@@ -154,7 +154,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
   const horse = await Horse.findOne({ id: req.params.id })
   const report = new Report({
     horse_id: req.params.id,
-    date: new Date(), //returns todays date
+    date: req.body.date, //returns todays date
     farrier: req.user.username,
     jobType: req.body.job,
     front: {},
