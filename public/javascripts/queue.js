@@ -99,7 +99,7 @@ $(document).ready(function() {
     columnDefs: [
       { responsivePriority: 1, targets: 0 },
       { responsivePriority: 2, targets: -1 },
-      { responsivePriority: 3, targets: 2 }
+      { responsivePriority: 3, targets: 3 }
     ],
 
     dom: '<"row"<"col"<"checkbox-area">><"col"fr>>tilpr',
@@ -133,22 +133,15 @@ $(document).ready(function() {
     localStorage.input = $(this).is(':checked')
   })
 
-  function dismiss(event) {
-    const url = '/horse/dismiss' + event.target.id
-    console.log(event.target.id)
-    $.post(url, function() {
-      location.reload()
-    })
+  /**
+   * Handles the submitting of the drop down boxes and sends the
+   * horse id and farrier id to the route. The Page is not reloaded
+   * and this results in a snappier interface.
+   *
+   * @param {string} horse: horse id retrieved from queue-item.ejs form
+   */
+  function changeFarrier(horse) {
+    const farrier = document.getElementById(horse + '-farrier').value
+    $.post('/horse/assign/' + horse + '/' + farrier)
   }
-
-  var element = document.getElementById('queue-body')
-  var hammertime = new Hammer(element)
-  hammertime.on('swiperight', dismiss)
 })
-
-function changeFarrier(horse) {
-  const farrier = document.getElementById(horse + '-farrier').value
-  $.post('/horse/assign/' + horse + '/' + farrier, function() {
-    //location.reload()
-  })
-}
