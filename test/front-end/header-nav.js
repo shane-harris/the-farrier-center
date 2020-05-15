@@ -24,9 +24,8 @@ const testHeaderNav = () => {
       })
     }
 
-    shouldHaveLink('The Farrier Center', route('/'))
     shouldHaveLink('Queue', route('/horse/queue'))
-    shouldHaveLink('Horses', route('/horse/all'))
+    shouldHaveLink('All Horses', route('/horse/all'))
     shouldHaveLink('New Horse', route('/horse/new'))
     shouldHaveLink('Admin', route('/admin'))
   })

@@ -31,12 +31,12 @@ describe('Queue page', () => {
     title.should.equal('Horse Queue | Farrier Center')
   })
 
-  it.skip('Should have horses', async () => {
+  it('Should have horses', async () => {
     const elements = await driver.findElements(By.linkText('Secretariat'))
     elements.length.should.equal(1)
   })
 
-  describe.skip('Horses', () => {
+  describe('Horses', () => {
     it('Should have the correct link', async () => {
       const url1 = await driver.findElement(By.linkText('Secretariat')).getAttribute('href')
       url1.should.equal(route('/horse/0'))
