@@ -171,7 +171,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     notes: req.body.reportNotes
   })
   //When you make a new shoeing, if date was not provided update horses last visit.
-  horse.lastVisit = report.date
+  console.log(report.date)
+  if (+report.date.getTime() > +horse.lastVisit.getTime()) {
+    horse.lastVisit = report.date
+  }
 
   //If there are any shoeing info for front area left = horseshoe[0], right = horseshoe[1]
   if (req.body.job === 'Half' || req.body.job === 'Full' || req.body.job === 'Trim') {
