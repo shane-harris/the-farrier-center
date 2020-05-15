@@ -160,6 +160,7 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     reportDate = new Date()
   } else {
     reportDate = new Date(req.body.date)
+    reportDate.setUTCHours(23)
   }
 
   //Make sure the report date isn't in the future.
