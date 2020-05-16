@@ -27,7 +27,7 @@ cloudinary.config({
 const storage = cloudinaryStorage({
   cloudinary: cloudinary,
   folder: 'dev-bojack',
-  allowedFormats: ['jpg', 'png'],
+  allowedFormats: ['jpg', 'jpe', 'jpeg', 'heif', 'heic', 'png'],
   transformation: [{ width: 500, height: 500, crop: 'limit' }]
 })
 
@@ -152,10 +152,26 @@ router.get('/:id/new-report', loggedIn, async (req, res) => {
 
 router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req, res) => {
   const horse = await Horse.findOne({ id: req.params.id })
+
+  let reportDate
+  const today = new Date()
+  //make sure report date isn't empty string
+  if (req.body.date === '') {
+    reportDate = new Date()
+  } else {
+    reportDate = new Date(req.body.date)
+    reportDate.setUTCHours(23)
+  }
+
+  //Make sure the report date isn't in the future.
+  if (+reportDate.getTime() > +today.getTime()) {
+    reportDate = today
+  }
+
   const report = new Report({
     horse_id: req.params.id,
-    date: new Date(), //returns todays date
-    farrier: req.user.username,
+    date: reportDate,
+    farrier: `${req.user.fname} ${req.user.lname}`,
     jobType: req.body.job,
     front: {},
     back: {},
@@ -171,7 +187,10 @@ router.post('/:id/new-report', parser.fields(imageFields), loggedIn, async (req,
     notes: req.body.reportNotes
   })
   //When you make a new shoeing, if date was not provided update horses last visit.
-  horse.lastVisit = report.date
+  //The +s are to make sure javascript doesn't try to compare strings instead of numbers
+  if (+reportDate.getTime() > +maybe(horse.lastVisit.getTime()).or(0)) {
+    horse.lastVisit = report.date
+  }
 
   //If there are any shoeing info for front area left = horseshoe[0], right = horseshoe[1]
   if (req.body.job === 'Half' || req.body.job === 'Full' || req.body.job === 'Trim') {
